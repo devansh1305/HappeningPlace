@@ -19,7 +19,7 @@ req.send(JSON.stringify(parameters));
 }
 function signup()
 {
-  addUser("Viswa","pass123");
+  addUser(document.getElementById("inputEmail4").value, document.getElementById("inputPassword4").value);
 	// First parameter is username, last parameter is password
 	// TODO get this from the front-end html using document.getElementByID and call this function
 }
