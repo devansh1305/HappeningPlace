@@ -1,37 +1,83 @@
-﻿<html>
-<head><title>THP</title>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title>Login Page</title>
+	
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+<style>
+body{
+	background-color:#A833A4;
+	color:#A833A4;
+
+}
+
+.bueno{
+	margin-left:0px;
+	background-color:black;
+	color:#A833A4;
+}
+
+.jumbotron{
+		background-color:black;
+	padding-top:0;
+	padding-bottom:0;
+	padding-left:30;
+
+}
+.container{
+	padding:bottom:10;
+}
+
+.textboxes{
+	padding-left:350px;
+	padding-right:350px;
+	padding-bottom:10px;
+    box-sizing: border-box;
+
+}
+</style>
+
 </head>
 <body>
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
-        <div class="card card-signin my-5">
-          <div class="card-body">
-            <h5 class="card-title text-center">Sign In</h5>
-            <form class="form-signin">
-              <div class="form-label-group">
-                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-                <label for="inputEmail">Email address</label>
-              </div>
+<div class="bueno">
 
-              <div class="form-label-group">
-                <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-                <label for="inputPassword">Password</label>
-              </div>
 
-              <div class="custom-control custom-checkbox mb-3">
-                <input type="checkbox" class="custom-control-input" id="customCheck1">
-                <label class="custom-control-label" for="customCheck1">Remember password</label>
-              </div>
-              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
-              <hr class="my-4">
-              <button class="btn btn-lg btn-google btn-block text-uppercase" type="submit"><i class="fab fa-google mr-2"></i> Sign in with Google</button>
-              <button class="btn btn-lg btn-facebook btn-block text-uppercase" type="submit"><i class="fab fa-facebook-f mr-2"></i> Sign in with Facebook</button>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<br>
+<h2  align="center">The Happening Place</h2>
+
+<br><br><br><br><br>
+
+<div class="textboxes">
+<div class="input-group input-group-lg">
+<span class="input-group-addon">Username</span>
+<input type="text" class="form-control" placeholder="Enter Username">
+</div>
+</div>
+<div class="textboxes">
+<div class="input-group input-group-lg">
+<span class="input-group-addon">Password</span>
+<input type="text" class="form-control" placeholder="Enter Password">
+</div><br>
+</div>
+
+<div class=jumbotron align="center">
+<button type="button" class="btn btn-lg btn-danger"> SignUp
+</button>
+<button type="button" class="btn btn-lg btn-primary"> Login <span class="glyphicon glyphicon-chevron-right"></span>
+</button>
+</div><br><br><br><br><br><br><br><br><br><br><br>
+
+
+<div class="container" align="right">
+		<button class="btn btn-primary btn-lg" data-target="#col1content" data-toggle="collapse">About the app</button>
+		<div id="col1content" class="collapse"><p>see for yourself</p></div>
+		
+</div>
+</div>
 </body>
 </html>
