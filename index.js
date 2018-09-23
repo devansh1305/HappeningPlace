@@ -18,6 +18,7 @@ var parameters = {
 req.send(JSON.stringify(parameters));
 }
 function signup()
-{// sign
+{
+  addUser("Viswa","pass123");
 
 }
