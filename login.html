@@ -8,38 +8,49 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-show-password/1.0.3/bootstrap-show-password.min.js"></script>
 
 <style>
 body{
+	margin: 0px 0px 0px 0px;
 	background-color:#A833A4;
 	color:#A833A4;
 
 }
 
 .bueno{
-	margin-left:0px;
+	margin-right: 0px;
+	padding-right:0px;
 	background-color:black;
 	color:#A833A4;
 }
 
 .jumbotron{
-		background-color:black;
-	padding-top:0;
-	padding-bottom:0;
+	margin: 0px 0px 0px 0px;
+	background-color:black;
+	padding-top:10;
+	padding-bottom:160px;
 	padding-left:30;
 
 }
 .container{
-	padding:bottom:10;
+	padding-top:50px;	
+	width:100%;
+	background-color:black;
 }
 
 .textboxes{
-	padding-left:350px;
-	padding-right:350px;
+	margin: 0px 0px 0px 0px;
+	background-color:black;
+	padding-left:450px;
+	padding-right:450px;
 	padding-bottom:10px;
-    box-sizing: border-box;
-
+	padding-top:20px;
+        box-sizing: border-box;
+	font-color: #A833A4;
 }
+
+
 </style>
 
 </head>
@@ -53,29 +64,42 @@ body{
 <br><br><br><br><br>
 
 <div class="textboxes">
+<!--
 <div class="input-group input-group-lg">
 <span class="input-group-addon">Username</span>
-<input type="text" class="form-control" placeholder="Enter Username">
+-->
+<input type="text" class="form-control" placeholder="Enter Username" id="username">
 </div>
 </div>
-<div class="textboxes">
+
+
+<div class="textboxes"> 
+<!--
 <div class="input-group input-group-lg">
 <span class="input-group-addon">Password</span>
-<input type="text" class="form-control" placeholder="Enter Password">
-</div><br>
+-->
+<input type="password" class="form-control" placeholder="Enter Password" id="password" data-toggle="password">
 </div>
+</div>
+
+
 
 <div class=jumbotron align="center">
 <button type="button" class="btn btn-lg btn-danger"> SignUp
 </button>
 <button type="button" class="btn btn-lg btn-primary"> Login <span class="glyphicon glyphicon-chevron-right"></span>
 </button>
-</div><br><br><br><br><br><br><br><br><br><br><br>
+</div>
+
+
+<script type="text/javascript">
+	$("#password").password('toggle');
+</script>
 
 
 <div class="container" align="right">
 		<button class="btn btn-primary btn-lg" data-target="#col1content" data-toggle="collapse">About the app</button>
-		<div id="col1content" class="collapse"><p>see for yourself</p></div>
+		<div id="col1content" class="collapse"><label>see for yourself</label></div>
 		
 </div>
 </div>
