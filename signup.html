@@ -2,6 +2,12 @@
 <html>
 <head>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+	<style type="text/css">
+		.spacing {
+			padding-top: 70px;
+		}
+	</style>
 	<title>Happening Place</title>
 </head>
 <body>
@@ -11,7 +17,7 @@ Nav class for the bav bar at the top to navigate
 
 !-->
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="#">Navbar</a>
+  <a class="navbar-brand" href="#">Happening Place</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -49,10 +55,13 @@ Nav class for the bav bar at the top to navigate
 <!-- 
 Creating the form for sign up
 !-->
+<div>
+	
+</div>
 
-<div class="container">
+<div class="container spacing">
 
-	<form>
+	<!-- <form>
 	  <div class="form-row">
 	    <div class="col">
 	      <input type="text" class="form-control" placeholder="First name">
@@ -61,10 +70,18 @@ Creating the form for sign up
 	      <input type="text" class="form-control" placeholder="Last name">
 	    </div>
 	  </div>
-	</form>
+	</form> -->
 
-	<form>
+<form>
   <div class="form-row">
+  	<div class="form-group col-md-6">
+      <label for="inputFName">First Name</label>
+      <input type="text" class="form-control" id="inputFName" placeholder="John">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="inputLName">Last Name</label>
+      <input type="text" class="form-control" id="inputLName" placeholder="Doe">
+    </div>
     <div class="form-group col-md-6">
       <label for="inputEmail4">Email</label>
       <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
@@ -99,19 +116,11 @@ Creating the form for sign up
       <input type="text" class="form-control" id="inputZip">
     </div>
   </div>
-  <div class="form-group">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" id="gridCheck">
-      <label class="form-check-label" for="gridCheck">
-        Check me out
-      </label>
-    </div>
-  </div>
-  <button type="submit" class="btn btn-primary">Sign in</button>
+
+ 
+  <button type="submit" class="btn btn-primary" id='subButton'>Sign up</button>
 </form>
 
 </div>
-
-
 </body>
 </html>
