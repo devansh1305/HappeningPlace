@@ -17,4 +17,7 @@ var parameters = {
 }
 req.send(JSON.stringify(parameters));
 }
-s
+function signup()
+{// sign
+
+}
