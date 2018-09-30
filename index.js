@@ -29,7 +29,15 @@ function userLogin(username,password)
     else if (this.readyState==4)
       alert("Invalid Credentials");
   };
+ req.setRequestHeader('Content-Type','application/json');
+  var params =
+  {
+    userName : username,
+    password : password
+  }
+  req.send(JSON.stringify(params));
 }
+
 function resetpassword(userName,userPassword,new_password,confirm_Password)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
