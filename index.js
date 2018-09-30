@@ -17,6 +17,23 @@ username:userName,
 	}
 	req.send(JSON.stringify(parameters));
 }
+
+function getUser(userName)
+{
+	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
+	var req = new XMLHttpRequest();
+	req.open('GET',' https://9ojvtxgwid.execute-api.us-east-1.amazonaws.com/getUser');
+	req.onreadystatechange = function(event)
+	{
+		console.log(event.target.response);
+	};
+	var params = {
+		username: username,
+	}
+	req.send(JSON.stringify(parameters));
+
+}
+
 function signup()
 {
 	addUser(document.getElementById("inputEmail4").value, document.getElementById("inputPassword4").value);
