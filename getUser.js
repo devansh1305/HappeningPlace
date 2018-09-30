@@ -3,43 +3,58 @@ const dynamodb = new AWS.DynamoDB({region:'us-east-1',apiVersion:'2012-08-10'});
 
 exports.handler = (event, context, callback) => {
     // TODO implement
-    /*
-    let scanningParameters={
-        TableName:'User',
-    };
 
-    dynamodb.scan(scanningParameters,function(err, data){
-        if(err){
-            callback(err,null);
+    var params1={
+        TableName:'User',
+        Item: {
+
+                username:{
+                    S: event.username
+                },
+                password:{
+                    S: event.password2
+                }
+
+
         }
-        else{
-            callback(null,data);
-        }
-    });
-    */
+    }
     var params={
         TableName:'User',
         Key: {
-            'username': {
-                S: 'viswa'
-            }
+            username: {
+                S: event.username
+            }/*,
+            password1: {
+                S: 'hp'
+            },
+            password2:{
+                S: 'newPass'
+            },
+            password3:{
+                S: 'newPass'
+            }*/
         }
     }
-    //console.log(params);
-    dynamodb.getItem(params, function(err,data){
-       if(err){
-           callback(err,null);
-       }else{
-           callback(null,data);
-       }
+
+    dynamodb.getItem(params,function(err,data){
+        if(err)
+        {
+            callback("OOOOOOPS!!");
+        }
+        else
+        {
+            if(data.Item.password.S===event.password1){
+                dynamodb.putItem(params1,function(err,data){
+                   if(err){
+                       callback("Cant Update");
+                   }
+                   else{
+                       callback("Password Updated");
+                   }
+                });
+            }
+            callback(null);
+        }
     });
-    /*
-    dynamodb.getItem(params, function(err,data){
-        if(err){
-            callback(err,null);
-        }
-        else{
-            callback(null,data);
-        }
-    });*/
+
 };

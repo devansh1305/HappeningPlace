@@ -6,38 +6,48 @@ function addUser(userName,userPassword)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
 	var req = new XMLHttpRequest();
-	req.open('POST','https://9ojvtxgwid.execute-api.us-east-1.amazonaws.com/signupTest/user-signup');
+	req.open('POST','https://9ojvtxgwid.execute-api.us-east-1.amazonaws.com/loginStage/user-signup');
 	req.onreadystatechange = function(event)
 	{
 		console.log(event.target.response);
 	};
 	var parameters = {
-username:userName,
-	 password:userPassword,
+		username:userName,
+		password:userPassword,
 	}
 	req.send(JSON.stringify(parameters));
 }
 
-function getUser(userName)
+function resetpassword(userName,userPassword,new_password,confirm_Password)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
 	var req = new XMLHttpRequest();
-	req.open('GET',' https://9ojvtxgwid.execute-api.us-east-1.amazonaws.com/getUser');
+	req.open('POST','https://9ojvtxgwid.execute-api.us-east-1.amazonaws.com/loginStage/resetpassword');
 	req.onreadystatechange = function(event)
 	{
 		console.log(event.target.response);
 	};
 	var params = {
 		username: username,
+		password1: userPassword,
+		password2: new_password,
+		password3: confirm_Password
 	}
-	req.send(JSON.stringify(parameters));
-
+	req.send(JSON.stringify(params));
 }
 
 function signup()
 {
 	addUser(document.getElementById("inputEmail4").value, document.getElementById("inputPassword4").value);
-	window.location.replace("login.html");
+	//window.location.replace("login.html");
+	// First parameter is username, last parameter is password
+	// TODO get this from the front-end html using document.getElementByID and call this function
+}
+
+function reset()
+{
+	addUser(document.getElementById("inputEmail").value, document.getElementById("old_inputPassword").value,document.getElementById("new_password").value,document.getElementById("confirm_Password").value);
+	//window.location.replace("login.html");
 	// First parameter is username, last parameter is password
 	// TODO get this from the front-end html using document.getElementByID and call this function
 }
