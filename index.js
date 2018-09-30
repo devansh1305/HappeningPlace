@@ -17,6 +17,24 @@ function addUser(userName,userPassword)
 	}
 	req.send(JSON.stringify(parameters));
 }
+
+function createEvent(event_Name,eventZipcode,eventLocation)
+{
+	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
+	var req = new XMLHttpRequest();
+	req.open('POST','https://9ojvtxgwid.execute-api.us-east-1.amazonaws.com/loginStage/createevent');
+	req.onreadystatechange = function(event)
+	{
+		console.log(event.target.response);
+	};
+	var parameters = {
+		eventName:event_Name,
+		zipcode:eventZipcode,
+		event_location:eventLocation,
+	}
+	req.send(JSON.stringify(parameters));
+}
+
 function userLogin(username,password)
 {
   var req = new XMLHttpRequest();
@@ -72,6 +90,17 @@ function reset()
 					document.getElementById("old_inputPassword").value,
 					document.getElementById("new_inputPassword").value,
 					document.getElementById("confirm_Password").value);
+	//window.location.replace("login.html");
+	// First parameter is username, last parameter is password
+	// TODO get this from the front-end html using document.getElementByID and call this function
+}
+
+function createE()
+{
+	console.log("Hi");
+	createEvent(document.getElementById("EventName").value,
+					document.getElementById("inputZip").value,
+					document.getElementById("BuildingName").value);
 	//window.location.replace("login.html");
 	// First parameter is username, last parameter is password
 	// TODO get this from the front-end html using document.getElementByID and call this function
