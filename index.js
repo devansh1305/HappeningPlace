@@ -17,7 +17,19 @@ function addUser(userName,userPassword)
 	}
 	req.send(JSON.stringify(parameters));
 }
-
+function userLogin(username,password)
+{
+  var req = new XMLHttpRequest();
+  req.open('POST','https://9ojvtxgwid.execute-api.us-east-1.amazonaws.com/loginStage/user-login')
+  req.onreadystatechange = function(event)
+  {
+    //console.log(event);
+    if(event.target.responseText==='true' && this.readyState==4)
+            console.log("Success");
+    else if (this.readyState==4)
+      alert("Invalid Credentials");
+  };
+}
 function resetpassword(userName,userPassword,new_password,confirm_Password)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
