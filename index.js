@@ -28,7 +28,7 @@ function resetpassword(userName,userPassword,new_password,confirm_Password)
 		console.log(event.target.response);
 	};
 	var params = {
-		username: username,
+		username: userName,
 		password1: userPassword,
 		password2: new_password,
 		password3: confirm_Password
@@ -38,7 +38,8 @@ function resetpassword(userName,userPassword,new_password,confirm_Password)
 
 function signup()
 {
-	addUser(document.getElementById("inputEmail4").value, document.getElementById("inputPassword4").value);
+	addUser(document.getElementById("inputEmail4").value,
+					document.getElementById("inputPassword4").value);
 	//window.location.replace("login.html");
 	// First parameter is username, last parameter is password
 	// TODO get this from the front-end html using document.getElementByID and call this function
@@ -46,7 +47,11 @@ function signup()
 
 function reset()
 {
-	addUser(document.getElementById("inputEmail").value, document.getElementById("old_inputPassword").value,document.getElementById("new_password").value,document.getElementById("confirm_Password").value);
+	console.log("Hi");
+	resetpassword(document.getElementById("inputEmail").value,
+					document.getElementById("old_inputPassword").value,
+					document.getElementById("new_inputPassword").value,
+					document.getElementById("confirm_Password").value);
 	//window.location.replace("login.html");
 	// First parameter is username, last parameter is password
 	// TODO get this from the front-end html using document.getElementByID and call this function
