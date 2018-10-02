@@ -20,12 +20,13 @@ function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_c
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
 	var req = new XMLHttpRequest();
-	req.open('POST','https://9ojvtxgwid.execute-api.us-east-1.amazonaws.com/loginStage/user-signup');
+	req.open('POST',user_sign_up_endpoint);
 	req.onreadystatechange = function(event)
 	{
 		if( this.readyState==4 && event.target.response==="true")
 		{
 			alert("Signed up successfully.");
+			location.href = "index.html";
 		}
 		else if (this.readyState==4){
 			console.log("Mostly gone. Username repeat");
@@ -49,7 +50,7 @@ function createEvent(event_Name,eventZipcode,eventLocation)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
 	var req = new XMLHttpRequest();
-	req.open('POST','https://9ojvtxgwid.execute-api.us-east-1.amazonaws.com/loginStage/createevent');
+	req.open('POST',host_create_event_endpoint);
 	req.onreadystatechange = function(event)
 	{
 		console.log(event.target.response);
@@ -65,7 +66,7 @@ function createEvent(event_Name,eventZipcode,eventLocation)
 function userLogin(username,password)
 {
   var req = new XMLHttpRequest();
-  req.open('POST','https://9ojvtxgwid.execute-api.us-east-1.amazonaws.com/loginStage/user-login')
+  req.open('POST',user_login_endpoint)
   req.onreadystatechange = function(event)
   {
     //console.log(event);
@@ -93,7 +94,7 @@ function resetpassword(userName,userPassword,new_password,confirm_Password)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
 	var req = new XMLHttpRequest();
-	req.open('POST','https://9ojvtxgwid.execute-api.us-east-1.amazonaws.com/loginStage/resetpassword');
+	req.open('POST',user_password_reset_endpoint);
 	req.onreadystatechange = function(event)
 	{
 		console.log(event.target.response);
