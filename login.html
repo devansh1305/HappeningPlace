@@ -4,7 +4,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <meta http-equiv="Content-Style-Type" content="text/css">
   <title>Login Page</title>
-	
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -13,49 +13,45 @@
 <style>
 body{
 	margin: 0px 0px 0px 0px;
-	background-color:black;
-	color:#A833A4;
-	
+	background-color:white;
+	color:black;
+
 
 }
 
-.svg{
-  animation: hideshow 10s ease infinite;
-
-}
 
 @keyframes hideshow {
   0% { opacity: 1; }
   10% { opacity: 1; }
   15% { opacity: 0; }
   100% { opacity: 0; }
-} 
+}
 
 
 .bueno{
 	margin-right: 0px;
 	padding-right:0px;
-	#background-color:black;
+	#background-color:white;
 	color:#A833A4;
 }
 
 .jumbotron{
 	margin: 0px 0px 0px 0px;
-	background-color:black;
+	background-color:white;
 	padding-top:0;
 	padding-bottom:0px;
 	#padding-left:30;
 
 }
 .container{
-	padding-top:50px;	
+	padding-top:50px;
 	width:100%;
-	#background-color:black;
+	#background-color:white;
 }
 
 .textboxes{
 	margin: 0px 0px 0px 0px;
-	#background-color:black;
+	#background-color:white;
 	padding-left:450px;
 	padding-right:450px;
 	padding-bottom:10px;
@@ -68,15 +64,15 @@ body{
         width: 200px;
         height: 50px;
 	color: white;
-    background-color: purple;
+    background-color: blue;
     font-size: 16px;
 	 transition: all 0.5s;
   cursor: pointer;
 
     }
 .btn-lg:hover {
-	background-color: white; 
-	color:black;
+	background-color: green;
+	color:white;
 }
 
 </style>
@@ -96,49 +92,12 @@ body{
       <a class="navbar-brand" href="#">Home</a>
     </div>
 
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
-        <li><a href="#">Link</a></li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#">Action</a></li>
-            <li><a href="#">Another action</a></li>
-            <li><a href="#">Something else here</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">Separated link</a></li>
-            <li role="separator" class="divider"></li>
-            <li><a href="#">One more separated link</a></li>
-          </ul>
-        </li>
-      </ul>
-   
-
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">About</a></li>
-      </ul>
-
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
 
 <div class="bueno">
 
-<svg width="100%" height="150">
-  <ellipse cx="70" cy="50" rx="25" ry="30" stroke="black" stroke-width="1" fill="#A833A4" />
-
-	<ellipse cx="200" cy="100" rx="25" ry="30" stroke="black" stroke-width="1" fill="#A833A4" />
-<polygon points="70,80 80,100 60,100" style="fill:#A833A4;stroke:#black;stroke-linejoin:"round";stroke-width:1" />
-
-<polygon points="200,130 210,150 190,150" style="fill:#A833A4;stroke:#black;stroke-linejoin:"round";stroke-width:1" />
-
-<animate attributeType="CSS" attributeName="opacity" 
-           from="1" to="0" dur="20s" animation-direction="alternate" repeatCount="indefinite" />
-
-
-</svg>
 
 
 
@@ -159,12 +118,12 @@ body{
 </div>
 
 
-<div class="textboxes"> 
+<div class="textboxes">
 <!--
 <div class="input-group input-group-lg">
 <span class="input-group-addon">Password</span>
 -->
-<input type="password" class="form-control" placeholder="Enter Password" id="password" data-toggle="password">
+<input type="password" class="form-control" placeholder="Enter Password" id="password" type="password">
 </div>
 </div>
 <br><br><br>
@@ -172,92 +131,16 @@ body{
 
 
 <div class=jumbotron align="center">
-<button type="button" class="btn btn-lg "> SignUp
+<button type="button" class="btn btn-lg" onclick="window.location='resetpass.html';"> Reset Password
 </button>
-<button type="button" class="btn btn-lg "> Login <span class="glyphicon glyphicon-chevron-right"></span>
+<button type="button" class="btn btn-lg"> Login <span class="glyphicon glyphicon-chevron-right"></span>
 </button>
 
 </div>
 
 
-
-<script type="text/javascript">
-	$("#password").password('toggle');
-</script>
-
-
-		
 </div>
 </div>
-
-
-<svg version="1.1" width="320" height="320" viewBox="0 0 320 320" fill="none" stroke="purple" stroke-linecap="round"
-     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <defs>
-    <path id="r1">
-      <animate id="p1" attributeName="d" values="m160,160l0,0 0,0;m130,110l30,-17 30,17;m130,60l30,-17 30,17;m160,20l0,0 0,0" dur="6s" repeatCount="indefinite"/>
-      <animate attributeName="stroke-width" values="0;4;4;4;0" dur="6s" repeatCount="indefinite" begin="p1.begin"/>
-    </path>
-    <path id="r2">
-      <animate attributeName="d" values="m160,160l0,0 0,0;m130,110l30,-17 30,17;m130,60l30,-17 30,17;m160,20l0,0 0,0" dur="6s" repeatCount="indefinite" begin="p1.begin+1s"/>
-      <animate attributeName="stroke-width" values="0;4;4;4;0" dur="6s" repeatCount="indefinite" begin="p1.begin+1s"/>
-    </path>
-    <path id="r3">
-      <animate attributeName="d" values="m160,160l0,0 0,0;m130,110l30,-17 30,17;m130,60l30,-17 30,17;m160,20l0,0 0,0" dur="6s" repeatCount="indefinite" begin="p1.begin+2s"/>
-      <animate attributeName="stroke-width" values="0;4;4;4;0" dur="6s" repeatCount="indefinite" begin="p1.begin+2s"/>
-    </path>
-    <path id="r4">
-      <animate id="p1" attributeName="d" values="m160,160l0,0 0,0;m130,110l30,-17 30,17;m130,60l30,-17 30,17;m160,20l0,0 0,0" dur="6s" repeatCount="indefinite" begin="p1.begin+3s"/>
-      <animate attributeName="stroke-width" values="0;4;4;4;0" dur="6s" repeatCount="indefinite" begin="p1.begin+3s"/>
-    </path>
-    <path id="r5">
-      <animate attributeName="d" values="m160,160l0,0 0,0;m130,110l30,-17 30,17;m130,60l30,-17 30,17;m160,20l0,0 0,0" dur="6s" repeatCount="indefinite" begin="p1.begin+4s"/>
-      <animate attributeName="stroke-width" values="0;4;4;4;0" dur="6s" repeatCount="indefinite" begin="p1.begin+4s"/>
-    </path>
-    <path id="r6">
-      <animate attributeName="d" values="m160,160l0,0 0,0;m130,110l30,-17 30,17;m130,60l30,-17 30,17;m160,20l0,0 0,0" dur="6s" repeatCount="indefinite" begin="p1.begin+5s"/>
-      <animate attributeName="stroke-width" values="0;4;4;4;0" dur="6s" repeatCount="indefinite" begin="p1.begin+5s"/>
-    </path>
-  </defs>
-  <use xlink:href="#r1"/>
-  <use xlink:href="#r1" transform="rotate(60 160 160)"/>
-  <use xlink:href="#r1" transform="rotate(120 160 160)"/>
-  <use xlink:href="#r1" transform="rotate(180 160 160)"/>
-  <use xlink:href="#r1" transform="rotate(240 160 160)"/>
-  <use xlink:href="#r1" transform="rotate(300 160 160)"/>
-  <use xlink:href="#r2" transform="rotate(30 160 160)"/>
-  <use xlink:href="#r2" transform="rotate(90 160 160)"/>
-  <use xlink:href="#r2" transform="rotate(150 160 160)"/>
-  <use xlink:href="#r2" transform="rotate(210 160 160)"/>
-  <use xlink:href="#r2" transform="rotate(270 160 160)"/>
-  <use xlink:href="#r2" transform="rotate(330 160 160)"/>
-  <use xlink:href="#r3"/>
-  <use xlink:href="#r3" transform="rotate(60 160 160)"/>
-  <use xlink:href="#r3" transform="rotate(120 160 160)"/>
-  <use xlink:href="#r3" transform="rotate(180 160 160)"/>
-  <use xlink:href="#r3" transform="rotate(240 160 160)"/>
-  <use xlink:href="#r3" transform="rotate(300 160 160)"/>
-  <use xlink:href="#r4" transform="rotate(30 160 160)"/>
-  <use xlink:href="#r4" transform="rotate(90 160 160)"/>
-  <use xlink:href="#r4" transform="rotate(150 160 160)"/>
-  <use xlink:href="#r4" transform="rotate(210 160 160)"/>
-  <use xlink:href="#r4" transform="rotate(270 160 160)"/>
-  <use xlink:href="#r4" transform="rotate(330 160 160)"/>
-  <use xlink:href="#r5"/>
-  <use xlink:href="#r5" transform="rotate(60 160 160)"/>
-  <use xlink:href="#r5" transform="rotate(120 160 160)"/>
-  <use xlink:href="#r5" transform="rotate(180 160 160)"/>
-  <use xlink:href="#r5" transform="rotate(240 160 160)"/>
-  <use xlink:href="#r5" transform="rotate(300 160 160)"/>
-  <use xlink:href="#r6" transform="rotate(30 160 160)"/>
-  <use xlink:href="#r6" transform="rotate(90 160 160)"/>
-  <use xlink:href="#r6" transform="rotate(150 160 160)"/>
-  <use xlink:href="#r6" transform="rotate(210 160 160)"/>
-  <use xlink:href="#r6" transform="rotate(270 160 160)"/>
-  <use xlink:href="#r6" transform="rotate(330 160 160)"/>
-</svg>
-
-</svg>
 
 </body>
 </html>
