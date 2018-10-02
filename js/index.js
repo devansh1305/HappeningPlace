@@ -56,7 +56,10 @@ function userLogin(username,password)
   {
     //console.log(event);
     if(event.target.responseText==='true' && this.readyState==4)
-            console.log("Success");
+      {
+					alert("Successful login");
+					location.href="eventDash.html"
+		  }
     else if (this.readyState==4)
       alert("Invalid Credentials");
   };
@@ -68,7 +71,10 @@ function userLogin(username,password)
   }
   req.send(JSON.stringify(params));
 }
-
+function login()
+{
+	userLogin(document.getElementById('username').value,document.getElementById('password').value);
+}
 function resetpassword(userName,userPassword,new_password,confirm_Password)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
