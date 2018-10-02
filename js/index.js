@@ -2,9 +2,10 @@
    Takes two parameters input and stores them in the AWS DynamoDB
    Sample Request: addUser("Viswajeeet Balaji","HappeningPlace Password");
  */
-function addUser(userName,userPassword)
+function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_city,_state,_zipcode)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
+	console.log("Hi");
 	var req = new XMLHttpRequest();
 	req.open('POST','https://9ojvtxgwid.execute-api.us-east-1.amazonaws.com/loginStage/user-signup');
 	req.onreadystatechange = function(event)
@@ -14,8 +15,16 @@ function addUser(userName,userPassword)
 	var parameters = {
 		username:userName,
 		password:userPassword,
+		firstname:firstName,
+		lastname:lastName,
+		address1:address_1,
+		address2:address_2,
+		city:_city,
+		state:_state,
+		zipcode:_zipcode
 	}
 	req.send(JSON.stringify(parameters));
+	console.log("Bye");
 }
 
 function createEvent(event_Name,eventZipcode,eventLocation)
@@ -30,7 +39,7 @@ function createEvent(event_Name,eventZipcode,eventLocation)
 	var parameters = {
 		eventName:event_Name,
 		zipcode:eventZipcode,
-		event_location:eventLocation,
+		event_location:eventLocation
 	}
 	req.send(JSON.stringify(parameters));
 }
@@ -76,8 +85,17 @@ function resetpassword(userName,userPassword,new_password,confirm_Password)
 
 function signup()
 {
+
 	addUser(document.getElementById("inputEmail4").value,
-					document.getElementById("inputPassword4").value);
+					document.getElementById("inputPassword4").value,
+					document.getElementById("inputFName").value,
+					document.getElementById("inputLName").value,
+					document.getElementById("inputAddress").value,
+					document.getElementById("inputAddress2").value,
+					document.getElementById("inputCity").value,
+					document.getElementById("inputState").value,
+					document.getElementById("inputZip").value
+				  );
 	//window.location.replace("login.html");
 	// First parameter is username, last parameter is password
 	// TODO get this from the front-end html using document.getElementByID and call this function
