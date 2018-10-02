@@ -73,7 +73,7 @@ function userLogin(username,password)
     if(event.target.responseText==='true' && this.readyState==4)
       {
 					alert("Successful login");
-					location.href="createEvent.html"
+					location.href="guest.html"
 		  }
     else if (this.readyState==4)
       alert("Invalid Credentials");
