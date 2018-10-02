@@ -5,12 +5,17 @@
 function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_city,_state,_zipcode)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
-	console.log("Hi");
 	var req = new XMLHttpRequest();
 	req.open('POST','https://9ojvtxgwid.execute-api.us-east-1.amazonaws.com/loginStage/user-signup');
 	req.onreadystatechange = function(event)
 	{
-		console.log(event.target.response);
+		if( this.readyState==4 && event.target.response==="true")
+		{
+			alert("Signed up successfully.");
+		}
+		else if (this.readyState==4){
+			console.log("Mostly gone. Username repeat");
+		}
 	};
 	var parameters = {
 		username:userName,
@@ -24,7 +29,6 @@ function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_c
 		zipcode:_zipcode
 	}
 	req.send(JSON.stringify(parameters));
-	console.log("Bye");
 }
 
 function createEvent(event_Name,eventZipcode,eventLocation)
