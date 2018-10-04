@@ -1,0 +1,32 @@
+lol
+lex.yy.cc
+y.tab.cc
+y.tab.hh
+
+============================================================
+
+"<" {
+	return LESS;
+}
+
+">>" {
+	return GREATGREAT;
+}
+
+">&" {
+	return GREATAMPERSAND;
+}
+
+"|" {
+	return PIPE;
+}
+
+"&" {
+	return AMPERSAND;
+}
+
+
+"." {
+	return NOTOKEN;
+}
+
