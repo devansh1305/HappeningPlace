@@ -1,0 +1,17 @@
+=== Weekly Individual Report (Team 20: Happening Place) ===
+Name: Viswajeeet Balaji
+
+Week 1 (Summary)
+09/23/2018 2 hrs b3e6eb5 signupService backend server code to write to database
+09/23/2018 3 hrs 7552f39 Partially integrated front-end signup with backend
+09/23/2018 2 hrs 48f4657 XMLHttpRequest to connect with endpoint
+09/23/2018 1 hrs 512f50b signUp helper function
+09/22/2018 1 hrs <-----> dynamoDB database set-up
+09/22/2018 2 hrs <-----> API endpoints for signup created
+
+Note: Last two item has no commit hash since database & API gateway set-up was on AWS platform
+
+Week 2 (Plan)
+09/24 3 hrs Learn and implement body mapping templates to validate HTTP requests
+09/25 3 hrs Add table schemas and extend current database
+09/26 6 hrs Connect users to event database

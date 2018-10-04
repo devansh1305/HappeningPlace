@@ -1,0 +1,17 @@
+=== Weekly Individual Report (Team 20: Happening Place) ===
+Name: Viswajeeet Balaji
+
+Week 2 (Summary)
+09/30/2018 3 hrs d46406a loginService backend server code to write to database
+09/30/2018 3 hrs 9519b51 Integrated front-end login with backend
+09/30/2018 2 hrs 811030d XMLHttpRequest to connect with REST API endpoint /users-login
+09/30/2018 1 hrs 811030d login helper function to be called from .html file
+09/29/2018 1 hrs <-----> AWS Lambda server set-up
+09/29/2018 1 hrs <-----> API endpoints for login created
+
+Note: Last two item has no commit hash since database & API gateway set-up was on AWS platform
+
+Week 3 (Plan)
+10/02 2 hrs Host able to view list of guest signed up for event
+10/03 4 hrs Generate list of events based on zipcode
+10/04 7 hrs Recommend events to users based on tags

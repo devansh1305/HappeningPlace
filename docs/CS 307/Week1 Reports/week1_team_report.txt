@@ -1,0 +1,32 @@
+=== Weekly Team Report (Team 20: Happening Place) ===
+
+Week 1 (Scrum master: Viswajeeet Balaji)
+
+09/22/2018 2 hrs 45a9232 Made basic HTML web page layout for resetting the password
+09/23/2018 2 hrs b3e6eb5 signupService backend server code to write to database
+09/23/2018 3 hrs 7552f39 Partially integrated front-end signup with backend
+09/23/2018 2 hrs 48f4657 XMLHttpRequest to connect with endpoint
+09/23/2018 1 hrs 512f50b signUp helper function
+09/23/2018 3 hrs 0a3ccb8 Fully set up the frontend to work with the API gateway to save information in database
+09/23/2018 4 hrs 64732be Connected the API gateway with the frontend. 
+09/23/2018 1 hrs ea10aee Created fields for for email, password, and address. Aligned it properly
+09/23/2018 2 hrs f7055b7 Added input fields for user to enter details for email, password, and new password
+09/23/2018 3 hrs 910917d Researched bootstrap to insert a theme for the web page
+09/23/2018 3 hrs 2e90433 Edited the HTML to make the layout more beautiful and eye appealing to the user
+09/22/2018 1 hrs <-----> dynamoDB database set-up
+09/22/2018 2 hrs <-----> API endpoints for signup created
+09/22/2018 1 hrs <-----> Made the navbar adjust to mobile size and created fields for user first and last name
+09/22/2018 1 hrs <-----> Created the nav bar for the sign up page
+
+Week 2 (Plan) (Scrum master: Viswajeeet Balaji)
+[Meetings]
+09/25 Discuss event-management dashboard front-end
+09/26 Discuss back-end services and connect event to database
+09/27 Generating list of events in user zipcode
+
+[Individual Goals]
+Devansh: Front-end UI for event creation and connect with back-end.
+Sanjay: Desing homepage UI and create scripts to connect with API gateway. 
+Seerat: Dashboard UI Component design in react JS.
+Sreekara: Backend for create event option for event host.
+Viswajeeet: Finish setting up API gateway endpoints and connect to front-end.
