@@ -93,11 +93,32 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 
 <div class="w3-container w3-third w3-theme-d3" style="padding-top:10px; padding-bottom:20px;">
 
-<div class="w3-container w3-card">
-<button onclick="location.href='temp.html';" class="w3-button">Create Event</button>
+<div class="w3-display-container w3-panel w3-theme-d3" style="padding:0px;">
+
+ <span onclick="location.href='EVENT_DASHBOARD.html'"
+  class="w3-button w3-theme-d1 w3-small w3-display-topright">&times;</span>
+
+
+<div class="w3-container w3-third w3-theme-d2" style="padding-top:20px; padding-bottom:20px; height:260px">
+	<img src="https://pbs.twimg.com/profile_images/824716853989744640/8Fcd0bji_400x400.jpg" class="w3-round" alt="Alps" style="max-width:100%"><br><br>
 </div>
 
-<div class="w3-container w3-card w3-bar-block">
+<form class="w3-container w3-twothird w3-theme-d2" style="padding-top:10px; padding-bottom:10px; height:260px;">
+<h2 style="font-size:1vw">Add Event Name</h2>
+
+
+	<input class="w3-input" type="text" placeholder="Enter Date">
+	<br>
+	<input class="w3-input" type="text" placeholder="Enter Time">
+	<br>
+	<input class="w3-input" type="text" placeholder="Enter Venue">
+</form>
+<br>
+<div class="w3-card">
+<input class="w3-input" type="text" placeholder="Description of the event"></div>
+
+</div>
+
 
 
 <div class="w3-panel w3-theme-d4 w3-display-container w3-card">
@@ -107,9 +128,6 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
   <p>Partytime</p>
 </div>
 
-
-
-</div>
 
 </div>
 
@@ -142,6 +160,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 
 <script>
 // Accordion
+
+function CreateEvent(){
+document.getElementById("demo").innerHTML = "Hello World";
+}
 
 function myFunction(id) {
     var x = document.getElementById(id);
