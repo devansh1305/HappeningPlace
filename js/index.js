@@ -97,13 +97,7 @@ function resetpassword(userName,userPassword,new_password,confirm_Password)
 	req.open('POST',user_password_reset_endpoint);
 	req.onreadystatechange = function(event)
 	{
-    		if(event.target.responseText==='true' && this.readyState==4)
-      		{
-			alert("Successful Password Reset");
-			location.href="index.html"
-		}
-    		else if (this.readyState==4)
-      			alert("Invalid Email or Password");
+		console.log(event.target.response);
 	};
 	var params = {
 		username: userName,
