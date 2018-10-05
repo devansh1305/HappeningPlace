@@ -93,7 +93,10 @@ function userLogin(username,password)
   req.send(JSON.stringify(params));
 }
 
+function retrieve()
+{
 
+}
 function login()
 {
 	userLogin(document.getElementById('username').value,document.getElementById('password').value);
