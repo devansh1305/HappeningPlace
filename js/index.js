@@ -188,9 +188,13 @@ function createE()
 {
 	console.log("Hi");
 
-	createEvent(document.getElementById("eventname").value,
-					document.getElementById("zipcode").value,
-					document.getElementById("venue").value);
+	console.log(document.getElementById("eventname").value);
+	console.log(document.getElementById("enterzip").value);
+	console.log(document.getElementById("entervenue").value);
+
+	createEvent("balajiv@purdue.edu", document.getElementById("eventname").value,
+					document.getElementById("enterzip").value,
+					document.getElementById("entervenue").value);
 	//window.location.replace("login.html");
 	// First parameter is username, last parameter is password
 	// TODO get this from the front-end html using document.getElementByID and call this function

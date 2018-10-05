@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-dark-grey.css">
 <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script type="text/javascript" src="js/index.js"></script>
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 </style>
@@ -139,7 +140,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 
 <!-- plus button is used to create event. the function below allows it to pop up -->
 function eventmanager(){
-document.getElementById("createEvent").innerHTML = "<div class=\"w3-display-container w3-panel w3-theme-d3\" style=\"padding:0px;\"><span onclick=\"this.parentElement.style.display='none'\"class=\"w3-button w3-theme-d1 w3-small w3-display-topright\">&times;</span><div class=\"w3-container w3-third w3-theme-d2\" style=\"padding-top:20px; padding-bottom:20px; height:260px\"><img src=\"https://pbs.twimg.com/profile_images/824716853989744640/8Fcd0bji_400x400.jpg\" class=\"w3-round\" alt=\"Alps\" style=\"max-width:100%\"><br><br></div><form class=\"w3-container w3-twothird w3-theme-d2\" style=\"padding-top:10px; padding-bottom:10px; height:260px;\"><h2 style=\"font-size:1vw\">Add Event Name</h2><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Date\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Time\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Venue\"></form><br><div class=\"w3-card\"><input class=\"w3-input\" type=\"text\" placeholder=\"Description of the event\"></div>";
+document.getElementById("createEvent").innerHTML = "<div class=\"w3-display-container w3-panel w3-theme-d3\" style=\"padding:0px;\"><span onclick=\"this.parentElement.style.display='none'\"class=\"w3-button w3-theme-d1 w3-small w3-display-topright\">&times;</span><div class=\"w3-container w3-third w3-theme-d2\" style=\"padding-top:20px; padding-bottom:20px; height:300px\"><img src=\"https://pbs.twimg.com/profile_images/824716853989744640/8Fcd0bji_400x400.jpg\" class=\"w3-round\" alt=\"Alps\" style=\"max-width:100%\"><br><br></div><form class=\"w3-container w3-twothird w3-theme-d2\" style=\"padding-top:10px; padding-bottom:10px; height:260px;\"><input class=\"w3-input\" type=\"text\" placeholder=\"Event Name\" id=\"eventname\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Date\" id=\"enterdate\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Time\" id=\"entertime\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Venue\" id=\"entervenue\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter zipcode\" id=\"enterzip\"></form><br><div class=\"w3-card\"><input class=\"w3-input\" type=\"text\" placeholder=\"Description of the event\"></div><div><button type=\"button\" class=\"btn btn-primary\" onclick=\"create()\">Create Event</button></div>";
 }
 
 
@@ -184,6 +185,10 @@ for (i = 0; i <3; i++) {
     text += "<div class=\"w3-panel w3-theme-d4 w3-display-container w3-card\"><span onclick=\"this.parentElement.style.display='none'\"class=\"w3-button w3-theme-d1 w3-large w3-display-topright\">&times;</span><h3>Event Name</h3><p>Partytime</p></div>";
 }
 document.getElementById("nearEventList").innerHTML = text;
+
+function create() {
+  createE();
+}
 
 
 </script>
