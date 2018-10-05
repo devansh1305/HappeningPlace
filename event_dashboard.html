@@ -95,12 +95,13 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 <a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Create Event" onclick="eventmanager()"><i class="fa fa-plus"></i></a>
 
 
+<!--space to open create event interface-->
 
 <p id="createEvent">	</p>
 
 
 
-
+<!-- space to open up the list of events nearby-->
 <p id="nearEventList">		</p>
 
 
@@ -112,11 +113,15 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 
 
 <div class="w3-rest w3-theme-d2" style="padding-top:10px; padding-bottom:20px; padding-left:1%; ">
-<div class="w3-bar-block w3-theme-d3">
+<div class="w3-bar-block w3-theme-d3" style="overflow:auto">
 <div class="w3-card w3-theme-d4" style="padding-left:5%"><h1>Guests</h1></div><a href="#" class="w3-bar-item w3-button w3-padding-large w3-hover-white" title="Add-user"><i class="fa fa-user-plus"></i></a>
-  <div class="w3-bar-item w3-hover-white w3-button w3-card-4">Devansh</div>
-  <div class="w3-bar-item w3-hover-white w3-button w3-card-4">Aditya</div>
-  <div class="w3-bar-item w3-hover-white w3-button w3-card-4">Rahul</div>
+
+<!-- enters a loop which provides all the guests in the current-->
+<p id="hostEventGuestList">
+</p>
+
+</div>
+
 <div class="w3-card w3-theme-d4" style="padding-left:5%"><h1>Description</h1></div>
   <div class="w3-bar-item w3-hover-white w3-button w3-card-4">#computerscience</div>
   <div class="w3-bar-item w3-hover-white w3-button w3-card-4">#purdue</div>
@@ -124,7 +129,6 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 </div>
 
 
-</div>
 </div>
 
 
@@ -135,13 +139,13 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 
 <script>
 // Accordion
-
 	
-
 <!-- plus button is used to create event. the function below allows it to pop up -->
 function eventmanager(){
 document.getElementById("createEvent").innerHTML = "<div class=\"w3-display-container w3-panel w3-theme-d3\" style=\"padding:0px;\"><span onclick=\"this.parentElement.style.display='none'\"class=\"w3-button w3-theme-d1 w3-small w3-display-topright\">&times;</span><div class=\"w3-container w3-third w3-theme-d2\" style=\"padding-top:20px; padding-bottom:20px; height:300px\"><img src=\"https://pbs.twimg.com/profile_images/824716853989744640/8Fcd0bji_400x400.jpg\" class=\"w3-round\" alt=\"Alps\" style=\"max-width:100%\"><br><br></div><form class=\"w3-container w3-twothird w3-theme-d2\" style=\"padding-top:10px; padding-bottom:10px; height:260px;\"><input class=\"w3-input\" type=\"text\" placeholder=\"Event Name\" id=\"eventname\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Date\" id=\"enterdate\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Time\" id=\"entertime\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Venue\" id=\"entervenue\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter zipcode\" id=\"enterzip\"></form><br><div class=\"w3-card\"><input class=\"w3-input\" type=\"text\" placeholder=\"Description of the event\"></div><div><button type=\"button\" class=\"btn btn-primary\" onclick=\"create()\">Create Event</button></div>";
 }
+
+
 
 
 
@@ -158,6 +162,11 @@ function myFunction(id) {
     }
 }
 
+
+
+
+
+
 // Used to toggle the menu on smaller screens when clicking on the menu button
 function openNav() {
     var x = document.getElementById("navDemo");
@@ -169,16 +178,19 @@ function openNav() {
 }
 
 
-var hostEventNames=["hello there","godness_sake","whaaa?"];
 
+
+
+var hostEventNames=["hello there","goodness_sake","whaaa?"];
 var text = "";
 var i;
-
 for (i = 0; i < hostEventNames.length; i++) {
     text += "<button class=\"w3-button w3-theme-d5 \" >" + hostEventNames[i] + "</button><br><br>";
 }
-
 document.getElementById("eventList").innerHTML = text;
+
+
+<!--local event list-->
 
 text="";
 for (i = 0; i <3; i++) {
@@ -186,11 +198,22 @@ for (i = 0; i <3; i++) {
 }
 document.getElementById("nearEventList").innerHTML = text;
 
+
+<!-- the guest list of the event selected by the host -->
+
+text="";
+for (i = 0; i <3; i++) {
+    text +="<div class=\"w3-bar-item w3-hover-white w3-button w3-card\">User Name</div>";
+}
+document.getElementById("hostEventGuestList").innerHTML = text;
+
+
+
+
+
 function create() {
   createE();
 }
-
-
 </script>
 
 
@@ -200,4 +223,3 @@ function create() {
 
 </body>
 </html>
-
