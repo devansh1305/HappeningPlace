@@ -50,6 +50,20 @@ function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_c
 	req.send(JSON.stringify(parameters));
 }
 
+
+function loadHostEventList(arr){
+
+var hostEventNames=arr;
+var text = "";
+var i;
+for (i = 0; i < hostEventNames.length; i++) {
+    text += "<button class=\"w3-button w3-theme-d5 \" >" + hostEventNames[i] + "</button><br><br>";
+}
+document.getElementById("eventList").innerHTML = text;
+
+}
+
+
 function createEvent(userName,event_Name,eventZipcode,eventLocation,time,description)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.

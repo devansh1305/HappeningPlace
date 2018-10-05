@@ -11,7 +11,12 @@
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 </style>
-<body class="w3-theme-l5">
+<body class="w3-theme-l5" onload="hostguestlist(); loadNearEventList(); loadHostEventList()">
+
+
+
+
+
 
 <!-- Navbar -->
 <div class="w3-top">
@@ -181,31 +186,31 @@ function openNav() {
 
 
 
-var hostEventNames=["hello there","goodness_sake","whaaa?"];
-var text = "";
-var i;
-for (i = 0; i < hostEventNames.length; i++) {
-    text += "<button class=\"w3-button w3-theme-d5 \" >" + hostEventNames[i] + "</button><br><br>";
-}
-document.getElementById("eventList").innerHTML = text;
-
-
 <!--local event list-->
 
+function loadNearEventList(){
+
+var near_event_list;
 text="";
 for (i = 0; i <3; i++) {
     text += "<div class=\"w3-panel w3-theme-d4 w3-display-container w3-card\"><span onclick=\"this.parentElement.style.display='none'\"class=\"w3-button w3-theme-d1 w3-large w3-display-topright\">&times;</span><h3>Event Name</h3><p>Partytime</p></div>";
 }
 document.getElementById("nearEventList").innerHTML = text;
 
+}
+
 
 <!-- the guest list of the event selected by the host -->
 
+
+function hostguestlist(){
+var host_guest_list;
 text="";
 for (i = 0; i <3; i++) {
     text +="<div class=\"w3-bar-item w3-hover-white w3-button w3-card\">User Name</div>";
 }
 document.getElementById("hostEventGuestList").innerHTML = text;
+}
 
 
 
