@@ -18,6 +18,7 @@
  var user_event_list_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-list"
 
  var userLoggedIn;
+ var glob_zip;
 
 function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_city,_state,_zipcode)
 {
@@ -68,6 +69,20 @@ function createEvent(userName,event_Name,eventZipcode,eventLocation,time)
 	req.send(JSON.stringify(parameters));
 }
 
+function getZip(username){
+	var req = new XMLHttpRequest();
+	req.open('POST',user_password_reset_endpoint);
+	req.onreadystatechange = function(event)
+	{
+		//console.log(event.target.response);
+		glob_zip=event.target.response;
+	};
+	var params = {
+		username: userName,
+	}
+	req.send(JSON.stringify(params));	
+}
+
 function userLogin(username,password)
 {
   var req = new XMLHttpRequest();
@@ -77,10 +92,12 @@ function userLogin(username,password)
     //console.log(event);
     if(event.target.responseText==='true' && this.readyState==4)
     {
+    	userLoggedIn = document.getElementById('username').value;
+    	localStorage.itemname = document.getElementById('username').value;
+    	console.log(userLoggedIn);
 		alert("Successful login");
-		userLoggedIn = document.getElementById('username');
+		
     location.href="guest.html"
-		console.log(userLoggedIn);
 	}
     else if (this.readyState==4)
       alert("Invalid Credentials");
@@ -92,6 +109,7 @@ function userLogin(username,password)
     password : password
   }
   req.send(JSON.stringify(params));
+	//getZip(username);
 }
 
 function renderUI(arr)
@@ -225,12 +243,13 @@ function reset()
 function createE()
 {
 	console.log("Hi");
+	console.log(userLoggedIn);
 
 	console.log(document.getElementById("eventname").value);
 	console.log(document.getElementById("enterzip").value);
 	console.log(document.getElementById("entervenue").value);
-
-	createEvent("balajiv@purdue.edu", document.getElementById("eventname").value,
+	userLoggedIn = localStorage.itemname;
+	createEvent(userLoggedIn, document.getElementById("eventname").value,
 					document.getElementById("enterzip").value,
 					document.getElementById("entervenue").value,
 					document.getElementById("entertime").value);
