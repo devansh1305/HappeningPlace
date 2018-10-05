@@ -11,10 +11,10 @@
  var user_password_reset_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-password-reset";
  var host_event_list_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-event-list";
  var host_event_guest_list_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-event-guest-list";
- var host_delete_event_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1";
- var host_create_event_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1";
- var guest_remove_event_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1";
- var guest_join_event_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1";
+ var host_delete_event_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-delete-event";
+ var host_create_event_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-create-event";
+ var guest_remove_event_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/guest-remove-event";
+ var guest_join_event_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/guest-join-event";
  var user_event_list_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-list"
 
  var userLoggedIn;
