@@ -74,14 +74,15 @@ function createEvent(userName,event_Name,eventZipcode,eventLocation,time,descrip
 	req.send(JSON.stringify(parameters));
 }
 
-function getZip(username){
+function getZip(){
 	var req = new XMLHttpRequest();
-	req.open('POST',user_password_reset_endpoint);
+	req.open('POST',user_zipcode_endpoint);
 	req.onreadystatechange = function(event)
 	{
-		//console.log(event.target.response);
-		guestListEvent(event.target.response);
+    if(this.readyState==4)
+    guestEventList(JSON.parse(event.target.response));
 	};
+  userName = localStorage.getItem("username");
 	var params = {
 		username: userName
 	}
@@ -101,9 +102,8 @@ function userLogin(username,password)
       localStorage.setItem("username",userLoggedIn);
     	console.log(userLoggedIn);
 		alert("Successful login");
-    getZip(username);
-
     location.href="guest.html"
+
 	}
     else if (this.readyState==4)
       alert("Invalid Credentials");
@@ -122,13 +122,16 @@ function renderUI(arr)
 {
   console.log(arr);
   document.getElementById('results').innerHTML = "";
-  for(var i=0;i<arr.length;i++)
+  if(arr!=null)
+  {for(var i=0;i<arr.length;i++)
   {
     document.getElementById('results').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\">1 min</span><h4>"+arr[i].name +" "+ arr[i].location+"</h4><br><hr class=\"w3-clear\"><p>Location: "+arr[i].location+"<br>Time: "+arr[i].time+"<br>ZipCode: "+arr[i].zipcode+"<br> Description:"+arr[i].desc+"</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"joinEvent(localStorage.getItem(\"username\")," +arr[i].eventid+ ")\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
   }
 }
+}
 function guestEventList(_zipcode)
 {
+  console.log(_zipcode);
   var req = new XMLHttpRequest();
 	req.open('POST',user_event_list_endpoint);
 	req.onreadystatechange = function(event)
