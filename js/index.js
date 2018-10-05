@@ -1,4 +1,4 @@
-/* addUser(userName,userPassword)
+/* addUser(userName,userPassword)  jasajs
    Takes two parameters input and stores them in the AWS DynamoDB
    Sample Request: addUser("Viswajeeet Balaji","HappeningPlace Password");
  */
@@ -15,6 +15,7 @@
  var host_create_event_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1";
  var guest_remove_event_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1";
  var guest_join_event_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1";
+ var user_event_list_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-list"
 
  var userLoggedIn;
 
@@ -91,10 +92,14 @@ function userLogin(username,password)
   }
   req.send(JSON.stringify(params));
 }
+
+
 function login()
 {
 	userLogin(document.getElementById('username').value,document.getElementById('password').value);
 }
+
+
 function resetpassword(userName,userPassword,new_password,confirm_Password)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
