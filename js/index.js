@@ -77,10 +77,12 @@ function userLogin(username,password)
     //console.log(event);
     if(event.target.responseText==='true' && this.readyState==4)
     {
+    	userLoggedIn = document.getElementById('username').value;
+    	localStorage.itemname = document.getElementById('username').value;
+    	console.log(userLoggedIn);
 		alert("Successful login");
-		userLoggedIn = document.getElementById('username');
+		
     location.href="guest.html"
-		console.log(userLoggedIn);
 	}
     else if (this.readyState==4)
       alert("Invalid Credentials");
@@ -224,12 +226,13 @@ function reset()
 function createE()
 {
 	console.log("Hi");
+	console.log(userLoggedIn);
 
 	console.log(document.getElementById("eventname").value);
 	console.log(document.getElementById("enterzip").value);
 	console.log(document.getElementById("entervenue").value);
-
-	createEvent("balajiv@purdue.edu", document.getElementById("eventname").value,
+	userLoggedIn = localStorage.itemname;
+	createEvent(userLoggedIn, document.getElementById("eventname").value,
 					document.getElementById("enterzip").value,
 					document.getElementById("entervenue").value,
 					document.getElementById("entertime").value);
