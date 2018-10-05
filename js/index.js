@@ -116,6 +116,28 @@ function login()
 }
 
 
+function joinEvent(userName,eventID)
+{
+	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
+	var req = new XMLHttpRequest();
+	req.open('POST',guest_join_event_endpoint);
+	req.onreadystatechange = function(event)
+	{
+		console.log(event.target.response);
+	};
+	var params = {
+		username: userName
+		event_id: eventID
+	}
+	req.send(JSON.stringify(params));
+}
+
+function join()
+{
+	//Implement code to get the events hosted by host
+	joinEvent();
+}
+
 function retrieveHostEventList(userName)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
