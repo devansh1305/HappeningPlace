@@ -49,7 +49,7 @@ function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_c
 	req.send(JSON.stringify(parameters));
 }
 
-function createEvent(userName,event_Name,eventZipcode,eventLocation)
+function createEvent(userName,event_Name,eventZipcode,eventLocation,time)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
 	var req = new XMLHttpRequest();
@@ -62,7 +62,8 @@ function createEvent(userName,event_Name,eventZipcode,eventLocation)
 		username:userName,
 		eventName:event_Name,
 		zipcode:eventZipcode,
-		event_location:eventLocation
+		event_location:eventLocation,
+		event_time:time
 	}
 	req.send(JSON.stringify(parameters));
 }
@@ -194,7 +195,8 @@ function createE()
 
 	createEvent("balajiv@purdue.edu", document.getElementById("eventname").value,
 					document.getElementById("enterzip").value,
-					document.getElementById("entervenue").value);
+					document.getElementById("entervenue").value,
+					document.getElementById("entertime").value);
 	//window.location.replace("login.html");
 	// First parameter is username, last parameter is password
 	// TODO get this from the front-end html using document.getElementByID and call this function
