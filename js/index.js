@@ -92,10 +92,22 @@ function userLogin(username,password)
   }
   req.send(JSON.stringify(params));
 }
-
+function guestEventList(_zipcode)
+{
+  var req = new XMLHttpRequest();
+	req.open('POST',user_event_list_endpoint);
+	req.onreadystatechange = function(event)
+	{
+		console.log(event.target.response);
+	};
+	var parameters = {
+		zip_code:_zipcode
+	}
+	req.send(JSON.stringify(parameters));
+}
 function retrieve()
 {
-
+    guestEventList(document.getElementById('zipcode').value);
 }
 function login()
 {
