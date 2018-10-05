@@ -49,12 +49,12 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 
 
 
-<div class="w3-container w3-theme-d3" style="padding-top:60px; padding-bottom:20px; height:1500px">
+<div class="w3-container w3-theme-d3" style="padding-top:60px; padding-bottom:20px; padding-left:10px; height:1500px">
 
 
 
 
-<div class="w3-container w3-third w3-theme-d3" style="padding-top:10px; padding-bottom:20px;">
+<div class="w3-container w3-third w3-theme-d3" style="padding-top:10px; padding-bottom:20px; padding-left:0px; padding-right:0px">
 
 
 <div class="w3-third w3-theme-d2 w3-card" style=" padding:15px; overflow:auto;">
@@ -67,7 +67,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 
 
 
-<div class="w3-rest " style="padding-top:1%; padding-bottom:20px; padding-right:20px; padding-left:1%">
+<div class="w3-rest " style="padding-top:1%; padding-bottom:20px; padding-right:20px; padding-left:10px">
 <div class="w3-bar-block w3-theme-d3">
 <div class="w3-card w3-theme-d4" style="padding-left:5%"><h2>Event Name</h2></div>
   <div class="w3-bar-item w3-hover-white w3-button w3-card-4">Food</div>
@@ -89,44 +89,18 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 
 
 
-<div class="w3-container w3-third w3-theme-d3" style="padding-top:10px; padding-bottom:20px;">
+<div class="w3-container w3-third w3-theme-d3" style="padding-top:10px; padding-bottom:20px; padding-left:0px;">
+
 <a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Create Event" onclick="eventmanager()"><i class="fa fa-plus"></i></a>
-<p id="createEvent">
+
+
+
+<p id="createEvent">	</p>
 
 
 
 
-
-
-<!--<div class="w3-display-container w3-panel w3-theme-d3" style="padding:0px;">
- <span onclick="location.href='EVENT_DASHBOARD.html'"
-  class="w3-button w3-theme-d1 w3-small w3-display-topright">&times;</span>
-<div class="w3-container w3-third w3-theme-d2" style="padding-top:20px; padding-bottom:20px; height:260px">
-	<img src="https://pbs.twimg.com/profile_images/824716853989744640/8Fcd0bji_400x400.jpg" class="w3-round" alt="Alps" style="max-width:100%"><br><br>
-</div>
-<form class="w3-container w3-twothird w3-theme-d2" style="padding-top:10px; padding-bottom:10px; height:260px;">
-<h2 style="font-size:1vw">Add Event Name</h2>
-	<input class="w3-input" type="text" placeholder="Enter Date">
-	<br>
-	<input class="w3-input" type="text" placeholder="Enter Time">
-	<br>
-	<input class="w3-input" type="text" placeholder="Enter Venue">
-</form>
-<br>
-<div class="w3-card">
-<input class="w3-input" type="text" placeholder="Description of the event"></div>
-</div>-->
-
-</p>
-
-
-
-<div class="w3-panel w3-theme-d4 w3-display-container w3-card">
-  <span onclick="this.parentElement.style.display='none'"
-  class="w3-button w3-theme-d1 w3-large w3-display-topright">&times;</span>
-  <h3>Event Name</h3>
-  <p>Partytime</p>
-</div>
+<p id="nearEventList">		</p>
 
 
 </div>
@@ -171,7 +145,6 @@ document.getElementById("createEvent").innerHTML = "<div class=\"w3-display-cont
 
 
 
-
 function myFunction(id) {
     var x = document.getElementById(id);
     if (x.className.indexOf("w3-show") == -1) {
@@ -183,6 +156,7 @@ function myFunction(id) {
         x.previousElementSibling.className.replace(" w3-theme-d1", "");
     }
 }
+
 // Used to toggle the menu on smaller screens when clicking on the menu button
 function openNav() {
     var x = document.getElementById("navDemo");
@@ -194,20 +168,29 @@ function openNav() {
 }
 
 
+var hostEventNames=["hello there","godness_sake","whaaa?"];
 
 var text = "";
 var i;
-for (i = 0; i < 5; i++) {
-    text += "<button class=\"w3-button w3-theme-d5 \" >New Event</button><br><br>";
+
+for (i = 0; i < hostEventNames.length; i++) {
+    text += "<button class=\"w3-button w3-theme-d5 \" >" + hostEventNames[i] + "</button><br><br>";
 }
+
 document.getElementById("eventList").innerHTML = text;
+
+text="";
+for (i = 0; i <3; i++) {
+    text += "<div class=\"w3-panel w3-theme-d4 w3-display-container w3-card\"><span onclick=\"this.parentElement.style.display='none'\"class=\"w3-button w3-theme-d1 w3-large w3-display-topright\">&times;</span><h3>Event Name</h3><p>Partytime</p></div>";
+}
+document.getElementById("nearEventList").innerHTML = text;
 
 
 </script>
 
 
 
-}
+
 </script>
 
 </body>
