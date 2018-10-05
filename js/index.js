@@ -69,21 +69,23 @@ function createEvent(userName,event_Name,eventZipcode,eventLocation,time,descrip
 		zipcode:eventZipcode,
 		event_location:eventLocation,
 		event_time:time,
-    desc: description
+    	desc: description
 	}
 	req.send(JSON.stringify(parameters));
 }
 
 function getZip(username){
+	console.log("78");
 	var req = new XMLHttpRequest();
 	req.open('POST',user_password_reset_endpoint);
 	req.onreadystatechange = function(event)
 	{
-		//console.log(event.target.response);
+		console.log(event.target.response);
 		guestListEvent(event.target.response);
 	};
+	console.log("86");
 	var params = {
-		username: userName
+		userName: username
 	}
 	req.send(JSON.stringify(params));
 }
@@ -98,12 +100,11 @@ function userLogin(username,password)
     if(event.target.responseText==='true' && this.readyState==4)
     {
     	userLoggedIn = document.getElementById('username').value;
-      localStorage.setItem("username",userLoggedIn);
+      	localStorage.setItem("username",userLoggedIn);
     	console.log(userLoggedIn);
 		alert("Successful login");
-    getZip(username);
-
-    location.href="guest.html"
+    	getZip(username);
+    	location.href="guest.html"
 	}
     else if (this.readyState==4)
       alert("Invalid Credentials");
@@ -130,11 +131,13 @@ function renderUI(arr)
 function guestEventList(_zipcode)
 {
   var req = new XMLHttpRequest();
+  	console.log("133");
 	req.open('POST',user_event_list_endpoint);
 	req.onreadystatechange = function(event)
 	{
     if(this.readyState==4)
     {
+    		console.log("139");
 		   renderUI(JSON.parse(event.target.response));
     }
 	};
