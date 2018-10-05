@@ -1,4 +1,4 @@
-/* addUser(userName,userPassword)
+/* addUser(userName,userPassword)  jasajs
    Takes two parameters input and stores them in the AWS DynamoDB
    Sample Request: addUser("Viswajeeet Balaji","HappeningPlace Password");
  */
