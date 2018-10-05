@@ -128,7 +128,7 @@ function login()
 }
 
 
-function joinEvent(userName,eventID)
+function joinEvent(eventID)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
 	var req = new XMLHttpRequest();
@@ -138,8 +138,9 @@ function joinEvent(userName,eventID)
 		console.log(event.target.response);
 	};
   eventID = eventID.toString();
+  console.log(eventID);
 	var params = {
-		username: userName,
+		username: userLoggedIn,
 		event_id: eventID
 	}
 	req.send(JSON.stringify(params));
