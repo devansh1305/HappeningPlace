@@ -4,7 +4,8 @@ exports.handler = (event, context, callback) => {
     // TODO implement
     //var eventName="test1"
     var randomNumber = (Math.floor(Math.random() * 1000000)).toString();
-    var params =
+    
+    var params = 
     {
         Item:
         {
@@ -27,7 +28,25 @@ exports.handler = (event, context, callback) => {
         },
         TableName:'Event'
     }
-
+    
+    
+    var params1={
+        TableName:'User',
+        Key:{
+            username:{
+                S: "balajiv@purdue.edu"
+            }
+        },
+        UpdateExpression: "ADD hosted_events :r",
+        ExpressionAttributeValues:{
+            ":r":{
+                "NS" : [randomNumber]
+            }
+        },
+        //ReturnValues:"UPDATED_NEW"
+    }
+    dynamodb.updateItem(params1,callback);
+    
     dynamodb.putItem(params,function(err,data)
     {
        if(err)
@@ -43,5 +62,7 @@ exports.handler = (event, context, callback) => {
            callback(null, response);
        }
     });
-
+    
+    
+   
 };
