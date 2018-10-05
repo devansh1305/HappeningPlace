@@ -98,7 +98,7 @@ function guestEventList(_zipcode)
 	req.open('POST',user_event_list_endpoint);
 	req.onreadystatechange = function(event)
 	{
-		console.log(event.target.response);
+		console.log(JSON.parse(event.target.response));
 	};
 	var parameters = {
 		zip_code:_zipcode
