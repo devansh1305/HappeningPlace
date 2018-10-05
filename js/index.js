@@ -49,6 +49,25 @@ function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_c
 	}
 	req.send(JSON.stringify(parameters));
 }
+function hostEventList()
+{
+  var req = new XMLHttpRequest();
+	req.open('POST',host_event_list_endpoint);
+	req.onreadystatechange = function(event)
+	{
+    if(this.readyState==4)
+    {
+     alert("Event Creation Successful");
+	   loadHostEventList(JSON.parse(event.target.response));
+
+  }
+	};
+  userName = lcoalStorage.getItem("username");
+	var parameters = {
+		username:userName,
+	}
+	req.send(JSON.stringify(parameters));
+}
 
 function createEvent(userName,event_Name,eventZipcode,eventLocation,time,description)
 {
@@ -125,7 +144,7 @@ function renderUI(arr)
   if(arr!=null)
   {for(var i=0;i<arr.length;i++)
   {
-    document.getElementById('results').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\">1 min</span><h4>"+arr[i].name +" "+ arr[i].location+"</h4><br><hr class=\"w3-clear\"><p>Location: "+arr[i].location+"<br>Time: "+arr[i].time+"<br>ZipCode: "+arr[i].zipcode+"<br> Description:"+arr[i].desc+"</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"joinEvent(localStorage.getItem(\"username\")," +arr[i].eventid+ ")\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
+    document.getElementById('results').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\">1 min</span><h4>"+arr[i].name +" "+ arr[i].location+"</h4><br><hr class=\"w3-clear\"><p>Location: "+arr[i].location+"<br>Time: "+arr[i].time+"<br>ZipCode: "+arr[i].zipcode+"<br> Description:" + arr[i].desc+"</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"joinEvent(" +arr[i].eventid+ ")\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
   }
 }
 }
@@ -160,16 +179,19 @@ function joinEvent(eventID)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
   userLoggedIn = localStorage.getItem("username");
+  console.log(userLoggedIn.toString());
+  console.log(eventID.toString());
 	var req = new XMLHttpRequest();
 	req.open('POST',guest_join_event_endpoint);
 	req.onreadystatechange = function(event)
 	{
 		console.log(event.target.response);
+    alert("Added to event")
 	};
   console.log(eventID);
 	var params = {
-		username: userLoggedIn,
-		event_id: eventID
+		username: userLoggedIn.toString(),
+		event_id: eventID.toString()
 	}
 	req.send(JSON.stringify(params));
 }
