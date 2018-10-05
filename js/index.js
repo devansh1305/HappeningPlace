@@ -59,7 +59,7 @@ function createEvent(userName,event_Name,eventZipcode,eventLocation)
 		console.log(event.target.response);
 	};
 	var parameters = {
-		username:userName
+		username:userName,
 		eventName:event_Name,
 		zipcode:eventZipcode,
 		event_location:eventLocation
@@ -102,6 +102,27 @@ function login()
 	userLogin(document.getElementById('username').value,document.getElementById('password').value);
 }
 
+
+function retrieveHostEventList(userName)
+{
+	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
+	var req = new XMLHttpRequest();
+	req.open('POST',host_event_list_endpoint);
+	req.onreadystatechange = function(event)
+	{
+		console.log(event.target.response);
+	};
+	var params = {
+		username: userName
+	}
+	req.send(JSON.stringify(params));
+}
+
+function getH_EventList()
+{
+	//Implement code to get the events hosted by host
+	retrieveHostEventList();
+}
 
 function resetpassword(userName,userPassword,new_password,confirm_Password)
 {
