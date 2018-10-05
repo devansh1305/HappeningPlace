@@ -45,7 +45,11 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 </div>
 
 
-<div class="w3-container w3-theme-d3" style="padding-top:60px; padding-bottom:20px; height:2000px">
+
+
+
+
+<div class="w3-container w3-theme-d3" style="padding-top:60px; padding-bottom:20px; height:1500px">
 
 
 
@@ -53,16 +57,10 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 <div class="w3-container w3-third w3-theme-d3" style="padding-top:10px; padding-bottom:20px;">
 
 
+<div class="w3-third w3-theme-d2 w3-card" style=" padding:15px; overflow:auto;">
+<p id="eventList">
 
-<div class="w3-quarter w3-theme-d2 w3-card" style=" padding:15px; overflow:auto;">
-
-<img src="https://cdn.pixabay.com/photo/2018/02/28/18/03/astronomy-3188563_960_720.jpg" class="w3-round w3-center w3-hover-opacity w3-button" alt="Alps" style="max-width:110px"><br><br>
-
-<img src="https://cdn.pixabay.com/photo/2018/02/28/18/03/astronomy-3188563_960_720.jpg" class="w3-round w3-hover-opacity w3-button" alt="Alps" style="max-width:110px"><br><br>
-
-<img src="https://cdn.pixabay.com/photo/2018/02/28/18/03/astronomy-3188563_960_720.jpg" class="w3-round w3-hover-opacity w3-button" alt="Alps" style="max-width:110px"><br><br>
-
-<img src="https://cdn.pixabay.com/photo/2018/02/28/18/03/astronomy-3188563_960_720.jpg" class="w3-round w3-hover-opacity w3-button" alt="Alps" style="max-width:110px"><br><br>
+</p>
 
 </div>
 
@@ -101,19 +99,13 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 
 
 <!--<div class="w3-display-container w3-panel w3-theme-d3" style="padding:0px;">
-
  <span onclick="location.href='EVENT_DASHBOARD.html'"
   class="w3-button w3-theme-d1 w3-small w3-display-topright">&times;</span>
-
-
 <div class="w3-container w3-third w3-theme-d2" style="padding-top:20px; padding-bottom:20px; height:260px">
 	<img src="https://pbs.twimg.com/profile_images/824716853989744640/8Fcd0bji_400x400.jpg" class="w3-round" alt="Alps" style="max-width:100%"><br><br>
 </div>
-
 <form class="w3-container w3-twothird w3-theme-d2" style="padding-top:10px; padding-bottom:10px; height:260px;">
 <h2 style="font-size:1vw">Add Event Name</h2>
-
-
 	<input class="w3-input" type="text" placeholder="Enter Date">
 	<br>
 	<input class="w3-input" type="text" placeholder="Enter Time">
@@ -123,7 +115,6 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 <br>
 <div class="w3-card">
 <input class="w3-input" type="text" placeholder="Description of the event"></div>
-
 </div>-->
 
 </p>
@@ -170,10 +161,15 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 <script>
 // Accordion
 
+	
+
+<!-- plus button is used to create event. the function below allows it to pop up -->
 function eventmanager(){
 document.getElementById("createEvent").innerHTML = "<div class=\"w3-display-container w3-panel w3-theme-d3\" style=\"padding:0px;\"><span onclick=\"this.parentElement.style.display='none'\"class=\"w3-button w3-theme-d1 w3-small w3-display-topright\">&times;</span><div class=\"w3-container w3-third w3-theme-d2\" style=\"padding-top:20px; padding-bottom:20px; height:260px\"><img src=\"https://pbs.twimg.com/profile_images/824716853989744640/8Fcd0bji_400x400.jpg\" class=\"w3-round\" alt=\"Alps\" style=\"max-width:100%\"><br><br></div><form class=\"w3-container w3-twothird w3-theme-d2\" style=\"padding-top:10px; padding-bottom:10px; height:260px;\"><h2 style=\"font-size:1vw\">Add Event Name</h2><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Date\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Time\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Venue\"></form><br><div class=\"w3-card\"><input class=\"w3-input\" type=\"text\" placeholder=\"Description of the event\"></div>";
-
 }
+
+
+
 
 
 function myFunction(id) {
@@ -195,6 +191,22 @@ function openNav() {
     } else {
         x.className = x.className.replace(" w3-show", "");
     }
+}
+
+
+
+var text = "";
+var i;
+for (i = 0; i < 5; i++) {
+    text += "<button class=\"w3-button w3-theme-d5 \" >New Event</button><br><br>";
+}
+document.getElementById("eventList").innerHTML = text;
+
+
+</script>
+
+
+
 }
 </script>
 
