@@ -16,6 +16,8 @@
  var guest_remove_event_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1";
  var guest_join_event_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1";
 
+ var userLoggedIn;
+
 function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_city,_state,_zipcode)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
@@ -46,7 +48,7 @@ function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_c
 	req.send(JSON.stringify(parameters));
 }
 
-function createEvent(event_Name,eventZipcode,eventLocation)
+function createEvent(userName,event_Name,eventZipcode,eventLocation)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
 	var req = new XMLHttpRequest();
@@ -56,6 +58,7 @@ function createEvent(event_Name,eventZipcode,eventLocation)
 		console.log(event.target.response);
 	};
 	var parameters = {
+		username:userName
 		eventName:event_Name,
 		zipcode:eventZipcode,
 		event_location:eventLocation
@@ -71,10 +74,12 @@ function userLogin(username,password)
   {
     //console.log(event);
     if(event.target.responseText==='true' && this.readyState==4)
-      {
-					alert("Successful login");
-					location.href="guest.html"
-		  }
+    {
+		alert("Successful login");
+		location.href="guest.html"
+		userLoggedIn = document.getElementById('username');
+		console.log(userLoggedIn);
+	}
     else if (this.readyState==4)
       alert("Invalid Credentials");
   };
@@ -141,9 +146,10 @@ function reset()
 function createE()
 {
 	console.log("Hi");
-	createEvent(document.getElementById("EventName").value,
-					document.getElementById("inputZip").value,
-					document.getElementById("BuildingName").value);
+
+	createEvent(document.getElementById("eventname").value,
+					document.getElementById("zipcode").value,
+					document.getElementById("venue").value);
 	//window.location.replace("login.html");
 	// First parameter is username, last parameter is password
 	// TODO get this from the front-end html using document.getElementByID and call this function
