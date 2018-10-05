@@ -59,7 +59,7 @@ function createEvent(userName,event_Name,eventZipcode,eventLocation)
 		console.log(event.target.response);
 	};
 	var parameters = {
-		username:userName
+		username:userName,
 		eventName:event_Name,
 		zipcode:eventZipcode,
 		event_location:eventLocation
@@ -92,10 +92,22 @@ function userLogin(username,password)
   }
   req.send(JSON.stringify(params));
 }
-
+function guestEventList(_zipcode)
+{
+  var req = new XMLHttpRequest();
+	req.open('POST',user_event_list_endpoint);
+	req.onreadystatechange = function(event)
+	{
+		console.log(event.target.response);
+	};
+	var parameters = {
+		zip_code:_zipcode
+	}
+	req.send(JSON.stringify(parameters));
+}
 function retrieve()
 {
-
+    guestEventList(document.getElementById('zipcode').value);
 }
 function login()
 {
