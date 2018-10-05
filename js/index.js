@@ -16,9 +16,9 @@
  var guest_remove_event_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/guest-remove-event";
  var guest_join_event_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/guest-join-event";
  var user_event_list_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-list"
+ var user_zipcode_endpoint ="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/zipcode"
 
  var userLoggedIn;
- var glob_zip;
 
 function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_city,_state,_zipcode)
 {
@@ -50,21 +50,26 @@ function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_c
 	req.send(JSON.stringify(parameters));
 }
 
-function createEvent(userName,event_Name,eventZipcode,eventLocation,time)
+function createEvent(userName,event_Name,eventZipcode,eventLocation,time,description)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
 	var req = new XMLHttpRequest();
 	req.open('POST',host_create_event_endpoint);
 	req.onreadystatechange = function(event)
 	{
+    if(this.readyState==4)
+    {
 		console.log(event.target.response);
+    alert("Event Creation Successful");
+  }
 	};
 	var parameters = {
 		username:userName,
 		eventName:event_Name,
 		zipcode:eventZipcode,
 		event_location:eventLocation,
-		event_time:time
+		event_time:time,
+    desc: description
 	}
 	req.send(JSON.stringify(parameters));
 }
@@ -75,12 +80,12 @@ function getZip(username){
 	req.onreadystatechange = function(event)
 	{
 		//console.log(event.target.response);
-		glob_zip=event.target.response;
+		guestListEvent(event.target.response);
 	};
 	var params = {
-		username: userName,
+		username: userName
 	}
-	req.send(JSON.stringify(params));	
+	req.send(JSON.stringify(params));
 }
 
 function userLogin(username,password)
@@ -93,10 +98,11 @@ function userLogin(username,password)
     if(event.target.responseText==='true' && this.readyState==4)
     {
     	userLoggedIn = document.getElementById('username').value;
-    	localStorage.itemname = document.getElementById('username').value;
+      localStorage.setItem("username",userLoggedIn);
     	console.log(userLoggedIn);
 		alert("Successful login");
-		
+    getZip(username);
+
     location.href="guest.html"
 	}
     else if (this.readyState==4)
@@ -109,15 +115,16 @@ function userLogin(username,password)
     password : password
   }
   req.send(JSON.stringify(params));
-	//getZip(username);
+
 }
 
 function renderUI(arr)
 {
   console.log(arr);
+  document.getElementById('results').innerHTML = "";
   for(var i=0;i<arr.length;i++)
   {
-    document.getElementById('results').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\">1 min</span><h4>"+arr[i].name +" "+ arr[i].location+"</h4><br><hr class=\"w3-clear\"><p>Location: "+arr[i].location+"<br>Time: "+arr[i].time+"<br>ZipCode: "+arr[i].zipcode+"</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"joinEvent(userLoggedIn,"+arr[i].eventid+")\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
+    document.getElementById('results').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\">1 min</span><h4>"+arr[i].name +" "+ arr[i].location+"</h4><br><hr class=\"w3-clear\"><p>Location: "+arr[i].location+"<br>Time: "+arr[i].time+"<br>ZipCode: "+arr[i].zipcode+"<br> Description:"+arr[i].desc+"</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"joinEvent(localStorage.getItem(\"username\")," +arr[i].eventid+ ")\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
   }
 }
 function guestEventList(_zipcode)
@@ -149,8 +156,7 @@ function login()
 function joinEvent(eventID)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
-  userLoggedIn = "balajiv@purdue.edu"
-  eventID = "244753"
+  userLoggedIn = localStorage.getItem("username");
 	var req = new XMLHttpRequest();
 	req.open('POST',guest_join_event_endpoint);
 	req.onreadystatechange = function(event)
@@ -242,17 +248,11 @@ function reset()
 
 function createE()
 {
-	console.log("Hi");
-	console.log(userLoggedIn);
-
-	console.log(document.getElementById("eventname").value);
-	console.log(document.getElementById("enterzip").value);
-	console.log(document.getElementById("entervenue").value);
-	userLoggedIn = localStorage.itemname;
+	userLoggedIn = localStorage.getItem("username");
 	createEvent(userLoggedIn, document.getElementById("eventname").value,
 					document.getElementById("enterzip").value,
 					document.getElementById("entervenue").value,
-					document.getElementById("entertime").value);
+					document.getElementById("entertime").value, document.getElementById('desc').value);
 	//window.location.replace("login.html");
 	// First parameter is username, last parameter is password
 	// TODO get this from the front-end html using document.getElementByID and call this function
