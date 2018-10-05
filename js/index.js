@@ -138,7 +138,7 @@ function joinEvent(userName,eventID)
 		console.log(event.target.response);
 	};
 	var params = {
-		username: userName
+		username: userName,
 		event_id: eventID
 	}
 	req.send(JSON.stringify(params));
