@@ -78,8 +78,8 @@ function userLogin(username,password)
     if(event.target.responseText==='true' && this.readyState==4)
     {
 		alert("Successful login");
-		location.href="guest.html"
 		userLoggedIn = document.getElementById('username');
+    location.href="guest.html"
 		console.log(userLoggedIn);
 	}
     else if (this.readyState==4)
@@ -99,7 +99,7 @@ function renderUI(arr)
   console.log(arr);
   for(var i=0;i<arr.length;i++)
   {
-    document.getElementById('results').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\">1 min</span><h4>"+arr[i].name +" "+ arr[i].location+"</h4><br><hr class=\"w3-clear\"><p>Location: "+arr[i].location+"<br>Time: "+arr[i].time+"<br>ZipCode: "+arr[i].zipcode+"</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
+    document.getElementById('results').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\">1 min</span><h4>"+arr[i].name +" "+ arr[i].location+"</h4><br><hr class=\"w3-clear\"><p>Location: "+arr[i].location+"<br>Time: "+arr[i].time+"<br>ZipCode: "+arr[i].zipcode+"</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"joinEvent(userLoggedIn,"+arr[i].eventid+")\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
   }
 }
 function guestEventList(_zipcode)
@@ -137,6 +137,7 @@ function joinEvent(userName,eventID)
 	{
 		console.log(event.target.response);
 	};
+  eventID = eventID.toString();
 	var params = {
 		username: userName,
 		event_id: eventID
@@ -147,7 +148,7 @@ function joinEvent(userName,eventID)
 function join()
 {
 	//Implement code to get the events hosted by host
-	joinEvent();
+	joinEvent(document.getElementById(),userLoggedIn);
 }
 
 function retrieveHostEventList(userName)
