@@ -131,13 +131,14 @@ function login()
 function joinEvent(eventID)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
+  userLoggedIn = "balajiv@purdue.edu"
+  eventID = "244753"
 	var req = new XMLHttpRequest();
 	req.open('POST',guest_join_event_endpoint);
 	req.onreadystatechange = function(event)
 	{
 		console.log(event.target.response);
 	};
-  eventID = eventID.toString();
   console.log(eventID);
 	var params = {
 		username: userLoggedIn,
