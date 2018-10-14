@@ -11,7 +11,8 @@
 <style>
 html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 </style>
-<body class="w3-theme-l5" onload="hostguestlist(); loadNearEventList(); loadHostEventList()">
+
+<body class="w3-theme-l5" onload="hostguestlist(); loadNearEventList(); loadHostEventList()" >
 
 
 
@@ -73,23 +74,34 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 
 
 
+
+<!-- COLUMN 1 -->
+
+
 <div class="w3-rest " style="padding-top:1%; padding-bottom:20px; padding-right:20px; padding-left:10px">
-<div class="w3-bar-block w3-theme-d3">
+<div id="eventDetails" class="w3-bar-block w3-theme-d3" style="padding-left:0px" >
+
+
 <div class="w3-card w3-theme-d4" style="padding-left:5%"><h2>Event Name</h2></div>
-  <div class="w3-bar-item w3-hover-white w3-button w3-card-4">Food</div>
-  <div class="w3-bar-item w3-hover-white w3-button w3-card-4">Drinks</div>
-  <div class="w3-bar-item w3-hover-white w3-button w3-card-4">Music</div>
+
+
+
 <div class="w3-card w3-theme-d4" style="padding-left:5%"><h2>Contributors</h2></div>
   <div class="w3-bar-item w3-hover-white w3-button w3-card-4">Viswa</div>
   <div class="w3-bar-item w3-hover-white w3-button w3-card-4">Sreekara</div>
   <div class="w3-bar-item w3-hover-white w3-button w3-card-4">Harish</div>
-</div>
-
 
 </div>
 
 
 </div>
+
+
+</div>
+
+
+
+
 
 
 
@@ -127,7 +139,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 
 </div>
 
-<div class="w3-card w3-theme-d4" style="padding-left:5%"><h1>Description</h1></div>
+<div class="w3-card w3-theme-d4" style="padding-left:5%"><h1>Descriptors</h1></div>
   <div class="w3-bar-item w3-hover-white w3-button w3-card-4">#computerscience</div>
   <div class="w3-bar-item w3-hover-white w3-button w3-card-4">#purdue</div>
   <div class="w3-bar-item w3-hover-white w3-button w3-card-4">#boilermaker</div>
@@ -175,7 +187,8 @@ function myFunction(id) {
 
 
 
-// Used to toggle the menu on smaller screens when clicking on the menu button
+
+<!-- Used to toggle the menu on smaller screens when clicking on the menu button -->
 function openNav() {
     var x = document.getElementById("navDemo");
     if (x.className.indexOf("w3-show") == -1) {
@@ -219,15 +232,35 @@ document.getElementById("hostEventGuestList").innerHTML = text;
 
 
 
+<!--this displays event details in the first column-->
+
+
+function displayHostEventDetails(name){
+
+var text="<div class=\"w3-card w3-theme-d4\" style=\"padding-left:5%\"><h2>"+name+"</h2></div>";
+var text2="";
+var text4="";
+
+for(var i=0;i<3;i++){
+    text2+=" <div class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2\">"+name+"Task</div>";
+    text4+=" <div class=\"w3-bar-item w3-hover-white w3-button w3-card-4\">"+name+"Name</div>";
+}
+
+var text3="<div class=\"w3-card w3-theme-d4\" style=\"padding-left:5%\"><h2>Contributors</h2></div>"
+
+	document.getElementById("eventDetails").innerHTML = text+text2+text3+text4;
+
+
+}
+
+
+
+
 function create() {
   createE();
 }
 </script>
 
-
-
-
-</script>
 
 </body>
 </html>
