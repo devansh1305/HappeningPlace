@@ -72,11 +72,11 @@ function hostEventList()
 
 function loadHostEventList(arr){
 
-var hostEventNames=arr;
+var hostEventNames=["hello", "there"];
 var text = "";
 var i;
 for (i = 0; i < hostEventNames.length; i++) {
-    text += "<button class=\"w3-button w3-theme-d5 \" >" + hostEventNames[i] + "</button><br><br>";
+    text += "<button class=\"w3-button w3-theme-d5 \"  onclick=\" displayHostEventDetails('"+ hostEventNames[i]+"')\" >" + hostEventNames[i] + "</button><br><br>";
 }
 document.getElementById("eventList").innerHTML = text;
 
