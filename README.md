@@ -5,3 +5,5 @@ Added Project Co-ordinator - Ashwin <br>
 Added Sanjay <br>
 Added Sreekara <br>
 Added Seerat <br>
+
+course website: http://courses.cs.purdue.edu/cs30700:fall18:start
