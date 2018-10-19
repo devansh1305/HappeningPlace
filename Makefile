@@ -18,5 +18,5 @@ commit_changes:
 
 push_repo:
 	@echo "\033[92mPushing repo...\033[0m"	
-	#git push
+	git push
 	@echo "\033[92mHave a nice day :) \033[0m"	
