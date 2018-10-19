@@ -8,7 +8,8 @@ commit_changes:
 	git status
 	git add .
 	@read -p "Enter Commit message: " commit_mess; \
-	git commit -m $$commit_mess
+	#echo $$commit_mess
+	git commit -m ${commit_mess}
 
 push_repo:
 	git push
