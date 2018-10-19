@@ -1,9 +1,14 @@
-all: update_repo commit_changes
+all: update_repo commit_changes push_repo
 
 update_repo:
-	echo "Update..."
+	echo "Updating repo..."
+	git pull
 
 commit_changes:
+	git status
+	git add .
 	@read -p "Enter Commit message: " commit_mess; \
-	echo $$commit_mess
-	
+	git commit -m $$commit_mess
+
+push_repo:
+	git push
