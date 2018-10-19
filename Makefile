@@ -14,10 +14,9 @@ commit_changes:
 	git add .
 	@echo "\033[92mCommitting in progress...\033[0m"	
 	@read -p "Enter Commit message: " commit_var; \
-	commit_mess=$$commit_var; \
-	git commit -m $$commit_mess 
+	git commit -m "$$commit_var" 
 
 push_repo:
 	@echo "\033[92mPushing repo...\033[0m"	
-	git push
+	#git push
 	@echo "\033[92mHave a nice day :) \033[0m"	
