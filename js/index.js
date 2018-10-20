@@ -164,14 +164,17 @@ function renderUI(arr)
 }
 function guestEventList(_zipcode)
 {
-  console.log(_zipcode);
   var req = new XMLHttpRequest();
 	req.open('POST',user_event_list_endpoint);
 	req.onreadystatechange = function(event)
 	{
-    if(this.readyState==4)
+    if(this.readyState==4 && event.target.response!="[]")
     {
 		   renderUI(JSON.parse(event.target.response));
+    }
+    else if(this.readyState==4 && event.target.response=="[]")
+    {
+      alert("Sorry no events found for that zipcode.");
     }
 	};
 	var parameters = {
@@ -240,11 +243,24 @@ function getH_EventList()
 function resetpassword(userName,userPassword,new_password,confirm_Password)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
+  if(new_password===confirm_Password)
+  {
+  }
+  else {
+    alert("New Password do not match")
+    return;
+  }
 	var req = new XMLHttpRequest();
 	req.open('POST',user_password_reset_endpoint);
 	req.onreadystatechange = function(event)
 	{
-		console.log(event.target.response);
+		if(this.readyState==4 && event.target.response==="true")
+    {
+      alert("Reset successful");
+    }
+    else if(this.readyState==4){
+      alert("Invalid account");
+    }
 	};
 	var params = {
 		username: userName,
@@ -268,21 +284,15 @@ function signup()
 					document.getElementById("inputState").value,
 					document.getElementById("inputZip").value
 				  );
-	//window.location.replace("login.html");
-	// First parameter is username, last parameter is password
-	// TODO get this from the front-end html using document.getElementByID and call this function
 }
 
 function reset()
 {
-	console.log("Hi");
 	resetpassword(document.getElementById("inputEmail").value,
 					document.getElementById("old_inputPassword").value,
 					document.getElementById("new_inputPassword").value,
 					document.getElementById("confirm_Password").value);
-	//window.location.replace("login.html");
-	// First parameter is username, last parameter is password
-	// TODO get this from the front-end html using document.getElementByID and call this function
+
 }
 
 function createE()
@@ -292,7 +302,5 @@ function createE()
 					document.getElementById("enterzip").value,
 					document.getElementById("entervenue").value,
 					document.getElementById("entertime").value, document.getElementById('desc').value);
-	//window.location.replace("login.html");
-	// First parameter is username, last parameter is password
-	// TODO get this from the front-end html using document.getElementByID and call this function
+
 }
