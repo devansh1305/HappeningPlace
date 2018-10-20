@@ -12,7 +12,7 @@
 html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 </style>
 
-<body class="w3-theme-l5" onload="hostguestlist(); loadNearEventList(); loadHostEventList()" >
+<body class="w3-theme-l5" onload="hostguestlist(); loadHostEventList()" >
 
 
 
@@ -85,7 +85,6 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 <div class="w3-card w3-theme-d4" style="padding-left:5%"><h2>Event Name</h2></div>
 
 
-
 <div class="w3-card w3-theme-d4" style="padding-left:5%"><h2>Contributors</h2></div>
 
 
@@ -117,7 +116,9 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 <br>
 
 <!-- space to open up the list of events nearby-->
-<p id="nearEventList">		</p>
+<div class=" w3-card-4 w3-theme-d4" id="middleDetailSpace" style="padding:10px"> </div>
+
+
 
 
 </div>
@@ -164,7 +165,9 @@ document.getElementById("createEvent").innerHTML += " <input class=\"w3-input\" 
 }
 
 
-
+function cancelCreateEvent(){
+document.getElementById("createEvent").innerHTML = "";
+}
 
 
 
@@ -203,7 +206,7 @@ function openNav() {
 <!--local event list-->
 
 function loadNearEventList(){
-
+<!--
 var near_event_list;
 text="";
 for (i = 0; i <3; i++) {
@@ -212,7 +215,7 @@ for (i = 0; i <3; i++) {
 document.getElementById("nearEventList").innerHTML = text;
 
 }
-
+-->
 
 <!-- the guest list of the event selected by the host -->
 
@@ -236,20 +239,32 @@ document.getElementById("hostEventGuestList").innerHTML = text;
 function displayHostEventDetails(name){
 
 var text="<div class=\"w3-card w3-theme-d4\" style=\"padding-left:5%\"><h2>"+name+"</h2></div>";
+text=text+"<div class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d4\" title=\"Remove Event\"><i class=\"fa fa-close\"></i></div>";
 var text2="";
 var text4="";
 
 for(var i=0;i<3;i++){
-    text2+=" <div class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2\">"+name+"Task</div>";
-    text4+=" <div class=\"w3-bar-item w3-hover-white w3-button w3-card-4\">"+name+"Name</div>";
+    text2+=" <button class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2\" onclick=\"displayTaskDetails('"+name+"');\" >"+name+"Task</button>";
+    text4+=" <div class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2\">"+name+"Name</div>";
 }
 
-var text3="<div class=\"w3-card w3-theme-d4\" style=\"padding-left:5%\"><h2>Contributors</h2></div>"
+var text3="<div class=\"w3-card w3-theme-d4\" style=\"padding-left:5%\"><h2>Contributors</h2></div>";
 
 	document.getElementById("eventDetails").innerHTML = text+text2+text3+text4;
 
 
 }
+
+
+function displayTaskDetails(name){
+var text="";
+text+="<h2>"+name +"</h2><div class=\"w3-theme-d2 w3-card-2\" style=\"padding:10px\"><h4>Task Description</h4>(task_details)<br><div class=\" w3-theme-d5 w3-bar\"> ";
+text+="<input class=\"w3-check\" type=\"checkbox\"><label>sub_task</label><br><input class=\"w3-small w3-check\" type=\"checkbox\"><label>sub_task</label><br><input class=\"w3-check\" type=\"checkbox\"><label>sub_task</label><br> </div>";
+
+document.getElementById("middleDetailSpace").innerHTML=text;
+}
+
+
 
 
 
