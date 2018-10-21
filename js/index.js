@@ -18,6 +18,7 @@
  var user_event_list_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-list"
  var user_zipcode_endpoint ="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/zipcode"
 
+
  var userLoggedIn;
 
 function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_city,_state,_zipcode)
@@ -90,11 +91,11 @@ function createEvent(userName,event_Name,eventZipcode,eventLocation,time,descrip
 	req.open('POST',host_create_event_endpoint);
 	req.onreadystatechange = function(event)
 	{
-    if(this.readyState==4)
-    {
-		console.log(event.target.response);
-    alert("Event Creation Successful");
-  }
+	    if(this.readyState==4)
+	    {
+			console.log(event.target.response);
+	    	alert("Event Creation Successful");
+	    }
 	};
 	var parameters = {
 		username:userName,
@@ -102,7 +103,7 @@ function createEvent(userName,event_Name,eventZipcode,eventLocation,time,descrip
 		zipcode:eventZipcode,
 		event_location:eventLocation,
 		event_time:time,
-    desc: description
+    	desc: description
 	}
 	req.send(JSON.stringify(parameters));
 }
@@ -271,9 +272,22 @@ function resetpassword(userName,userPassword,new_password,confirm_Password)
 	req.send(JSON.stringify(params));
 }
 
+function getValue()
+{
+  var x=document.getElementById("inte");
+  // for (var i = 0; i < x.options.length; i++) {
+  //    if(x.options[i].selected ==true){
+  //         alert(x.options[i].selected);
+  //     }
+  // }
+  return x;
+}
+
 function signup()
 {
-
+	var x = getValue();
+	
+	console.log(x);
 	addUser(document.getElementById("inputEmail4").value,
 					document.getElementById("inputPassword4").value,
 					document.getElementById("inputFName").value,
