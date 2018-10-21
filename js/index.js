@@ -56,7 +56,6 @@ function hostEventList()
     if(this.readyState==4)
     {
      alert("Event Creation Successful");
-	   loadHostEventList(JSON.parse(event.target.response));
 
   }
 	};
@@ -151,7 +150,7 @@ function create() {
 }
 
 
-function createEvent(userName,event_Name,eventZipcode,eventLocation,time,description,tags)
+function createEvent(userName,event_Name,eventZipcode,eventLocation,time,description)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
 	var req = new XMLHttpRequest();
@@ -171,7 +170,7 @@ function createEvent(userName,event_Name,eventZipcode,eventLocation,time,descrip
 		event_location:eventLocation,
 		event_time:time,
     desc: description,
-    tags: tags;
+    tags: tags
 	}
 	req.send(JSON.stringify(parameters));
 }
@@ -288,14 +287,21 @@ function join()
 	joinEvent(document.getElementById(),userLoggedIn);
 }
 
-function retrieveHostEventList(userName)
+function retrieveHostEventList()
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
+  userName = localStorage.getItem("username");
+  console.log(userName);
 	var req = new XMLHttpRequest();
 	req.open('POST',host_event_list_endpoint);
 	req.onreadystatechange = function(event)
 	{
-		console.log(event.target.response);
+    if(this.readyState==4)
+    {
+		    console.log(JSON.parse(event.target.response));
+        loadHostEventList(JSON.parse(event.target.response));
+    }
+
 	};
 	var params = {
 		username: userName
@@ -306,7 +312,7 @@ function retrieveHostEventList(userName)
 function getH_EventList()
 {
 	//Implement code to get the events hosted by host
-	retrieveHostEventList();
+	retrieveHostEventList(localStorage.getItem("userName"));
 }
 
 function resetpassword(userName,userPassword,new_password,confirm_Password)
@@ -383,6 +389,6 @@ function createE()
 	createEvent(userLoggedIn, document.getElementById("eventname").value,
 					document.getElementById("enterzip").value,
 					document.getElementById("entervenue").value,
-					document.getElementById("entertime").value, document.getElementById('desc').value,document.getElementById('tags').value);
+					document.getElementById("entertime").value, document.getElementById("description").value);
 
 }
