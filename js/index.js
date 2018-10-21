@@ -70,6 +70,7 @@ function hostEventList()
 	}
 	req.send(JSON.stringify(parameters));
 }
+}
 
 
 function loadHostEventList(arr){
@@ -176,13 +177,6 @@ function createEvent(userName,event_Name,eventZipcode,eventLocation,time,descrip
 	 event_time:time,
 	 desc: description,
 	 tags: tags
-	 username:userName,
-	 eventName:event_Name,
-	 zipcode:eventZipcode,
-	 event_location:eventLocation,
-	 event_time:time,
-	 desc: description,
-	 tags: tags;
 	}
 	req.send(JSON.stringify(parameters));
 }
@@ -400,11 +394,12 @@ function createE()
 {
 	userLoggedIn = localStorage.getItem("username");
 	createEvent(userLoggedIn, document.getElementById("eventname").value,
-					document.getElementById("enterzip").value,
-					document.getElementById("entervenue").value,
-					document.getElementById("entertime").value, document.getElementById("description").value);
 			document.getElementById("enterzip").value,
 			document.getElementById("entervenue").value,
-			document.getElementById("entertime").value, document.getElementById('desc').value,document.getElementById('tags').value);
+			document.getElementById("entertime").value,
+			document.getElementById("description").value,
+			document.getElementById('desc').value,
+			document.getElementById('tags').value
+	);
 
 }
