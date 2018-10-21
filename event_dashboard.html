@@ -13,12 +13,6 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 </style>
 
 <body class="w3-theme-l5" onload="hostguestlist(); loadNearEventList(); loadHostEventList()" >
-
-
-
-
-
-
 <!-- Navbar -->
 <div class="w3-top">
  <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
@@ -43,32 +37,19 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
  </div>
 </div>
 
-<!-- Navbar on small screens -->
+<!-- Navbar on small screens
 <div id="navDemo" class="w3-bar-block w3-theme-d2 w3-hide w3-hide-large w3-hide-medium w3-large">
   <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 1</a>
   <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 2</a>
   <a href="#" class="w3-bar-item w3-button w3-padding-large">Link 3</a>
   <a href="#" class="w3-bar-item w3-button w3-padding-large">My Profile</a>
-</div>
-
-
-
-
+</div>-->
 
 
 <div class="w3-container w3-theme-d3" style="padding-top:60px; padding-bottom:20px; padding-left:10px; height:1500px">
-
-
-
-
 <div class="w3-container w3-third w3-theme-d3" style="padding-top:10px; padding-bottom:20px; padding-left:0px; padding-right:0px">
-
-
 <div class="w3-third w3-theme-d2 w3-card" style=" padding:15px; overflow:auto;">
-<p id="eventList">
-
-</p>
-
+<p id="eventList"></p>
 </div>
 
 
@@ -82,7 +63,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 <div id="eventDetails" class="w3-bar-block w3-theme-d3" style="padding-left:0px" >
 
 
-<div class="w3-card w3-theme-d4" style="padding-left:5%"><h2>Event Name</h2></div>
+<div class="w3-card w3-theme-d4" style="padding-left:5%"><h2>Tasks</h2></div>
 
 
 
@@ -90,50 +71,24 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 
 
 </div>
-
-
 </div>
-
-
 </div>
-
-
-
-
-
-
-
-
 
 <div class="w3-container w3-third w3-theme-d3" style="padding-top:10px; padding-bottom:10px; padding-left:0px;">
-
 <a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Create Event" onclick="eventmanager()"><i class="fa fa-plus"></i></a>
-
-
 <!--space to open create event interface-->
-
-<p id="createEvent">	</p>
-
+<p id="createEvent"></p>
 <br>
-
 <!-- space to open up the list of events nearby-->
-<p id="nearEventList">		</p>
-
-
+<p id="nearEventList"></p>
 </div>
-
-
-
-
-
 
 <div class="w3-rest w3-theme-d2" style="padding-top:10px; padding-bottom:20px; padding-left:1%; ">
 <div class="w3-bar-block w3-theme-d3" style="overflow:auto">
 <div class="w3-card w3-theme-d4" style="padding-left:5%"><h1>Guests</h1></div><a href="#" class="w3-bar-item w3-button w3-padding-large w3-hover-white" title="Add-user"><i class="fa fa-user-plus"></i></a>
 
 <!-- enters a loop which provides all the guests in the current-->
-<p id="hostEventGuestList">
-</p>
+<p id="hostEventGuestList"></p>
 
 </div>
 
@@ -149,116 +104,5 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 
 
 </div>
-
-
-
-<script>
-// Accordion
-
-//plus button is used to create event. the function below allows it to pop up
-function eventmanager(){
-document.getElementById("createEvent").innerHTML = "<div class=\"w3-display-container w3-panel w3-theme-d3\" style=\"padding:0px;\">";
-document.getElementById("createEvent").innerHTML+="<span onclick=\"this.parentElement.style.display='none'\"class=\"w3-button w3-theme-d1 w3-small w3-display-topright\">&times;</span><br>";
-document.getElementById("createEvent").innerHTML+="<input class=\"w3-input\" type=\"text\" placeholder=\"Event Name\" id=\"eventname\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Date\" id=\"enterdate\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Time\" id=\"entertime\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Venue\" id=\"entervenue\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter zipcode\" id=\"enterzip\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Event Description\" id=\"description\"><br></div>";
-document.getElementById("createEvent").innerHTML += " <input class=\"w3-input\" type=\"text\" placeholder=\"Enter Tags\" id=\"tags\"><br><button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"create()\">Create Event</button>";
-}
-
-
-
-
-
-
-function myFunction(id) {
-    var x = document.getElementById(id);
-    if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-        x.previousElementSibling.className += " w3-theme-d1";
-    } else {
-        x.className = x.className.replace("w3-show", "");
-        x.previousElementSibling.className =
-        x.previousElementSibling.className.replace(" w3-theme-d1", "");
-    }
-}
-
-
-
-
-
-
-
-<!-- Used to toggle the menu on smaller screens when clicking on the menu button -->
-function openNav() {
-    var x = document.getElementById("navDemo");
-    if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-    } else {
-        x.className = x.className.replace(" w3-show", "");
-    }
-}
-
-
-
-
-
-<!--local event list-->
-
-function loadNearEventList(){
-
-var near_event_list;
-text="";
-for (i = 0; i <3; i++) {
-    text += "<div class=\"w3-panel w3-theme-d4 w3-display-container w3-card\"><span onclick=\"this.parentElement.style.display='none'\"class=\"w3-button w3-theme-d1 w3-large w3-display-topright\">&times;</span><h3>Event Name</h3><p>Partytime</p></div>";
-}
-document.getElementById("nearEventList").innerHTML = text;
-
-}
-
-
-<!-- the guest list of the event selected by the host -->
-
-
-function hostguestlist(){
-var host_guest_list;
-text="";
-for (i = 0; i <3; i++) {
-    text +="<div class=\"w3-bar-item w3-hover-white w3-button w3-card\">User Name</div>";
-}
-document.getElementById("hostEventGuestList").innerHTML = text;
-}
-
-
-
-
-
-<!--this displays event details in the first column-->
-
-
-function displayHostEventDetails(name){
-
-var text="<div class=\"w3-card w3-theme-d4\" style=\"padding-left:5%\"><h2>"+name+"</h2></div>";
-var text2="";
-var text4="";
-
-for(var i=0;i<3;i++){
-    text2+=" <div class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2\">"+name+"Task</div>";
-    text4+=" <div class=\"w3-bar-item w3-hover-white w3-button w3-card-4\">"+name+"Name</div>";
-}
-
-var text3="<div class=\"w3-card w3-theme-d4\" style=\"padding-left:5%\"><h2>Contributors</h2></div>"
-
-	document.getElementById("eventDetails").innerHTML = text+text2+text3+text4;
-
-
-}
-
-
-
-
-function create() {
-  createE();
-}
-</script>
-
-
 </body>
 </html>
