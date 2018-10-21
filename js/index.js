@@ -366,6 +366,16 @@ function getValue()
 function signup()
 {
 	var userInterestsArr = getValue();
+	// for(var i = 0; i < userInterestsArr.length; i++) {
+	// 	alert(userInterestsArr[i].options);
+	// }
+	var userInterestsArrStr = [];
+	for(var i = 0; i < userInterestsArr.options.length; i++) {
+		if(userInterestsArr.options[i].selected) {
+			userInterestsArrStr.push(userInterestsArr.options[i].label);
+		}
+	}
+	console.log(userInterestsArrStr);
 	addUser(document.getElementById("inputEmail4").value,
 			document.getElementById("inputPassword4").value,
 			document.getElementById("inputFName").value,
@@ -375,7 +385,7 @@ function signup()
 			document.getElementById("inputCity").value,
 			document.getElementById("inputState").value,
 			document.getElementById("inputZip").value,
-			userInterestsArr.options
+			userInterestsArrStr
 	       );
 }
 
@@ -384,7 +394,8 @@ function reset()
 	resetpassword(document.getElementById("inputEmail").value,
 			document.getElementById("old_inputPassword").value,
 			document.getElementById("new_inputPassword").value,
-			document.getElementById("confirm_Password").value);
+			document.getElementById("confirm_Password").value
+			);
 
 }
 
