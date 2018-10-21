@@ -31,6 +31,7 @@ function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_c
 			location.href = "index.html";
 		}
 		else if (this.readyState==4){
+      console.log(event.target.response);
 			console.log("Mostly gone. Username repeat");
 		}
 	};
@@ -376,6 +377,7 @@ function signup()
 		}
 	}
 	console.log(userInterestsArrStr);
+
 	addUser(document.getElementById("inputEmail4").value,
 			document.getElementById("inputPassword4").value,
 			document.getElementById("inputFName").value,
@@ -405,10 +407,7 @@ function createE()
 	createEvent(userLoggedIn, document.getElementById("eventname").value,
 			document.getElementById("enterzip").value,
 			document.getElementById("entervenue").value,
-			document.getElementById("entertime").value,
-			document.getElementById("description").value,
-			document.getElementById('desc').value,
-			document.getElementById('tags').value
-	);
+			document.getElementById("entertime").value, 
+			document.getElementById("description").value);
 
 }
