@@ -43,7 +43,7 @@ function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_c
 	 address2:address_2,
 	 city:_city,
 	 state:_state,
-	 zipcode:_zipcode
+	 zipcode:_zipcode,
 	 usertags:_usertags
 	}
 	req.send(JSON.stringify(parameters));
@@ -54,16 +54,13 @@ function hostEventList()
 	req.open('POST',host_event_list_endpoint);
 	req.onreadystatechange = function(event)
 	{
-<<<<<<< HEAD
     if(this.readyState==4)
     {
      alert("Event Creation Successful");
-=======
 		if(this.readyState==4)
 		{
 			alert("Event Creation Successful");
 			loadHostEventList(JSON.parse(event.target.response));
->>>>>>> 5bf4e143d1be2137c709ea68310dee992f09aa65
 
 		}
 	};
@@ -172,23 +169,20 @@ function createEvent(userName,event_Name,eventZipcode,eventLocation,time,descrip
 		}
 	};
 	var parameters = {
-<<<<<<< HEAD
-		username:userName,
-		eventName:event_Name,
-		zipcode:eventZipcode,
-		event_location:eventLocation,
-		event_time:time,
-    desc: description,
-    tags: tags
-=======
-username:userName,
+	 username:userName,
+	 eventName:event_Name,
+	 zipcode:eventZipcode,
+	 event_location:eventLocation,
+	 event_time:time,
+	 desc: description,
+	 tags: tags
+	 username:userName,
 	 eventName:event_Name,
 	 zipcode:eventZipcode,
 	 event_location:eventLocation,
 	 event_time:time,
 	 desc: description,
 	 tags: tags;
->>>>>>> 5bf4e143d1be2137c709ea68310dee992f09aa65
 	}
 	req.send(JSON.stringify(parameters));
 }
@@ -406,14 +400,11 @@ function createE()
 {
 	userLoggedIn = localStorage.getItem("username");
 	createEvent(userLoggedIn, document.getElementById("eventname").value,
-<<<<<<< HEAD
 					document.getElementById("enterzip").value,
 					document.getElementById("entervenue").value,
 					document.getElementById("entertime").value, document.getElementById("description").value);
-=======
 			document.getElementById("enterzip").value,
 			document.getElementById("entervenue").value,
 			document.getElementById("entertime").value, document.getElementById('desc').value,document.getElementById('tags').value);
->>>>>>> 5bf4e143d1be2137c709ea68310dee992f09aa65
 
 }
