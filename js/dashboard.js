@@ -128,7 +128,7 @@ function displayTaskDetails(eventID) {
  text += "<h2>" + eventID + "</h2><div class=\"w3-theme-d2 w3-card-2\" style=\"padding:10px\"><h4>Task Description</h4>";
 
 
-text+="<div class=\"w3-card-3 w3-theme-d3\" style=\"padding:5px\"><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Sub_Task Name\" id=\"subtaskname\">";
+text+="<div class=\"w3-card-3 w3-theme-d3\" style=\"padding:5px\"><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Subtask Name\" id=\"subtaskname\">";
 
 text+="<button type=\"button\" class=\"w3-button w3-small w3-theme-d5\" onclick=\"create()\">Add Sub_Task</button></div>"
 
@@ -144,7 +144,12 @@ text += "<input class=\"w3-check\" type=\"checkbox\"><label>sub_task</label><br>
 
 
 
-displayContributorDetails(eventName){
+function displayContributorDetails(eventName){
+
+var text="";
+
+document.getElementById("createEvent").innerHTML = text;
+
 
 
 }
