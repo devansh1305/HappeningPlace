@@ -3,9 +3,6 @@
    Sample Request: addUser("Viswajeeet Balaji","HappeningPlace Password");
  */
 
- /*
- TODO: Add all endpoints here
- */
  var user_sign_up_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-signup";
  var user_login_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-login";
  var user_password_reset_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-password-reset";
@@ -73,7 +70,12 @@ function hostEventList()
 
 function loadHostEventList(arr){
 
-var hostEventNames=["hello", "there"];
+var hostEventNames=arr;
+if(arr==null)
+  {
+    document.getElementById("eventList").innerHTML = "No events hosted";
+    return;
+  }
 var text = "";
 var i;
 for (i = 0; i < hostEventNames.length; i++) {
@@ -83,8 +85,77 @@ document.getElementById("eventList").innerHTML = text;
 
 }
 
+function eventmanager(){
+document.getElementById("createEvent").innerHTML = "<div class=\"w3-display-container w3-panel w3-theme-d3\" style=\"padding:0px;\">";
+document.getElementById("createEvent").innerHTML+="<input class=\"w3-input\" type=\"text\" placeholder=\"Event Name\" id=\"eventname\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Date\" id=\"enterdate\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Time\" id=\"entertime\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Venue\" id=\"entervenue\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter zipcode\" id=\"enterzip\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Event Description\" id=\"description\"><br>";
+document.getElementById("createEvent").innerHTML += " <input class=\"w3-input\" type=\"text\" placeholder=\"Enter Tags\" id=\"tags\"><br><button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"create()\">Create Event</button>&nbsp<button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"cancel()\">Cancel</button></div>";
+}
 
-function createEvent(userName,event_Name,eventZipcode,eventLocation,time,description)
+function myFunction(id) {
+    var x = document.getElementById(id);
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+        x.previousElementSibling.className += " w3-theme-d1";
+    } else {
+        x.className = x.className.replace("w3-show", "");
+        x.previousElementSibling.className =
+        x.previousElementSibling.className.replace(" w3-theme-d1", "");
+    }
+}
+function loadNearEventList(){
+
+var near_event_list;
+text="";
+for (i = 0; i <3; i++) {
+    text += "<div class=\"w3-panel w3-theme-d4 w3-display-container w3-card\"><span onclick=\"this.parentElement.style.display='none'\"class=\"w3-button w3-theme-d1 w3-large w3-display-topright\">&times;</span><h3>Event Name</h3><p>Partytime</p></div>";
+}
+document.getElementById("nearEventList").innerHTML = text;
+
+}
+
+
+function hostguestlist(){
+var host_guest_list;
+text="";
+for (i = 0; i <3; i++) {
+    text +="<div class=\"w3-bar-item w3-hover-white w3-button w3-card\">User Name</div>";
+}
+document.getElementById("hostEventGuestList").innerHTML = text;
+}
+
+
+function cancel()
+{
+  document.getElementById("createEvent").innerHTML = "";
+}
+
+function displayHostEventDetails(name){
+
+var text="<div class=\"w3-card w3-theme-d4\" style=\"padding-left:5%\"><h2>"+name+"</h2></div>";
+var text2="";
+var text4="";
+
+for(var i=0;i<3;i++){
+    text2+=" <div class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2\">"+name+"Task</div>";
+    text4+=" <div class=\"w3-bar-item w3-hover-white w3-button w3-card-4\">"+name+"Name</div>";
+}
+
+var text3="<div class=\"w3-card w3-theme-d4\" style=\"padding-left:5%\"><h2>Contributors</h2></div>"
+
+	document.getElementById("eventDetails").innerHTML = text+text2+text3+text4;
+
+
+}
+
+
+
+
+function create() {
+  createE();
+}
+
+
+function createEvent(userName,event_Name,eventZipcode,eventLocation,time,description,tags)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
 	var req = new XMLHttpRequest();
@@ -103,7 +174,12 @@ function createEvent(userName,event_Name,eventZipcode,eventLocation,time,descrip
 		zipcode:eventZipcode,
 		event_location:eventLocation,
 		event_time:time,
+<<<<<<< HEAD
     	desc: description
+=======
+    desc: description,
+    tags: tags;
+>>>>>>> 90d1b27be4bc6aa6a08c257a518848c75816c643
 	}
 	req.send(JSON.stringify(parameters));
 }
@@ -315,6 +391,6 @@ function createE()
 	createEvent(userLoggedIn, document.getElementById("eventname").value,
 					document.getElementById("enterzip").value,
 					document.getElementById("entervenue").value,
-					document.getElementById("entertime").value, document.getElementById('desc').value);
+					document.getElementById("entertime").value, document.getElementById('desc').value,document.getElementById('tags').value);
 
 }
