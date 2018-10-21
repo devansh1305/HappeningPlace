@@ -1,8 +1,10 @@
-/* addUser(userName,userPassword)  jasajs
-   Takes two parameters input and stores them in the AWS DynamoDB
-   Sample Request: addUser("Viswajeeet Balaji","HappeningPlace Password");
+/*Core Javascript File
+ * @author Viswajeeet Balaji
+ * @version 2.0
+ * @date 21st Oct, 2018
  */
 
+//Amazon Web Services Endpoints
 var user_sign_up_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-signup";
 var user_login_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-login";
 var user_password_reset_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-password-reset";
@@ -14,10 +16,11 @@ var guest_remove_event_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazon
 var guest_join_event_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/guest-join-event";
 var user_event_list_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-list"
 var user_zipcode_endpoint ="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/zipcode"
+var event_task_list_endpoint ="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-task-list"
+var event_contributor_list_endpoint ="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-contributor-list"
 
 
-var userLoggedIn;
-
+// Add Users to the Users Database
 function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_city,_state,_zipcode,_usertags)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
@@ -31,8 +34,7 @@ function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_c
 			location.href = "index.html";
 		}
 		else if (this.readyState==4){
-      console.log(event.target.response);
-			console.log("Mostly gone. Username repeat");
+      alert("Invalid details")
 		}
 	};
 	var parameters = {
@@ -49,6 +51,31 @@ function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_c
 	}
 	req.send(JSON.stringify(parameters));
 }
+
+function signup()
+{
+	var userInterestsArr = getValue();
+	var userInterestsArrStr = [];
+	for(var i = 0; i < userInterestsArr.options.length; i++) {
+		if(userInterestsArr.options[i].selected) {
+			userInterestsArrStr.push(userInterestsArr.options[i].label);
+		}
+	}
+	console.log(userInterestsArrStr);
+
+	addUser(document.getElementById("inputEmail4").value,
+			document.getElementById("inputPassword4").value,
+			document.getElementById("inputFName").value,
+			document.getElementById("inputLName").value,
+			document.getElementById("inputAddress").value,
+			document.getElementById("inputAddress2").value,
+			document.getElementById("inputCity").value,
+			document.getElementById("inputState").value,
+			document.getElementById("inputZip").value,
+			userInterestsArrStr
+	       );
+}
+
 function hostEventList()
 {
 	var req = new XMLHttpRequest();
@@ -364,32 +391,7 @@ function getValue()
 	return x;
 }
 
-function signup()
-{
-	var userInterestsArr = getValue();
-	// for(var i = 0; i < userInterestsArr.length; i++) {
-	// 	alert(userInterestsArr[i].options);
-	// }
-	var userInterestsArrStr = [];
-	for(var i = 0; i < userInterestsArr.options.length; i++) {
-		if(userInterestsArr.options[i].selected) {
-			userInterestsArrStr.push(userInterestsArr.options[i].label);
-		}
-	}
-	console.log(userInterestsArrStr);
 
-	addUser(document.getElementById("inputEmail4").value,
-			document.getElementById("inputPassword4").value,
-			document.getElementById("inputFName").value,
-			document.getElementById("inputLName").value,
-			document.getElementById("inputAddress").value,
-			document.getElementById("inputAddress2").value,
-			document.getElementById("inputCity").value,
-			document.getElementById("inputState").value,
-			document.getElementById("inputZip").value,
-			userInterestsArrStr
-	       );
-}
 
 function reset()
 {
@@ -407,7 +409,7 @@ function createE()
 	createEvent(userLoggedIn, document.getElementById("eventname").value,
 			document.getElementById("enterzip").value,
 			document.getElementById("entervenue").value,
-			document.getElementById("entertime").value, 
+			document.getElementById("entertime").value,
 			document.getElementById("description").value);
 
 }
