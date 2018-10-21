@@ -145,8 +145,14 @@ text += "<input class=\"w3-check\" type=\"checkbox\"><label>sub_task</label><br>
 
 
 function displayContributorDetails(eventName){
+var text="<div>";
+text="<div class=\"w3-theme-d4 w3-card-3\"><H3>&nbsp&nbspContributer Name</h3>";
 
-var text="";
+text+="<H3>&nbsp&nbspTask Assigned</h3>";
+
+text+="</div></div>";
+
+
 
 document.getElementById("createEvent").innerHTML = text;
 
