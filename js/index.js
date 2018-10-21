@@ -18,7 +18,7 @@ var user_zipcode_endpoint ="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.c
 
 var userLoggedIn;
 
-function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_city,_state,_zipcode)
+function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_city,_state,_zipcode,_usertags)
 {
 	// Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
 	var req = new XMLHttpRequest();
@@ -44,6 +44,7 @@ function addUser(userName,userPassword,firstName,lastName,address_1,address_2,_c
 	 city:_city,
 	 state:_state,
 	 zipcode:_zipcode
+	 usertags:_usertags
 	}
 	req.send(JSON.stringify(parameters));
 }
@@ -353,7 +354,7 @@ function getValue()
 
 function signup()
 {
-	var x = getValue();
+	var userInterestsArr = getValue();
 
 	console.log(x);
 	addUser(document.getElementById("inputEmail4").value,
@@ -364,7 +365,8 @@ function signup()
 			document.getElementById("inputAddress2").value,
 			document.getElementById("inputCity").value,
 			document.getElementById("inputState").value,
-			document.getElementById("inputZip").value
+			document.getElementById("inputZip").value,
+			userInterestsArr.options
 	       );
 }
 
