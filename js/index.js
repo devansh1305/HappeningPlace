@@ -366,8 +366,6 @@ function getValue()
 function signup()
 {
 	var userInterestsArr = getValue();
-
-	console.log(x);
 	addUser(document.getElementById("inputEmail4").value,
 			document.getElementById("inputPassword4").value,
 			document.getElementById("inputFName").value,
