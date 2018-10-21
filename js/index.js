@@ -146,10 +146,6 @@ var text3="<div class=\"w3-card w3-theme-d4\" style=\"padding-left:5%\"><h2>Cont
 
 
 }
-
-
-
-
 function create() {
   createE();
 }
@@ -174,12 +170,8 @@ function createEvent(userName,event_Name,eventZipcode,eventLocation,time,descrip
 		zipcode:eventZipcode,
 		event_location:eventLocation,
 		event_time:time,
-<<<<<<< HEAD
-    	desc: description
-=======
     desc: description,
     tags: tags;
->>>>>>> 90d1b27be4bc6aa6a08c257a518848c75816c643
 	}
 	req.send(JSON.stringify(parameters));
 }
@@ -362,7 +354,7 @@ function getValue()
 function signup()
 {
 	var x = getValue();
-	
+
 	console.log(x);
 	addUser(document.getElementById("inputEmail4").value,
 					document.getElementById("inputPassword4").value,
