@@ -12,7 +12,17 @@
 html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 </style>
 
+<<<<<<< HEAD
 <body class="w3-theme-l5" onload="hostguestlist(); loadNearEventList(); loadHostEventList()" >
+=======
+<body class="w3-theme-l5" onload="hostguestlist(); loadHostEventList()" >
+
+
+
+
+
+
+>>>>>>> 5beef7923ddf115a8c81e2ea546a678b0c1dd997
 <!-- Navbar -->
 <div class="w3-top">
  <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
@@ -66,7 +76,6 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 <div class="w3-card w3-theme-d4" style="padding-left:5%"><h2>Tasks</h2></div>
 
 
-
 <div class="w3-card w3-theme-d4" style="padding-left:5%"><h2>Contributors</h2></div>
 
 
@@ -80,13 +89,21 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 <p id="createEvent"></p>
 <br>
 <!-- space to open up the list of events nearby-->
+<<<<<<< HEAD
 <p id="nearEventList"></p>
+=======
+<div class=" w3-card-4 w3-theme-d4" id="middleDetailSpace" style="padding:10px"> </div>
+
+
+
+
+>>>>>>> 5beef7923ddf115a8c81e2ea546a678b0c1dd997
 </div>
 
 <div class="w3-rest w3-theme-d2" style="padding-top:10px; padding-bottom:20px; padding-left:1%; ">
 <div class="w3-bar-block w3-theme-d3" style="overflow:auto">
-<div class="w3-card w3-theme-d4" style="padding-left:5%"><h1>Guests</h1></div><a href="#" class="w3-bar-item w3-button w3-padding-large w3-hover-white" title="Add-user"><i class="fa fa-user-plus"></i></a>
-
+<div class="w3-card w3-theme-d4" style="padding-left:5%"><h1>Guests</h1></div><!--<a href="#" class="w3-bar-item w3-button w3-padding-large w3-hover-white" title="Add-user"><i class="fa fa-user-plus"></i></a>
+-->
 <!-- enters a loop which provides all the guests in the current-->
 <p id="hostEventGuestList"></p>
 
@@ -104,5 +121,137 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 
 
 </div>
+<<<<<<< HEAD
+=======
+
+
+
+<script>
+// Accordion
+
+//plus button is used to create event. the function below allows it to pop up
+function eventmanager(){
+document.getElementById("createEvent").innerHTML = "<div class=\"w3-display-container w3-panel w3-theme-d3\" style=\"padding:0px;\">";
+document.getElementById("createEvent").innerHTML+="<span onclick=\"this.parentElement.style.display='none'\"class=\"w3-button w3-theme-d1 w3-small w3-display-topright\">&times;</span><br>";
+document.getElementById("createEvent").innerHTML+="<input class=\"w3-input\" type=\"text\" placeholder=\"Event Name\" id=\"eventname\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Date\" id=\"enterdate\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Time\" id=\"entertime\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Venue\" id=\"entervenue\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter zipcode\" id=\"enterzip\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Event Description\" id=\"description\"><br></div>";
+document.getElementById("createEvent").innerHTML += " <input class=\"w3-input\" type=\"text\" placeholder=\"Enter Tags\" id=\"tags\"><br><button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"create()\">Create Event</button>";
+}
+
+
+function cancelCreateEvent(){
+document.getElementById("createEvent").innerHTML = "";
+}
+
+
+
+function myFunction(id) {
+    var x = document.getElementById(id);
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+        x.previousElementSibling.className += " w3-theme-d1";
+    } else {
+        x.className = x.className.replace("w3-show", "");
+        x.previousElementSibling.className =
+        x.previousElementSibling.className.replace(" w3-theme-d1", "");
+    }
+}
+
+
+
+
+
+
+
+<!-- Used to toggle the menu on smaller screens when clicking on the menu button -->
+function openNav() {
+    var x = document.getElementById("navDemo");
+    if (x.className.indexOf("w3-show") == -1) {
+        x.className += " w3-show";
+    } else {
+        x.className = x.className.replace(" w3-show", "");
+    }
+}
+
+
+
+
+
+<!--local event list-->
+
+function loadNearEventList(){
+<!--
+var near_event_list;
+text="";
+for (i = 0; i <3; i++) {
+    text += "<div class=\"w3-panel w3-theme-d4 w3-display-container w3-card\"><span onclick=\"this.parentElement.style.display='none'\"class=\"w3-button w3-theme-d1 w3-large w3-display-topright\">&times;</span><h3>Event Name</h3><p>Partytime</p></div>";
+}
+document.getElementById("nearEventList").innerHTML = text;
+
+}
+-->
+
+<!-- the guest list of the event selected by the host -->
+
+
+function hostguestlist(){
+var host_guest_list;
+text="";
+for (i = 0; i <3; i++) {
+    text +="<div class=\"w3-bar-item w3-hover-white w3-button w3-card\">User Name</div>";
+}
+document.getElementById("hostEventGuestList").innerHTML = text;
+}
+
+
+
+
+
+<!--this displays event details in the first column-->
+
+
+function displayHostEventDetails(name){
+
+var text="<div class=\"w3-card w3-theme-d4\" style=\"padding-left:5%\"><h2>"+name+"</h2></div>";
+
+text=text+"<div class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d4\" title=\"Remove Event\"><i class=\"fa fa-close\"></i></div>";
+var text2="";
+var text4="";
+
+for(var i=0;i<3;i++){
+    text2+=" <button class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2\" onclick=\"displayTaskDetails('"+name+"');\" >"+name+"Task</button>";
+    text4+=" <div class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2\">"+name+"Name</div>";
+}
+
+var text3="<div class=\"w3-card w3-theme-d4\" style=\"padding-left:5%\"><h2>Contributors</h2></div>";
+
+	document.getElementById("eventDetails").innerHTML = text+text2+text3+text4;
+
+
+}
+
+
+function displayTaskDetails(name){
+var text="";
+text=text+"<div class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d4\" title=\"Add Contributer\"><i class=\"fa fa-user-plus\"></i></div>";
+text=text+"<div class=\"w3-bar-item w3-hover-white w3-right w3-button w3-card-2 w3-medium w3-theme-d4\" title=\"Remove Task\"><i class=\"fa fa-close\"></i></div><br>";
+text+="<h2>"+name +"</h2><div class=\"w3-theme-d2 w3-card-2\" style=\"padding:10px\"><h4>Task Description"
+text+="</h4><div class=\" w3-bar\"> ";
+text+="<input class=\"w3-check\" type=\"checkbox\"><label>sub_task</label><br><input class=\"w3-small w3-check\" type=\"checkbox\"><label>sub_task</label><br><input class=\"w3-check\" type=\"checkbox\"><label>sub_task</label><br> </div>";
+
+document.getElementById("middleDetailSpace").innerHTML=text;
+}
+
+
+
+
+
+
+function create() {
+  createE();
+}
+</script>
+
+
+>>>>>>> 5beef7923ddf115a8c81e2ea546a678b0c1dd997
 </body>
 </html>
