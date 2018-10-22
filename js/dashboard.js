@@ -54,8 +54,9 @@ function hostguestlist() {
   }
   document.getElementById("hostEventGuestList").innerHTML = text;
 }
-function displayHostEventDetails(currentEvent) {
 
+function displayHostEventDetails(currentEvent) {
+  localStorage.setItem("currentEvent", currentEvent);
   var task = "<button class=\"w3-button w3-hide-small w3-padding-large w3-hover-white\" title=\"Create Task\" onclick=\"addTask()\"><i class=\"fa fa-plus\"></i></button>";
   var contributor = "<button class=\"w3-button w3-hide-small w3-padding-large w3-hover-white\" title=\"Create Contributor\" onclick=\"addContributor()\"><i class=\"fa fa-plus\"></i></button>";
   for (var i = 0; i < 3; i++) {
@@ -64,8 +65,6 @@ function displayHostEventDetails(currentEvent) {
   }
   document.getElementById("tasks").innerHTML = task;
   document.getElementById("contributors").innerHTML = task;
-
-
 }
 
 function addTask() {
