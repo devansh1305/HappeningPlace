@@ -10,8 +10,9 @@ var user_login_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.co
 var user_password_reset_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-password-reset";
 var guest_remove_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/guest-remove-event";
 var guest_join_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/guest-join-event";
-var user_event_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-list"
-var user_zipcode_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/zipcode"
+var user_event_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-list";
+var user_zipcode_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/zipcode";
+var user_event_history_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-history";
 
 
 
