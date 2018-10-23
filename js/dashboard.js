@@ -12,7 +12,7 @@ var host_create_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazo
 var event_task_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-task-list"
 var event_contributor_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-contributor-list"
 var event_add_task_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-add-task";
-
+var taskArr;
 
 function eventmanager() {
   document.getElementById("createEvent").innerHTML = "<div class=\"w3-display-container w3-panel w3-theme-d3\" style=\"padding:0px;\">";
@@ -56,15 +56,30 @@ function hostguestlist() {
 
 function displayHostEventDetails(currentEvent) {
   localStorage.setItem("currentEvent", currentEvent);
-  var task = "<button class=\"w3-button w3-hide-small w3-padding-large w3-hover-white\" title=\"Create Task\" onclick=\"callAddTask()\"><i class=\"fa fa-plus\"></i></button>";
-  var contributor = "<button class=\"w3-button w3-hide-small w3-padding-large w3-hover-white\" title=\"Add Contributor\" onclick=\"addContributor()\"><i class=\"fa fa-plus\"></i></button>";
-
-  for (var i = 0; i < 3; i++) {
-    task += "<button class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2\" onclick=\"displayTaskDetails('" + currentEvent + "');\" >" + currentEvent + "Task</button>";
-    contributor += "<button class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2\" onclick=\"displayContributorDetails('" + currentEvent + "');\" >" + currentEvent + "Contributor</button>";
+  var req = new XMLHttpRequest();
+  req.open('POST', event_task_list_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+        taskArr = JSON.parse(event.target.response);
+        var task = "<button class=\"w3-button w3-hide-small w3-padding-large w3-hover-white\" title=\"Create Task\" onclick=\"callAddTask()\"><i class=\"fa fa-plus\"></i></button>";
+        var contributor = "<button class=\"w3-button w3-hide-small w3-padding-large w3-hover-white\" title=\"Add Contributor\" onclick=\"addContributor()\"><i class=\"fa fa-plus\"></i></button>";
+        console.log(taskArr);
+        if(taskArr!=null)
+        {
+        for (var i = 0; i < taskArr.length; i++) {
+          task += "<button class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2\" onclick=\"displayTaskDetails('" + taskArr[i][1] + "');\" >" + taskArr[i][0] + "</button>";
+          contributor += "<button class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2\" onclick=\"displayContributorDetails('" + currentEvent + "');\" >" + currentEvent + "Contributor</button>";
+        }
+      }
+        document.getElementById("tasks").innerHTML = task;
+        document.getElementById("contributors").innerHTML = contributor;
+    }
+  };
+  var parameters = {
+    eventid: localStorage.getItem("currentEvent")
   }
-  document.getElementById("tasks").innerHTML = task;
-  document.getElementById("contributors").innerHTML = contributor;
+  req.send(JSON.stringify(parameters));
+
 }
 function callAddTask() {
   document.getElementById("createEvent").innerHTML = "<div class=\"w3-display-container w3-panel w3-theme-d3\" style=\"padding:0px;\">";
@@ -135,6 +150,7 @@ function addTask() {
   req.open('POST', event_add_task_endpoint);
   req.onreadystatechange = function(event) {
     if (this.readyState == 4 && event.target.response=="true") {
+      retrieveTasks();
        alert("Task added successfully");
     }
     else if(this.readyState==4) {
@@ -147,6 +163,22 @@ function addTask() {
     task_name: document.getElementById("task_name").value,
     desc: document.getElementById("task_description").value,
 
+  }
+  req.send(JSON.stringify(parameters));
+}
+
+function retrieveTasks()
+{
+  var req = new XMLHttpRequest();
+  req.open('POST', event_task_list_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+        taskArr = JSON.parse(event.target.response);
+    }
+  };
+  console.log(localStorage.getItem("currentEvent"));
+  var parameters = {
+    eventid: localStorage.getItem("currentEvent")
   }
   req.send(JSON.stringify(parameters));
 }
