@@ -73,7 +73,7 @@ function signup() {
       userInterestsArrStr.push(userInterestsArr.options[i].label);
     }
   }
-
+ console.log(userInterestsArr);
   //Add user to the database
   addUser(document.getElementById("inputEmail4").value,
     document.getElementById("inputPassword4").value,
@@ -240,8 +240,4 @@ function joinEvent(eventID) {
     event_id: eventID.toString()
   }
   req.send(JSON.stringify(params));
-}
-
-function join() {
-  joinEvent(document.getElementById());
 }
