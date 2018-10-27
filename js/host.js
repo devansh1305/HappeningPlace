@@ -145,7 +145,7 @@ function reset() {
 
 }
 
-function createEvent(userName, event_Name, eventZipcode, eventLocation, time, description) {
+function createEvent(userName, event_Name, eventZipcode, eventLocation, time, description, tags) {
   // Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
   var req = new XMLHttpRequest();
   req.open('POST', host_create_event_endpoint);
@@ -162,7 +162,7 @@ function createEvent(userName, event_Name, eventZipcode, eventLocation, time, de
     event_location: eventLocation,
     event_time: time,
     desc: description,
-    tags: tags
+    usertags: tags
   }
   req.send(JSON.stringify(parameters));
 }
