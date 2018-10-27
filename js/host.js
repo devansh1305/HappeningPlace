@@ -66,13 +66,13 @@ function addUser(userName, userPassword, firstName, lastName, address_1, address
 function signup() {
 
   //Get the user interest tags supplied by the user during sign up
-  var userInterestsArr = document.getElementById("inte");
+  var userInterestsArr = document.getElementById("inte").value.split(/[ ,]+/);
   var userInterestsArrStr = [];
-  for (var i = 0; i < userInterestsArr.options.length; i++) {
-    if (userInterestsArr.options[i].selected) {
-      userInterestsArrStr.push(userInterestsArr.options[i].label);
-    }
-  }
+  // for (var i = 0; i < userInterestsArr.options.length; i++) {
+  //   if (userInterestsArr.options[i].selected) {
+  //     userInterestsArrStr.push(userInterestsArr.options[i].label);
+  //   }
+  // }
  console.log("HI"+userInterestsArrStr);
   //Add user to the database
   addUser(document.getElementById("inputEmail4").value,
@@ -84,7 +84,7 @@ function signup() {
     document.getElementById("inputCity").value,
     document.getElementById("inputState").value,
     document.getElementById("inputZip").value,
-    userInterestsArrStr
+    userInterestsArr
   );
 }
 
