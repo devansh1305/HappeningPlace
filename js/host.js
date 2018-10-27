@@ -42,7 +42,7 @@ function addUser(userName, userPassword, firstName, lastName, address_1, address
   req.onreadystatechange = function(event) {
     if (this.readyState == 4 && event.target.response === "true") {
       alert("Signed up successfully.");
-      location.href = "index.html";
+      location.href = "homepage.html";
     } else if (this.readyState == 4) {
       alert("Invalid details")
     }
@@ -73,7 +73,7 @@ function signup() {
       userInterestsArrStr.push(userInterestsArr.options[i].label);
     }
   }
- console.log(userInterestsArr);
+ console.log("HI"+userInterestsArrStr);
   //Add user to the database
   addUser(document.getElementById("inputEmail4").value,
     document.getElementById("inputPassword4").value,
