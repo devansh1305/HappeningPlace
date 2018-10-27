@@ -12,6 +12,7 @@ var host_create_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazo
 var event_task_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-task-list"
 var event_contributor_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-contributor-list"
 var event_add_task_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-add-task";
+var event_add_contributor_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-add-contributor";
 var taskArr;
 
 function eventmanager() {
@@ -62,23 +63,43 @@ function displayHostEventDetails(currentEvent) {
     if (this.readyState == 4) {
         taskArr = JSON.parse(event.target.response);
         var task = "<button class=\"w3-button w3-hide-small w3-padding-large w3-hover-white\" title=\"Create Task\" onclick=\"callAddTask()\"><i class=\"fa fa-plus\"></i></button>";
-        var contributor = "<button class=\"w3-button w3-hide-small w3-padding-large w3-hover-white\" title=\"Add Contributor\" onclick=\"addContributor()\"><i class=\"fa fa-plus\"></i></button>";
-        console.log(taskArr);
         if(taskArr!=null)
         {
         for (var i = 0; i < taskArr.length; i++) {
           task += "<button class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2\" onclick=\"displayTaskDetails('" + taskArr[i][1] + "');\" >" + taskArr[i][0] + "</button>";
-          contributor += "<button class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2\" onclick=\"displayContributorDetails('" + currentEvent + "');\" >" + currentEvent + "Contributor</button>";
-        }
+          }
       }
         document.getElementById("tasks").innerHTML = task;
-        document.getElementById("contributors").innerHTML = contributor;
     }
   };
   var parameters = {
     eventid: localStorage.getItem("currentEvent")
   }
   req.send(JSON.stringify(parameters));
+
+
+  var req2 = new XMLHttpRequest();
+  req2.open('POST', event_contributor_list_endpoint);
+  req2.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+        contributorArr = JSON.parse(event.target.response);
+        console.log(event.target.response);
+        console.log(contributorArr);
+        var contributor = "<button class=\"w3-button w3-hide-small w3-padding-large w3-hover-white\" title=\"Add Contributor\" onclick=\"callAddContributor()\"><i class=\"fa fa-plus\"></i></button>";
+        if(contributorArr!=null)
+        {
+        for (var i = 0; i < contributorArr.length; i++) {
+          contributor += "<button class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2\" onclick=\"displayContributorDetails('" + contributorArr[i][1] + "');\" >" + contributorArr[i][0] + "</button>";
+        }
+      }
+        document.getElementById("contributors").innerHTML = contributor;
+    }
+  };
+  var parameters2 = {
+    event_id: localStorage.getItem("currentEvent")
+  }
+  req2.send(JSON.stringify(parameters2));
+
 
 }
 function callAddTask() {
@@ -87,10 +108,10 @@ function callAddTask() {
   document.getElementById("createEvent").innerHTML += " <input class=\"w3-input\" type=\"text\" placeholder=\"Enter Tags with spaces\" id=\"tags\"><br><button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"addTask()\">Create Task</button>&nbsp<button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"cancel()\">Cancel</button></div>";
 }
 
-function addContributor() {
+function callAddContributor() {
   document.getElementById("createEvent").innerHTML = "<div class=\"w3-display-container w3-panel w3-theme-d3\" style=\"padding:0px;\">";
-  document.getElementById("createEvent").innerHTML += "<input class=\"w3-input\" type=\"text\" placeholder=\"Contributor e-mail ID\" id=\"contributoremail\">";
-  document.getElementById("createEvent").innerHTML += "<br><button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"create()\">Add Contributor</button>&nbsp<button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"cancel()\">Cancel</button></div>";
+  document.getElementById("createEvent").innerHTML += "<input class=\"w3-input\" type=\"text\" placeholder=\"Contributor e-mail ID\" id=\"contributor_username\">";
+  document.getElementById("createEvent").innerHTML += "<br><button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"addContributor\">Add Contributor</button>&nbsp<button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"cancel()\">Cancel</button></div>";
 }
 
 function loadHostEventList(arr) {
@@ -150,11 +171,10 @@ function addTask() {
   req.open('POST', event_add_task_endpoint);
   req.onreadystatechange = function(event) {
     if (this.readyState == 4 && event.target.response=="true") {
-      retrieveTasks();
+      displayHostEventDetails(localStorage.getItem("currentEvent"));
        alert("Task added successfully");
     }
     else if(this.readyState==4) {
-      console.log(event.target.response);
       alert("Sorry resource unavailable");
     }
   };
@@ -167,18 +187,22 @@ function addTask() {
   req.send(JSON.stringify(parameters));
 }
 
-function retrieveTasks()
-{
+function addContributor() {
   var req = new XMLHttpRequest();
-  req.open('POST', event_task_list_endpoint);
+  req.open('POST', event_add_contributor_endpoint);
   req.onreadystatechange = function(event) {
-    if (this.readyState == 4) {
-        taskArr = JSON.parse(event.target.response);
+    if (this.readyState == 4 && event.target.response=="true") {
+      displayHostEventDetails(localStorage.getItem("currentEvent"));
+       alert("Contributor added successfully");
+    }
+    else if(this.readyState==4) {
+      alert("Sorry resource unavailable");
     }
   };
-  console.log(localStorage.getItem("currentEvent"));
   var parameters = {
-    eventid: localStorage.getItem("currentEvent")
+    event_id: localStorage.getItem("currentEvent"),
+    contributor_username: document.getElementById("contributor_username").value,
+
   }
   req.send(JSON.stringify(parameters));
 }
