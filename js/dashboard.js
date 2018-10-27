@@ -14,12 +14,14 @@ var event_contributor_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.
 var event_add_task_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-add-task";
 var taskArr;
 
+/*this is called when you hit the plus button in the dashboard.html to create a event*/
 function eventmanager() {
   document.getElementById("createEvent").innerHTML = "<div class=\"w3-display-container w3-panel w3-theme-d3\" style=\"padding:0px;\">";
   document.getElementById("createEvent").innerHTML += "<input class=\"w3-input\" type=\"text\" placeholder=\"Event Name\" id=\"eventname\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Date\" id=\"enterdate\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Time\" id=\"entertime\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Venue\" id=\"entervenue\"><br><input class=\"w3-input\" type=\"text\" placeholder=\"Enter zipcode\" id=\"enterzip\"><br><input class=\"w3-input\"type=\"text\" placeholder=\"Event Description\" id=\"description\"><br>";
   document.getElementById("createEvent").innerHTML += " <input class=\"w3-input\" type=\"text\" placeholder=\"Enter Tags\" id=\"tags\"><br><button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"create()\">Create Event</button>&nbsp<button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"cancel()\">Cancel</button></div>";
 }
 
+/*dont create a event*/
 function cancel() {
   document.getElementById("createEvent").innerHTML = "";
 }
