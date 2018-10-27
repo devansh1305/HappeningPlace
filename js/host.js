@@ -168,11 +168,14 @@ function createEvent(userName, event_Name, eventZipcode, eventLocation, time, de
 }
 
 function create() {
+  let tagsArray = document.getElementById("tags").value.split(/[ ,]+/);
+  console.log(tagsArray);
   createEvent(localStorage.getItem("username"), document.getElementById("eventname").value,
     document.getElementById("enterzip").value,
     document.getElementById("entervenue").value,
     document.getElementById("entertime").value,
-    document.getElementById("description").value);
+    document.getElementById("description").value,
+    tagsArray);
 }
 
 
