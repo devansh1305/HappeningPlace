@@ -150,3 +150,7 @@ function addTask() {
   }
   req.send(JSON.stringify(parameters));
 }
+
+function retrieveUserEvents() {
+  retrieveHostEventList();
+}
