@@ -27,6 +27,12 @@ function cancel() {
   document.getElementById("createEvent").innerHTML = "";
 }
 
+
+
+
+
+
+
 function myFunction(id) {
   var x = document.getElementById(id);
   if (x.className.indexOf("w3-show") == -1) {
@@ -48,14 +54,40 @@ function openNav() {
   }
 }
 
-function hostguestlist() {
-  var host_guest_list;
+
+
+
+function hostguestlistonclick(position){
+var host_guest_list=["hemanth","rahul","harish"];
   text = "";
-  for (i = 0; i < 3; i++) {
-    text += "<div class=\"w3-bar-item w3-hover-white w3-button w3-card\">User Name</div>";
+  for (i = 0; i < position; i++) {
+  text += "<div class=\"w3-bar-item w3-hover-white w3-button w3-card\" title=\"guest email\" onclick=\"hostguestlistonclick("+i+")\">"+ host_guest_list[i]+"</div>";
+  }
+
+text += "<div class=\"w3-bar-item w3-hover-white w3-button w3-card\" title=\"guest email\">email ID</div>";
+
+	
+ for (i = position+1; i < host_guest_list.length; i++) {
+  text += "<div class=\"w3-bar-item w3-hover-white w3-button w3-card\" title=\"guest email\" onclick=\"hostguestlistonclick("+i+")\">"+ host_guest_list[i]+"</div>";
+  }
+  document.getElementById("hostEventGuestList").innerHTML = text;
+
+
+}
+
+
+
+function hostguestlist() {
+  var host_guest_list=["hemanth","rahul","harish"];
+  text = "";
+  for (i = 0; i < host_guest_list.length; i++) {
+    text += "<div class=\"w3-bar-item w3-hover-white w3-button w3-card\" title=\"guest email\" onclick=\"hostguestlistonclick("+i+")\">"+ host_guest_list[i]+"</div>";
   }
   document.getElementById("hostEventGuestList").innerHTML = text;
 }
+
+
+
 
 function displayHostEventDetails(currentEvent) {
   localStorage.setItem("currentEvent", currentEvent);
@@ -111,7 +143,7 @@ function addContributor(){
 
 
 
-function callAddTask() {
+function callAddTask() { 
   document.getElementById("createEvent").innerHTML = "<div class=\"w3-display-container w3-panel w3-theme-d3\" style=\"padding:0px;\">";
   document.getElementById("createEvent").innerHTML += "<input class=\"w3-input\" type=\"text\" placeholder=\"Task Name\" id=\"task_name\"><br><input class=\"w3-input\"type=\"text\" placeholder=\"Task Description\" id=\"task_description\"><br>";
   document.getElementById("createEvent").innerHTML += " <input class=\"w3-input\" type=\"text\" placeholder=\"Enter Tags with spaces\" id=\"tags\"><br><button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"addTask()\">Create Task</button>&nbsp<button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"cancel()\">Cancel</button></div>";
