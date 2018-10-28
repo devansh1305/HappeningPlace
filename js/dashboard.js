@@ -102,19 +102,29 @@ function displayHostEventDetails(currentEvent) {
   }
   req2.send(JSON.stringify(parameters2));
 
-
 }
+
+
+
+
 function callAddTask() {
   document.getElementById("createEvent").innerHTML = "<div class=\"w3-display-container w3-panel w3-theme-d3\" style=\"padding:0px;\">";
   document.getElementById("createEvent").innerHTML += "<input class=\"w3-input\" type=\"text\" placeholder=\"Task Name\" id=\"task_name\"><br><input class=\"w3-input\"type=\"text\" placeholder=\"Task Description\" id=\"task_description\"><br>";
   document.getElementById("createEvent").innerHTML += " <input class=\"w3-input\" type=\"text\" placeholder=\"Enter Tags with spaces\" id=\"tags\"><br><button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"addTask()\">Create Task</button>&nbsp<button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"cancel()\">Cancel</button></div>";
 }
 
+
+
+
+
 function callAddContributor() {
   document.getElementById("createEvent").innerHTML = "<div class=\"w3-display-container w3-panel w3-theme-d3\" style=\"padding:0px;\">";
   document.getElementById("createEvent").innerHTML += "<input class=\"w3-input\" type=\"text\" placeholder=\"Contributor e-mail ID\" id=\"contributor_username\">";
-  document.getElementById("createEvent").innerHTML += "<br><button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"addContributor\">Add Contributor</button>&nbsp<button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"cancel()\">Cancel</button></div>";
+  document.getElementById("createEvent").innerHTML += "<br><button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"addContributor()\">Add Contributor</button>&nbsp<button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"cancel()\">Cancel</button></div>";
 }
+
+
+
 
 function loadHostEventList(arr) {
 
@@ -133,10 +143,20 @@ function loadHostEventList(arr) {
 }
 
 function displayTaskDetails(eventID) {
+
+
   var text = "";
-  text = text + "<div class=\"w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d4\" title=\"Add Contributer\"><i class=\"fa fa-user-plus\"></i></div>";
+
   text = text + "<div class=\"w3-bar-item w3-hover-white w3-right w3-button w3-card-2 w3-medium w3-theme-d4\" title=\"Remove Task\"><i class=\"fa fa-close\"></i></div><br>";
   text += "<h2>" + eventID + "</h2><div class=\"w3-theme-d2 w3-card-2\" style=\"padding:10px\"><h4>Task Description</h4>";
+
+
+
+ text+= "<div class=\"w3-display-container w3-panel w3-theme-d3\" style=\"padding:0px;\">";
+text += "<input class=\"w3-input\" type=\"text\" placeholder=\"Contributor e-mail ID\" id=\"contributor_username\">";
+text += "<br><button type=\"button\" class=\"w3-button w3-theme-d1\" >Add Contributor</button>&nbsp<button type=\"button\" class=\"w3-button w3-theme-d1\" onclick=\"cancel()\">Cancel</button></div>";
+
+
   text += "<div class=\"w3-card-3 w3-theme-d3\" style=\"padding:5px\"><input class=\"w3-input\" type=\"text\" placeholder=\"Enter Subtask Name\" id=\"subtaskname\">";
   text += "<button type=\"button\" class=\"w3-button w3-small w3-theme-d5\" onclick=\"create()\">Add Sub_Task</button></div>"
   text += "<div class=\" w3-bar\"> ";
@@ -144,13 +164,19 @@ function displayTaskDetails(eventID) {
   document.getElementById("createEvent").innerHTML = text;
 }
 
-function displayContributorDetails(eventName) {
-  var text = "<div>";
-  text = "<div class=\"w3-theme-d4 w3-card-3\"><H3>&nbsp&nbspContributer Name</h3>";
-  text += "<H3>&nbsp&nbspTask Assigned</h3>";
-  text += "</div></div>";
+
+
+
+function displayContributorDetails(contributerName) {
+  var text = "<div class=\"w3-theme-d3 w3-card-3\"> ";
+  text += "<div class=\"w3-theme-d4 w3-card-3\"><H3>&nbsp&nbsp"+contributerName+"</h3>";
+  text += "</div><H3>&nbsp&nbspTask Assigned</h3>";
+  text += "</div>";
   document.getElementById("createEvent").innerHTML = text;
 }
+
+
+
 
 function retrieveHostEventList() {
 
@@ -167,6 +193,9 @@ function retrieveHostEventList() {
   }
   req.send(JSON.stringify(parameters));
 }
+
+
+
 
 function addTask() {
   var req = new XMLHttpRequest();
