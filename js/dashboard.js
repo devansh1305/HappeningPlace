@@ -105,6 +105,10 @@ function displayHostEventDetails(currentEvent) {
 }
 
 
+function addContributor(){
+	console.log(document.getElementById("contributor_username").value);
+}
+
 
 
 function callAddTask() {
