@@ -42,23 +42,55 @@ exports.handler = (event, context, callback) => {
                         
                         context.done('error_invoke_error',err1);
                     }
-                    /*
                     else if(data2.Payload){
                         //console.log(data2.Payload);
                         context.succeed(data2.Payload);
                     }
-                    */
+                    /*
                     else
                     {
                         callback("Success in invoking");
                     }
+                    */
                 });
                 //console.log("Test_12_3");
                 //console.log(_element);
             });
+            
+            var params_for_host={
+                TableName:'User',
+                Key:{
+                    username:{
+                        S: data1.Item.Host.S
+                    }
+                },
+                UpdateExpression: "DELETE hosted_events :r",
+                ExpressionAttributeValues:{
+                    ":r":{
+                        "NS" : [data1.Item.EventID.S]
+                    }
+                },
+            };
+            dynamodb.updateItem(params_for_host,callback);
+            
+            var last_delete={
+                TableName:'Event',
+                Key:{
+                    EventID:{
+                        S: data1.Item.EventID.S
+                    }
+                }
+            };
+            dynamodb.delete(last_delete, function(err_delete, data_delete) {
+                if (err_delete) {
+                    callback("Unable to delete item. Error JSON:", JSON.stringify(err, null, 2));
+                } 
+                else {
+                    callback("Delete Success!!");
+                }
+            });
+            
         }
-        
-        
     });
 
 };
