@@ -12,7 +12,7 @@
   html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 </style>
 
-<body class="w3-theme-l5" onload="getZip()">
+<body class="w3-theme-l5" onload="getZip();loadProfile()">
 
   <!-- Navbar -->
   <div class="w3-top">
@@ -53,12 +53,14 @@
         <!-- Profile -->
         <div class="w3-card w3-round w3-white">
           <div class="w3-container">
-            <h4 class="w3-center">Viswa's Profile</h4>
+            <h4 class="w3-center">
+              <p id="firstName"></p> Profile
+            </h4>
             <p class="w3-center"><img src="img/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
             <hr>
             <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Computer Science & Mathematics Major</p>
-            <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> Purdue University, US</p>
-            <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> Dec 1, 1988</p>
+            <p id="address1"><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i></p>
+            <p id="email"><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i></p>
           </div>
         </div>
         <br>
@@ -106,18 +108,8 @@
         <div class="w3-card w3-round w3-white w3-hide-small">
           <div class="w3-container">
             <p>Interest Tags</p>
-            <p>
-              <span class="w3-tag w3-small w3-theme-d5">Gene Spafford</span>
-              <span class="w3-tag w3-small w3-theme-d4">Gustavo</span>
-              <span class="w3-tag w3-small w3-theme-d3">CS 252</span>
-              <span class="w3-tag w3-small w3-theme-d2">CS 307</span>
-              <span class="w3-tag w3-small w3-theme-d1">Turkstra</span>
-              <span class="w3-tag w3-small w3-theme">Purdue</span>
-              <span class="w3-tag w3-small w3-theme-l1">Giant Leaps</span>
-              <span class="w3-tag w3-small w3-theme-l2">Neil Armstrong</span>
-              <span class="w3-tag w3-small w3-theme-l3">Computer Science</span>
-              <span class="w3-tag w3-small w3-theme-l4">Zoology</span>
-              <span class="w3-tag w3-small w3-theme-l5">Psychology</span>
+            <p id="tags">
+
             </p>
           </div>
         </div>
@@ -143,16 +135,20 @@
             <div class="w3-card w3-round w3-white">
               <div class="w3-container w3-padding">
                 <h6 class="w3-opacity">Search for events</h6>
-                <input contenteditable="true" class="w3-border w3-padding" placeholder="zipcode" id="zipcode"></input><br><br>
+                <input contenteditable="true" class="w3-border w3-padding" placeholder="Enter zipcode" id="zipcodeInput"></input><i> and/or </i>
+                <input contenteditable="true" class="w3-border w3-padding" placeholder="Enter tags" id="tagsInput"></input><br><br>
                 <button type="button" class="w3-button w3-theme" onclick="retrieve()"><i class="fa fa-pencil"></i> Retrieve</button>
               </div>
             </div>
           </div>
         </div>
 
-        <p id="results">
-          <!--  <div class="w3-container w3-card w3-white w3-round w3-margin"><br>
-        <img src="img/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
+
+         <div class="w3-round w3-margin"><br>
+           <div class="w3-card w3-container w3-blue" id="backgroundCard">
+             <p id="searchResults"></p>
+           </div>
+        <!--<img src="img/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
         <span class="w3-right w3-opacity">1 min</span>
         <h4>Gambling Gardens - Harish Krishnan</h4><br>
         <hr class="w3-clear">
@@ -186,9 +182,9 @@
         <button type="button" class="w3-button w3-theme-d1 w3-margin-bottom"><i class="fa fa-thumbs-up"></i>  Like</button>
         <button type="button" class="w3-button w3-theme-d2 w3-margin-bottom"><i class="fa fa-comment"></i>  Comment</button>
       </div>-->
-          <p>
             <!-- End Middle Column -->
       </div>
+    </div>
 
       <!-- Right Column -->
       <div class="w3-col m2">

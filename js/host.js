@@ -30,12 +30,12 @@ var user_event_history_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amaz
  * 11. renderUI - Display the list of events to the user in UI
  * 12. getZip - Gets the event list for user's default zipcode
  * 13. joinEvent - Adds the username to the guest list for the event_time
- * 14. join - Calls joinEvent and supplies details to it
+ * 14. loadProfile - After successful login, the profile details to be displayed are updated
  */
 
 
 // Add Users to the Users Database
-function addUser(userName, userPassword, firstName, lastName, address_1, address_2, _city, _state, _zipcode) {
+function addUser(userName, userPassword, firstName, lastName, address_1, address_2, _city, _state, _zipcode,_usertags) {
   // Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
   var req = new XMLHttpRequest();
   req.open('POST', user_sign_up_endpoint);
@@ -57,7 +57,7 @@ function addUser(userName, userPassword, firstName, lastName, address_1, address
     city: _city,
     state: _state,
     zipcode: _zipcode,
-    //usertags: _usertags
+    usertags: _usertags
   }
   req.send(JSON.stringify(parameters));
 }
@@ -66,13 +66,7 @@ function addUser(userName, userPassword, firstName, lastName, address_1, address
 function signup() {
 
   //Get the user interest tags supplied by the user during sign up
-  /*var userInterestsArr = document.getElementById("inte").value.split(/[ ,]+/);
-  var userInterestsArrStr = [];
-  for (var i = 0; i < userInterestsArr.options.length; i++) {
-    if (userInterestsArr.options[i].selected) {
-      userInterestsArrStr.push(userInterestsArr.options[i].label);
-    }
-  }*/
+  var userInterestsArr = document.getElementById("inte").value.split(/[,]+/);
 //Add user to the database
   addUser(document.getElementById("inputEmail4").value,
     document.getElementById("inputPassword4").value,
@@ -82,8 +76,8 @@ function signup() {
     document.getElementById("inputAddress2").value,
     document.getElementById("inputCity").value,
     document.getElementById("inputState").value,
-    document.getElementById("inputZip").value
-  //  userInterestsArr
+    document.getElementById("inputZip").value,
+   userInterestsArr
   );
 }
 
@@ -91,9 +85,12 @@ function userLogin(username, password) {
   var req = new XMLHttpRequest();
   req.open('POST', user_login_endpoint)
   req.onreadystatechange = function(event) {
-    console.log(event);
-    if (event.target.responseText === 'true' && this.readyState == 4) {
+    res= "";
+    if(this.readyState==4)
+    res = JSON.parse(event.target.response);
+    if (res.response === 'true' && this.readyState == 4) {
       localStorage.setItem("username", document.getElementById('username').value);
+      localStorage.setItem("userDetails",event.target.response);
       alert("Successful login");
       location.href = "guest.html"
     } else if (this.readyState == 4)
@@ -189,7 +186,8 @@ function guestEventList(_zipcode) {
     if (this.readyState == 4 && event.target.response != "[]") {
       renderUI(JSON.parse(event.target.response));
     } else if (this.readyState == 4 && event.target.response == "[]") {
-      alert("Sorry no events found for that zipcode.");
+      document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
+        document.getElementById('searchResults').innerHTML = "Sorry no events found for that zipcode.";
     }
   };
   var parameters = {
@@ -199,15 +197,17 @@ function guestEventList(_zipcode) {
 }
 
 function retrieve() {
-  guestEventList(document.getElementById('zipcode').value);
+  guestEventList(document.getElementById('zipcodeInput').value);
 }
 
 function renderUI(arr) {
   console.log(arr);
-  document.getElementById('results').innerHTML = "";
+  document.getElementById('searchResults').innerHTML = "";
+  document.getElementById("backgroundCard").className = "w3-card w3-container w3-blue";
   if (arr != null) {
     for (var i = 0; i < arr.length; i++) {
-      document.getElementById('results').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\">1 min</span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"joinEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
+
+      document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\">1 min</span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"joinEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
     }
   }
 }
@@ -243,4 +243,20 @@ function joinEvent(eventID) {
     event_id: eventID.toString()
   }
   req.send(JSON.stringify(params));
+}
+
+function loadProfile()
+{
+  //Tags updated
+  arr = JSON.parse(localStorage.getItem("userDetails"));
+  console.log(arr);
+  for(var i=0;i<arr.interest_tags.length;i++)
+  {
+    document.getElementById("tags").innerHTML += "<span class=\"w3-tag w3-small w3-theme-l"+((i%5))+"\">"+arr.interest_tags[i]+"</span> ";
+  }
+
+  //Profile name
+  document.getElementById("firstName").innerHTML = arr.firstname+"'s";
+  document.getElementById("address1").innerHTML += arr.address1+", "+arr.address2;
+  document.getElementById("email").innerHTML += arr.email;
 }
