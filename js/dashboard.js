@@ -21,9 +21,24 @@ var event_add_task_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-add-task";
 var event_add_contributor_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-add-contributor";
-var host_cancel_event_endpoint = "";
+var host_cancel_event_endpoint =
+  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1";
 var taskArr;
 
+function cancelEvent() {
+  var req = new XMLHttpRequest();
+  req.open("POST", host_cancel_event_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      host_delete_event_endpoint(JSON.parse(event.target.response));
+    }
+  };
+  event_id = localStorage.getItem("evenID");
+  var parameters = {
+    event_id: eventID
+  };
+  req.send(JSON.stringify(parameters));
+}
 /*this is called when you hit the plus button in the dashboard.html to create a event*/
 function eventmanager() {
   document.getElementById("createEvent").innerHTML =
