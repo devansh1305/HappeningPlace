@@ -35,7 +35,7 @@ var user_event_history_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amaz
 
 
 // Add Users to the Users Database
-function addUser(userName, userPassword, firstName, lastName, address_1, address_2, _city, _state, _zipcode, _usertags) {
+function addUser(userName, userPassword, firstName, lastName, address_1, address_2, _city, _state, _zipcode) {
   // Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
   var req = new XMLHttpRequest();
   req.open('POST', user_sign_up_endpoint);
@@ -57,7 +57,7 @@ function addUser(userName, userPassword, firstName, lastName, address_1, address
     city: _city,
     state: _state,
     zipcode: _zipcode,
-    usertags: _usertags
+    //usertags: _usertags
   }
   req.send(JSON.stringify(parameters));
 }
@@ -66,13 +66,13 @@ function addUser(userName, userPassword, firstName, lastName, address_1, address
 function signup() {
 
   //Get the user interest tags supplied by the user during sign up
-  var userInterestsArr = document.getElementById("inte").value.split(/[ ,]+/);
+  /*var userInterestsArr = document.getElementById("inte").value.split(/[ ,]+/);
   var userInterestsArrStr = [];
   for (var i = 0; i < userInterestsArr.options.length; i++) {
     if (userInterestsArr.options[i].selected) {
       userInterestsArrStr.push(userInterestsArr.options[i].label);
     }
-  }
+  }*/
 //Add user to the database
   addUser(document.getElementById("inputEmail4").value,
     document.getElementById("inputPassword4").value,
@@ -82,8 +82,8 @@ function signup() {
     document.getElementById("inputAddress2").value,
     document.getElementById("inputCity").value,
     document.getElementById("inputState").value,
-    document.getElementById("inputZip").value,
-    userInterestsArr
+    document.getElementById("inputZip").value
+  //  userInterestsArr
   );
 }
 
