@@ -91,12 +91,15 @@ function userLogin(username, password) {
   var req = new XMLHttpRequest();
   req.open('POST', user_login_endpoint)
   req.onreadystatechange = function(event) {
+    console.log(event);
     if (event.target.responseText === 'true' && this.readyState == 4) {
       localStorage.setItem("username", document.getElementById('username').value);
       alert("Successful login");
       location.href = "guest.html"
     } else if (this.readyState == 4)
+    {
       alert("Invalid Credentials");
+    }
   };
   req.setRequestHeader('Content-Type', 'application/json');
   var params = {
@@ -108,7 +111,8 @@ function userLogin(username, password) {
 }
 
 function login() {
-  userLogin(document.getElementById('username').value, document.getElementById('password').value);
+  if(document.getElementById('username').value!="" && document.getElementById('password').value!="")
+    userLogin(document.getElementById('username').value, document.getElementById('password').value);
 }
 
 function resetpassword(userName, userPassword, new_password, confirm_Password) {
