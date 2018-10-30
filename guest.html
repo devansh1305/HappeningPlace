@@ -12,7 +12,7 @@
   html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 </style>
 
-<body class="w3-theme-l5" onload="getZip();loadProfile()">
+<body class="w3-theme-l5" onload="loadProfile()">
 
   <!-- Navbar -->
   <div class="w3-top">
@@ -72,7 +72,7 @@
             <div id="Demo1" class="w3-hide w3-container">
               <p>Profile details..</p>
             </div>
-            <button onclick="myFunction('Demo2" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i> My Events</button>
+            <button onclick="myFunction('Demo2" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i>My Events</button>
             <div id="Demo2" class="w3-hide w3-container">
               <p>Event Timeline...</p>
             </div>
@@ -135,9 +135,9 @@
             <div class="w3-card w3-round w3-white">
               <div class="w3-container w3-padding">
                 <h6 class="w3-opacity">Search for events</h6>
-                <input contenteditable="true" class="w3-border w3-padding" placeholder="Enter zipcode" id="zipcodeInput"></input><i> and/or </i>
+                <input contenteditable="true" class="w3-border w3-padding" placeholder="Enter zipcode" id="zipcodeInput" default="0"></input><i> and/or </i>
                 <input contenteditable="true" class="w3-border w3-padding" placeholder="Enter tags" id="tagsInput"></input><br><br>
-                <button type="button" class="w3-button w3-theme" onclick="retrieve()"><i class="fa fa-pencil"></i> Retrieve</button>
+                <button type="button" class="w3-button w3-theme" onclick="guestEventList()"><i class="fa fa-pencil"></i> Retrieve</button>
               </div>
             </div>
           </div>
@@ -146,7 +146,7 @@
 
          <div class="w3-round w3-margin"><br>
            <div class="w3-card w3-container w3-blue" id="backgroundCard">
-             <p id="searchResults"></p>
+             <p id="searchResults">Loading...</p>
            </div>
         <!--<img src="img/avatar2.png" alt="Avatar" class="w3-left w3-circle w3-margin-right" style="width:60px">
         <span class="w3-right w3-opacity">1 min</span>

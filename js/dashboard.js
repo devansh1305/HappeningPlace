@@ -68,6 +68,18 @@ function myFunction(id) {
   }
 }
 
+function create() {
+  let tagsArray = document.getElementById("tags").value.split(/[ ,]+/);
+  console.log(tagsArray);
+  createEvent(localStorage.getItem("username"), document.getElementById("eventname").value,
+    document.getElementById("enterzip").value,
+    document.getElementById("entervenue").value,
+    document.getElementById("entertime").value,
+    document.getElementById("description").value,
+    tagsArray);
+}
+
+
 function openNav() {
   var x = document.getElementById("navDemo");
   if (x.className.indexOf("w3-show") == -1) {
