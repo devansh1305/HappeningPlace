@@ -173,7 +173,7 @@ function guestEventList() {
   req.open('POST', user_event_list_endpoint);
   req.onreadystatechange = function(event) {
     if (this.readyState == 4 && event.target.response != "[]") {
-      renderUI(JSON.parse(event.target.response));
+      renderUI(JSON.parse(event.target.response),"blue");
     } else if (this.readyState == 4 && event.target.response == "[]") {
       document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
         document.getElementById('searchResults').innerHTML = "Sorry no events found for that zipcode.";
@@ -186,7 +186,7 @@ function guestEventList() {
   req.send(JSON.stringify(parameters));
 }
 
-function renderUI(arr) {
+function renderUI(arr,color) {
 
   if (arr != null) {
     console.log(arr);
@@ -196,13 +196,20 @@ function renderUI(arr) {
     var flag=0;
     for (var i = 0; i < arr.length; i++) {
       if(arr[i]!=null)
-      { document.getElementById("backgroundCard").className = "w3-card w3-container w3-blue";
+      { document.getElementById("backgroundCard").className = "w3-card w3-container w3-"+color;
         if(flag==0)
         {
           document.getElementById('searchResults').innerHTML = "";
           flag=1;
         }
-        document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\">1 min</span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"joinEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
+        if(color=='blue'){
+        document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"joinEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
+      }
+      else if(color=='green')
+      {
+        document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-l2 w3-margin-bottom\" onclick=\"joinEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-down\"></i> Cancel RSVP</button><button type=\"button\" class=\"w3-button w3-theme-d4 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
+
+      }
       }
   }
   }
@@ -252,7 +259,9 @@ function viewParticipatingEvents()
   req.open('POST', user_event_history_endpoint);
   req.onreadystatechange = function(event) {
     if(this.readyState==4)
-    renderUI(JSON.parse(event.target.response));
+    {
+    renderUI(JSON.parse(event.target.response),"green");
+    }
   };
   var params = {
     username: userLoggedIn.toString()
