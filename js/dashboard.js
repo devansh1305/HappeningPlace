@@ -122,6 +122,9 @@ function openNav() {
     document.getElementById("hostEventGuestList").innerHTML = text;
   }*/
 
+
+
+
   function hostguestlist() {
     var host_guest_list = ["hemanth", "rahul", "harish"];
     text = "";
@@ -135,6 +138,43 @@ function openNav() {
     }
     document.getElementById("hostEventGuestList").innerHTML = text;
   }
+
+
+
+
+
+
+function hostContributeList(){
+ var arr =["contribute1","contribute2","contribute3"];
+     
+      var text = "";
+      var i;
+      for (i = 0; i < arr.length; i++) {
+        text +="<div class=\"w3-button w3-theme-d5\">"+arr[i]+"</div><br><br>"
+      }
+      document.getElementById("eventList").innerHTML = text;
+
+
+}
+
+
+
+
+
+	function displayEventDetails(arg){
+		
+		var text = "";
+        text+="<br>";
+      text +="<h2>" + arg + "<button class=\"button button3 w3-right\" title=\"Cancel Event\">Cancel Event</button></h2><h3 class=\"w3-card-4 w3-theme-d5\">&nbsp&nbspEvent Details</h3><div class=\"w3-theme-d3 w3-card-2\" style=\"padding:10px\">";
+
+	text+="<h5>Location:</h5><h5>Time:</h5><h5>Description:</h5></div>";
+      document.getElementById("createEvent").innerHTML = text;
+
+	}
+
+
+
+
 
   function displayHostEventDetails(currentEvent) {
     localStorage.setItem("currentEvent", currentEvent);
@@ -239,12 +279,15 @@ function callAddTask() {
         text +=
           '<button class="w3-button w3-theme-d5 "  onclick=" displayHostEventDetails(\'' +
           hostEventNames[i][1] +
-          "')\" >" +
+          "'); displayEventDetails('"+hostEventNames[i][0]+"')\" >" +
           hostEventNames[i][0] +
           "</button><br><br>";
       }
       document.getElementById("eventList").innerHTML = text;
     }
+
+
+
 
     function displayTaskDetails(eventID) {
       var text = "";
@@ -274,6 +317,10 @@ function callAddTask() {
       document.getElementById("createEvent").innerHTML = text;
     }
 
+
+
+
+
     function displayContributorDetails(contributerName) {
       var text = '<div class="w3-theme-d3 w3-card-3"> ';
       text +=
@@ -286,6 +333,7 @@ function callAddTask() {
     }
 
     function retrieveHostEventList() {
+	
       var req = new XMLHttpRequest();
       req.open("POST", host_event_list_endpoint);
       req.onreadystatechange = function(event) {
