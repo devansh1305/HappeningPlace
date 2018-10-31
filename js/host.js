@@ -33,7 +33,7 @@ var user_event_history_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amaz
 
 
 // Add Users to the Users Database
-function addUser(userName, userPassword, firstName, lastName, address_1, address_2, _city, _state, _zipcode,_usertags) {
+function addUser(userName, userPassword, firstName, lastName, address_1, address_2, _city, _state, _zipcode, _usertags) {
   // Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
   var req = new XMLHttpRequest();
   req.open('POST', user_sign_up_endpoint);
@@ -65,7 +65,7 @@ function signup() {
 
   //Get the user interest tags supplied by the user during sign up
   var userInterestsArr = document.getElementById("inte").value.split(/[,]+/);
-//Add user to the database
+  //Add user to the database
   addUser(document.getElementById("inputEmail4").value,
     document.getElementById("inputPassword4").value,
     document.getElementById("inputFName").value,
@@ -75,7 +75,7 @@ function signup() {
     document.getElementById("inputCity").value,
     document.getElementById("inputState").value,
     document.getElementById("inputZip").value,
-   userInterestsArr
+    userInterestsArr
   );
 }
 
@@ -83,16 +83,16 @@ function userLogin(username, password) {
   var req = new XMLHttpRequest();
   req.open('POST', user_login_endpoint)
   req.onreadystatechange = function(event) {
-    res= "";
-    if(this.readyState==4)
-    res = JSON.parse(event.target.response);
+    res = "";
+    console.log(event.target.response);
+    if (this.readyState == 4)
+      res = JSON.parse(event.target.response);
     if (res.response === 'true' && this.readyState == 4) {
       localStorage.setItem("username", document.getElementById('username').value);
-      localStorage.setItem("userDetails",event.target.response);
+      localStorage.setItem("userDetails", event.target.response);
       alert("Successful login");
       location.href = "guest.html"
-    } else if (this.readyState == 4)
-    {
+    } else if (this.readyState == 4) {
       alert("Invalid Credentials");
     }
   };
@@ -106,7 +106,7 @@ function userLogin(username, password) {
 }
 
 function login() {
-  if(document.getElementById('username').value!="" && document.getElementById('password').value!="")
+  if (document.getElementById('username').value != "" && document.getElementById('password').value != "")
     userLogin(document.getElementById('username').value, document.getElementById('password').value);
 }
 
@@ -143,91 +143,67 @@ function reset() {
 
 }
 
-function createEvent(userName, event_Name, eventZipcode, eventLocation, time, description, tags) {
-  // Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
-  var req = new XMLHttpRequest();
-  req.open('POST', host_create_event_endpoint);
-  req.onreadystatechange = function(event) {
-    if (this.readyState == 4) {
-      console.log(event.target.response);
-      alert("Event Creation Successful");
-    }
-  };
-  var parameters = {
-    username: userName,
-    eventName: event_Name,
-    zipcode: eventZipcode,
-    event_location: eventLocation,
-    event_time: time,
-    desc: description,
-    usertags: tags
-  }
-  req.send(JSON.stringify(parameters));
-}
-
-
-
-
 function guestEventList() {
   var req = new XMLHttpRequest();
   req.open('POST', user_event_list_endpoint);
   req.onreadystatechange = function(event) {
     if (this.readyState == 4 && event.target.response != "[]") {
-      renderUI(JSON.parse(event.target.response),"blue");
+      renderUI(JSON.parse(event.target.response), "blue");
     } else if (this.readyState == 4 && event.target.response == "[]") {
       document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
-        document.getElementById('searchResults').innerHTML = "Sorry no events found for that zipcode.";
+      document.getElementById('searchResults').innerHTML = "Sorry no events found for that zipcode.";
     }
   };
   var parameters;
   document.getElementById('searchResults').innerHTML = "";
   document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
   document.getElementById('searchResults').innerHTML = "Sorry no events found for that zipcode.";
-  console.log(document.getElementById('zipcodeInput').value=='' && document.getElementById('tagsInput').value=='');
-  if(document.getElementById('zipcodeInput').value=='' && document.getElementById('tagsInput').value=='')
-  {
+  console.log(document.getElementById('zipcodeInput').value == '' && document.getElementById('tagsInput').value == '');
+  if (document.getElementById('zipcodeInput').value == '' && document.getElementById('tagsInput').value == '') {
     arr = JSON.parse(localStorage.getItem("userDetails"));
     console.log(arr.zipcode);
     parameters = {
       zip_code: arr.zipcode,
-      interest_tags:""
+      interest_tags: ""
     }
-  }
-  else {
+  } else {
     parameters = {
       zip_code: document.getElementById('zipcodeInput').value,
-      interest_tags:document.getElementById('tagsInput').value
+      interest_tags: document.getElementById('tagsInput').value
     }
   }
   req.send(JSON.stringify(parameters));
 }
 
-function renderUI(arr,color) {
+function renderUI(arr, color) {
 
   if (arr != null) {
     console.log(arr);
     document.getElementById('searchResults').innerHTML = "";
-    document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
-    document.getElementById('searchResults').innerHTML = "Sorry no events found for that zipcode.";
-    var flag=0;
+    if (color != 'green') {
+      document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
+      document.getElementById('searchResults').innerHTML = "Sorry no events found for that zipcode.";
+    }
+    else {
+      document.getElementById("backgroundCard").className = "w3-card w3-container w3-green";
+      document.getElementById('searchResults').innerHTML = "<label>You have not RSVP'ed any event yet<label>";
+    }
+    var flag = 0;
     for (var i = 0; i < arr.length; i++) {
-      if(arr[i]!=null)
-      { document.getElementById("backgroundCard").className = "w3-card w3-container w3-"+color;
-        if(flag==0)
-        {
+      if (arr[i] != null) {
+        document.getElementById("backgroundCard").className = "w3-card w3-container w3-" + color;
+        if (flag == 0) {
           document.getElementById('searchResults').innerHTML = "";
-          flag=1;
+          flag = 1;
         }
-        if(color=='blue'){
-        document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"joinEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
-      }
-      else if(color=='green')
-      {
-        document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-l2 w3-margin-bottom\" onclick=\"joinEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-down\"></i> Cancel RSVP</button><button type=\"button\" class=\"w3-button w3-theme-d4 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
+        if (color == 'blue') {
+          document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"joinEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
+        } else if (color == 'green') {
+          document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-l2 w3-margin-bottom\" onclick=\"cancelEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-down\"></i> Cancel RSVP</button><button type=\"button\" class=\"w3-button w3-theme-d4 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
 
+        }
       }
-      }
-  }
+    }
   }
 }
 
@@ -238,8 +214,7 @@ function joinEvent(eventID) {
   req.open('POST', guest_join_event_endpoint);
   req.onreadystatechange = function(event) {
 
-    if(this.readyState==4 && event.target.response=='true')
-    {
+    if (this.readyState == 4 && event.target.response == 'true') {
       console.log(event.target.response);
       alert("Added to event")
     }
@@ -252,33 +227,30 @@ function joinEvent(eventID) {
   req.send(JSON.stringify(params));
 }
 
-function loadProfile()
-{
+function loadProfile() {
   //Tags updated
   arr = JSON.parse(localStorage.getItem("userDetails"));
   console.log(arr);
-  for(var i=0;i<arr.interest_tags.length;i++)
-  {
-    document.getElementById("tags").innerHTML += "<span class=\"w3-tag w3-small w3-theme-l"+((i%5))+"\">"+arr.interest_tags[i]+"</span> ";
+  for (var i = 0; i < arr.interest_tags.length; i++) {
+    document.getElementById("tags").innerHTML += "<span class=\"w3-tag w3-small w3-theme-l" + ((i % 5)) + "\">" + arr.interest_tags[i] + "</span> ";
   }
   guestEventList();
   //Profile name
-  document.getElementById("firstName").innerHTML = arr.firstname+"'s";
-  document.getElementById("address1").innerHTML += arr.address1+", "+arr.address2;
+  document.getElementById("firstName").innerHTML = arr.firstname + "'s";
+  document.getElementById("address1").innerHTML += arr.address1 + ", " + arr.address2;
   document.getElementById("email").innerHTML += arr.email;
 
   //Send Reminders
   //Function to loop through all events returned by  returnParticipatingEvents
-  //If date is within 1 day of current date, then add the event name to 
+  //If date is within 1 day of current date, then add the event name to
 }
-function returnParticipatingEvents()
-{
+
+function returnParticipatingEvents() {
   userLoggedIn = localStorage.getItem("username");
   var req = new XMLHttpRequest();
   req.open('POST', user_event_history_endpoint);
   req.onreadystatechange = function(event) {
-    if(this.readyState==4)
-    {
+    if (this.readyState == 4) {
       return JSON.parse(event.target.response);
     }
   };
@@ -288,15 +260,13 @@ function returnParticipatingEvents()
   req.send(JSON.stringify(params));
 }
 
-function viewParticipatingEvents()
-{
+function viewParticipatingEvents() {
   userLoggedIn = localStorage.getItem("username");
   var req = new XMLHttpRequest();
   req.open('POST', user_event_history_endpoint);
   req.onreadystatechange = function(event) {
-    if(this.readyState==4)
-    {
-    renderUI(JSON.parse(event.target.response),"green");
+    if (this.readyState == 4) {
+      renderUI(JSON.parse(event.target.response), "green");
     }
   };
   var params = {

@@ -23,6 +23,8 @@ var event_add_contributor_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-add-contributor";
 var host_cancel_event_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1";
+  var host_event_details_endpoint =
+    "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-details";
 var taskArr;
 
 function cancelEvent() {
@@ -125,79 +127,88 @@ function openNav() {
 
 
 
-  function hostguestlist() {
-    var host_guest_list = ["hemanth", "rahul", "harish"];
-    text = "";
-    for (i = 0; i < host_guest_list.length; i++) {
-      text +=
-        '<div class="w3-bar-item w3-hover-white w3-button w3-card" title="guest email" onclick="hostguestlistonclick(' +
-        i +
-        ')">' +
-        host_guest_list[i] +
-        "</div>";
-    }
-    document.getElementById("hostEventGuestList").innerHTML = text;
+function hostguestlist() {
+  var host_guest_list = ["hemanth", "rahul", "harish"];
+  text = "";
+  for (i = 0; i < host_guest_list.length; i++) {
+    text +=
+      '<div class="w3-bar-item w3-hover-white w3-button w3-card" title="guest email" onclick="hostguestlistonclick(' +
+      i +
+      ')">' +
+      host_guest_list[i] +
+      "</div>";
   }
-
-
-
-
-
-
-
-function hostContributeList(){
- var arr =["contribute1","contribute2","contribute3"];
-
-      var text = "";
-      var i;
-      for (i = 0; i < arr.length; i++) {
-        text +="<div class=\"w3-button w3-theme-d5\">"+arr[i]+"</div><br><br>"
-      }
-      document.getElementById("eventList").innerHTML = text;
-
-
+  document.getElementById("hostEventGuestList").innerHTML = text;
 }
 
 
 
 
 
-	function displayEventDetails(arg){
 
-		var text = "";
-        text+="<br>";
-      text +="<h2>" + arg + "<button class=\"button button3 w3-right\" title=\"Cancel Event\">Cancel Event</button></h2><h3 class=\"w3-card-4 w3-theme-d5\">&nbsp&nbspEvent Details</h3><div class=\"w3-theme-d3 w3-card-2\" style=\"padding:10px\">";
 
-	text+="<h5>Location:</h5><h5>Time:</h5><h5>Description:</h5></div>";
+function hostContributeList() {
+  var arr = ["contribute1", "contribute2", "contribute3"];
+
+  var text = "";
+  var i;
+  for (i = 0; i < arr.length; i++) {
+    text += "<div class=\"w3-button w3-theme-d5\">" + arr[i] + "</div><br><br>"
+  }
+  document.getElementById("eventList").innerHTML = text;
+
+
+}
+
+function displayEventDetails()
+{
+  var req = new XMLHttpRequest();
+  req.open("POST", host_event_details_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      arg = JSON.parse(event.target.response);
+      var text = "";
+      text += "<br>";
+      text += "<h2>" + arg[0]+ "<button class=\"button button3 w3-right\" title=\"Cancel Event\">Cancel Event</button></h2><h3 class=\"w3-card-4 w3-theme-d5\">&nbsp&nbspEvent Details</h3><div class=\"w3-theme-d3 w3-card-2\" style=\"padding:10px\">";
+      text += "<h5>Location:"+arg[2]+"</h5><h5>Time:"+arg[4]+"</h5><h5>Description:"+arg[3]+"</h5></div>";
       document.getElementById("createEvent").innerHTML = text;
+      document.getElementById("tagsOutput").innerHTML = "";
+      for(var i in arg[5])
+        document.getElementById("tagsOutput").innerHTML += "<div class=\"w3-bar-item w3-hover-white w3-button w3-card-4\">"+arg[5][i]+"</div>";
+       //arg[6] is guest List
+      }
 
-	}
+  };
+  var parameters = {
+    eventid: localStorage.getItem("currentEvent")
+  };
+  req.send(JSON.stringify(parameters));
 
 
+}
 
-
-
-  function displayHostEventDetails(currentEvent) {
-    localStorage.setItem("currentEvent", currentEvent);
-    var req = new XMLHttpRequest();
-    req.open("POST", event_task_list_endpoint);
-    req.onreadystatechange = function(event) {
-      if (this.readyState == 4) {
-        taskArr = JSON.parse(event.target.response);
-        var task =
-          '<button class="w3-button w3-hide-small w3-padding-large w3-hover-white" title="Create Task" onclick="callAddTask()"><i class="fa fa-plus"></i></button>';
-        if (taskArr != null) {
-          for (var i = 0; i < taskArr.length; i++) {
-            task +=
-              '<button class="w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2" onclick="displayTaskDetails(\'' +
-              taskArr[i][1] +
-              "');\" >" +
-              taskArr[i][0] +
-              "</button>";
-          }
+function displayHostEventDetails(currentEvent) {
+  localStorage.setItem("currentEvent", currentEvent);
+  var req = new XMLHttpRequest();
+  req.open("POST", event_task_list_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      taskArr = JSON.parse(event.target.response);
+      var task =
+        '<button class="w3-button w3-hide-small w3-padding-large w3-hover-white" title="Create Task" onclick="callAddTask()"><i class="fa fa-plus"></i></button>';
+      if (taskArr != null) {
+        for (var i = 0; i < taskArr.length; i++) {
+          task +=
+            '<button class="w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2" onclick="displayTaskDetails(\'' +
+            taskArr[i][1] +
+            "');\" >" +
+            taskArr[i][0] +
+            "</button>";
         }
       }
       document.getElementById("tasks").innerHTML = task;
+    }
+
   };
   var parameters = {
     eventid: localStorage.getItem("currentEvent")
@@ -207,10 +218,9 @@ function hostContributeList(){
   var req2 = new XMLHttpRequest();
   req2.open("POST", event_contributor_list_endpoint);
   req2.onreadystatechange = function(event) {
-    if (this.readyState == 4) {
+    if (this.readyState == 4 && event.target.response!=null) {
       contributorArr = JSON.parse(event.target.response);
-      console.log(event.target.response);
-      console.log(contributorArr);
+
       var contributor =
         '<button class="w3-button w3-hide-small w3-padding-large w3-hover-white" title="Add Contributor" onclick="callAddContributor()"><i class="fa fa-plus"></i></button>';
       if (contributorArr != null) {
@@ -233,7 +243,6 @@ function hostContributeList(){
 }
 
 function addContributor() {
-  console.log(document.getElementById("contributor_username").value);
   var req = new XMLHttpRequest();
   req.open('POST', event_add_contributor_endpoint);
   req.onreadystatechange = function(event) {
@@ -246,6 +255,30 @@ function addContributor() {
   var parameters = {
     event_id: localStorage.getItem("currentEvent"),
     contributor_username: document.getElementById("contributor_username").value
+  }
+  req.send(JSON.stringify(parameters));
+}
+
+function createEvent(userName, event_Name, eventZipcode, eventLocation, time, description, tags) {
+  // Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
+  var req = new XMLHttpRequest();
+  req.open('POST', host_create_event_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      console.log(event.target.response);
+      alert("Event Creation Successful");
+      retrieveHostEventList();
+      document.getElementById("createEvent").innerHTML = "";
+    }
+  };
+  var parameters = {
+    username: userName,
+    eventName: event_Name,
+    zipcode: eventZipcode,
+    event_location: eventLocation,
+    event_time: time,
+    desc: description,
+    usertags: tags
   }
   req.send(JSON.stringify(parameters));
 }
@@ -268,30 +301,29 @@ function callAddContributor() {
     '<br><button type="button" class="w3-button w3-theme-d1" onclick="addContributor()">Add Contributor</button>&nbsp<button type="button" class="w3-button w3-theme-d1" onclick="cancel()">Cancel</button></div>';
 }
 
-    function loadHostEventList(arr) {
-      var hostEventNames = arr;
-      if (arr == null) {
-        document.getElementById("eventList").innerHTML = "No events hosted";
-        return;
-      }
-      var text = "";
-      var i;
-      for (i = 0; i < hostEventNames.length; i++) {
-        text +=
-          '<button class="w3-button w3-theme-d5 "  onclick=" displayHostEventDetails(\'' +
-          hostEventNames[i][1] +
-          "'); displayEventDetails('"+hostEventNames[i][0]+"')\" >" +
-          hostEventNames[i][0] +
-          "</button><br><br>";
-      }
-      document.getElementById("eventList").innerHTML = text;
-    }
+function loadHostEventList(arr) {
+  var hostEventNames = arr;
+  if (arr == null) {
+    document.getElementById("eventList").innerHTML = "No events hosted";
+    return;
+  }
+  var text = "";
+  var i;
+  for (i = 0; i < hostEventNames.length; i++) {
+    text +=
+      "<button class=\"w3-button w3-theme-d5\"  onclick=\" displayHostEventDetails('" +
+      hostEventNames[i][1] + "'); displayEventDetails()\">" +
+      hostEventNames[i][0] +
+      "</button><br><br>";
+  }
+  document.getElementById("eventList").innerHTML = text;
+}
 
 
 
 
-    function displayTaskDetails(eventID) {
-      var text = "";
+function displayTaskDetails(eventID) {
+  var text = "";
 
   text =
     text +
@@ -322,26 +354,26 @@ function callAddContributor() {
 
 
 
-    function displayContributorDetails(contributerName) {
-      var text = '<div class="w3-theme-d3 w3-card-3"> ';
-      text +=
-        '<div class="w3-theme-d4 w3-card-3"><H3>&nbsp&nbsp' +
-        contributerName +
-        "</h3>";
-      text += "</div><H3>&nbsp&nbspTask Assigned</h3>";
-      text += "</div>";
-      document.getElementById("createEvent").innerHTML = text;
+function displayContributorDetails(contributerName) {
+  var text = '<div class="w3-theme-d3 w3-card-3"> ';
+  text +=
+    '<div class="w3-theme-d4 w3-card-3"><H3>&nbsp&nbsp' +
+    contributerName +
+    "</h3>";
+  text += "</div><H3>&nbsp&nbspTask Assigned</h3>";
+  text += "</div>";
+  document.getElementById("createEvent").innerHTML = text;
+}
+
+function retrieveHostEventList() {
+
+  var req = new XMLHttpRequest();
+  req.open("POST", host_event_list_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      loadHostEventList(JSON.parse(event.target.response));
     }
-
-    function retrieveHostEventList() {
-
-      var req = new XMLHttpRequest();
-      req.open("POST", host_event_list_endpoint);
-      req.onreadystatechange = function(event) {
-        if (this.readyState == 4) {
-          loadHostEventList(JSON.parse(event.target.response));
-        }
-      };
+  };
   userName = localStorage.getItem("username");
   var parameters = {
     username: userName

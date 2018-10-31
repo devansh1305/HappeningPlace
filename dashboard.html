@@ -11,7 +11,7 @@
   <script type="text/javascript" src="js/dashboard.js"></script>
 </head>
 
-<body class="w3-theme-l5" onload="loadHostEventList(); retrieveHostEventList()">
+<body class="w3-theme-l5" onload="retrieveHostEventList()">
   <div class="w3-top">
     <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
       <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2"
@@ -82,13 +82,13 @@
 
 
           <div class="w3-card w3-theme-d4" style="padding-left:0%">
-            <h2>&nbsp&nbspTasks</h2>
+            <h3>&nbsp&nbspTasks</h3>
 
             <p id="tasks" class="w3-bar-block w3-theme-d3"></p>
           </div>
 
           <div class="w3-card w3-theme-d4" style="padding-left:0%">
-            <h2>&nbsp&nbspContributors</h2>
+            <h3>&nbsp&nbspContributors</h3>
             <p id="contributors" class="w3-bar-block w3-theme-d3"></p>
           </div>
 
@@ -104,17 +104,17 @@
     <div class="w3-rest w3-theme-d2" style="padding-top:10px; padding-bottom:20px; padding-left:1%; ">
       <div class="w3-bar-block w3-theme-d3" style="overflow:auto">
         <div class="w3-card w3-theme-d4" style="padding-left:5%">
-          <h1>Guests</h1>
+          <h3>Guests</h3>
         </div>
         <p id="hostEventGuestList"></p>
 
       </div>
       <div class="w3-card w3-theme-d4" style="padding-left:5%">
-        <h1>Descriptors</h1>
+        <h3>Descriptors</h3>
       </div>
-      <div class="w3-bar-item w3-hover-white w3-button w3-card-4">#computerscience</div>
-      <div class="w3-bar-item w3-hover-white w3-button w3-card-4">#purdue</div>
-      <div class="w3-bar-item w3-hover-white w3-button w3-card-4">#boilermaker</div>
+      <p id="tagsOutput">
+
+    </p>
     </div>
 
 
