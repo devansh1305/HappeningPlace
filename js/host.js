@@ -179,9 +179,25 @@ function guestEventList() {
         document.getElementById('searchResults').innerHTML = "Sorry no events found for that zipcode.";
     }
   };
-  var parameters = {
-    zip_code: document.getElementById('zipcodeInput').value,
-    interest_tags:document.getElementById('tagsInput').value
+  var parameters;
+  document.getElementById('searchResults').innerHTML = "";
+  document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
+  document.getElementById('searchResults').innerHTML = "Sorry no events found for that zipcode.";
+  console.log(document.getElementById('zipcodeInput').value=='' && document.getElementById('tagsInput').value=='');
+  if(document.getElementById('zipcodeInput').value=='' && document.getElementById('tagsInput').value=='')
+  {
+    arr = JSON.parse(localStorage.getItem("userDetails"));
+    console.log(arr.zipcode);
+    parameters = {
+      zip_code: arr.zipcode,
+      interest_tags:""
+    }
+  }
+  else {
+    parameters = {
+      zip_code: document.getElementById('zipcodeInput').value,
+      interest_tags:document.getElementById('tagsInput').value
+    }
   }
   req.send(JSON.stringify(parameters));
 }
@@ -245,11 +261,31 @@ function loadProfile()
   {
     document.getElementById("tags").innerHTML += "<span class=\"w3-tag w3-small w3-theme-l"+((i%5))+"\">"+arr.interest_tags[i]+"</span> ";
   }
-
+  guestEventList();
   //Profile name
   document.getElementById("firstName").innerHTML = arr.firstname+"'s";
   document.getElementById("address1").innerHTML += arr.address1+", "+arr.address2;
   document.getElementById("email").innerHTML += arr.email;
+
+  //Send Reminders
+  //Function to loop through all events returned by  returnParticipatingEvents
+  //If date is within 1 day of current date, then add the event name to 
+}
+function returnParticipatingEvents()
+{
+  userLoggedIn = localStorage.getItem("username");
+  var req = new XMLHttpRequest();
+  req.open('POST', user_event_history_endpoint);
+  req.onreadystatechange = function(event) {
+    if(this.readyState==4)
+    {
+      return JSON.parse(event.target.response);
+    }
+  };
+  var params = {
+    username: userLoggedIn.toString()
+  }
+  req.send(JSON.stringify(params));
 }
 
 function viewParticipatingEvents()
