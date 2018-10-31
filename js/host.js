@@ -211,13 +211,15 @@ function renderUI(arr) {
 function joinEvent(eventID) {
   // Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
   userLoggedIn = localStorage.getItem("username");
-  console.log(userLoggedIn.toString());
-  console.log(eventID.toString());
   var req = new XMLHttpRequest();
   req.open('POST', guest_join_event_endpoint);
   req.onreadystatechange = function(event) {
-    console.log(event.target.response);
-    alert("Added to event")
+
+    if(this.readyState==4 && event.target.response=='true')
+    {
+      console.log(event.target.response);
+      alert("Added to event")
+    }
   };
   console.log(eventID);
   var params = {
@@ -241,4 +243,19 @@ function loadProfile()
   document.getElementById("firstName").innerHTML = arr.firstname+"'s";
   document.getElementById("address1").innerHTML += arr.address1+", "+arr.address2;
   document.getElementById("email").innerHTML += arr.email;
+}
+
+function viewParticipatingEvents()
+{
+  userLoggedIn = localStorage.getItem("username");
+  var req = new XMLHttpRequest();
+  req.open('POST', user_event_history_endpoint);
+  req.onreadystatechange = function(event) {
+    if(this.readyState==4)
+    renderUI(JSON.parse(event.target.response));
+  };
+  var params = {
+    username: userLoggedIn.toString()
+  }
+  req.send(JSON.stringify(params));
 }

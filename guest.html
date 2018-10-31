@@ -51,28 +51,27 @@
       <!-- Left Column -->
       <div class="w3-col m3">
         <!-- Profile -->
-        <div class="w3-card w3-round w3-white">
-          <div class="w3-container">
-            <h4 class="w3-center">
-              <p id="firstName"></p> Profile
-            </h4>
-            <p class="w3-center"><img src="img/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
-            <hr>
-            <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Computer Science & Mathematics Major</p>
-            <p id="address1"><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i></p>
-            <p id="email"><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i></p>
-          </div>
-        </div>
+
         <br>
 
         <!-- Accordion -->
         <div class="w3-card w3-round">
           <div class="w3-white">
             <button onclick="myFunction('Demo1')" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-circle-o-notch fa-fw w3-margin-right"></i> My Profile</button>
-            <div id="Demo1" class="w3-hide w3-container">
-              <p>Profile details..</p>
+            <div id="Demo1" class="w3-hide w3-container w3-card w3-round w3-white">
+
+                <div class="w3-container">
+                  <h4 class="w3-center">
+                    <p id="firstName"></p> Profile
+                  </h4>
+                  <p class="w3-center"><img src="img/avatar3.png" class="w3-circle" style="height:106px;width:106px" alt="Avatar"></p>
+                  <hr>
+                  <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Computer Science & Mathematics Major</p>
+                  <p id="address1"><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i></p>
+                  <p id="email"><i class="fa fa-envelope fa-fw w3-margin-right w3-text-theme"></i></p>
+              </div>
             </div>
-            <button onclick="myFunction('Demo2" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i>My Events</button>
+            <button onclick="viewParticipatingEvents()" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i>My Events</button>
             <div id="Demo2" class="w3-hide w3-container">
               <p>Event Timeline...</p>
             </div>
