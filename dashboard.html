@@ -9,18 +9,17 @@
   <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-dark-grey.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script type="text/javascript" src="js/dashboard.js"></script>
-  <script type="text/javascript" src="js/host.js"></script>
 </head>
 
-<body class="w3-theme-l5" onload="loadHostEventList(); retrieveHostEventList()">
+<body class="w3-theme-l5" onload="retrieveHostEventList()">
   <div class="w3-top">
     <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
       <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2"
         href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-      <a href="guest.html" class="w3-bar-item w3-button w3-padding-large w3-theme-d4" title="home"><i class="fa fa-home w3-margin-right"></i>Happening
+      <a class="w3-bar-item w3-button w3-padding-large w3-theme-d4" title="home"><i class="fa fa-home w3-margin-right"></i>Happening
         Place</a>
       <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
-      <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Switch User"><i
+      <a href="guest.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Switch User"><i
           class="fa fa-refresh"></i></a>
       <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
       <div class="w3-dropdown-hover w3-hide-small">
@@ -34,7 +33,7 @@
 
       <style>
         .button3 {
-          background-color: #f44336;
+          background-color: #862d2d;
           border: none;
           color: white;
           padding: 10px 12px;
@@ -50,6 +49,9 @@
         }
       </style>
       <button onclick=cancelEvent() class="button button3">CancelEvent </button>
+          width: 130px;
+        }
+      </style>
 
       <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
         <img src="img/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
@@ -65,14 +67,14 @@
   </div>
 
 
-  <div class="w3-container w3-theme-d3" style="padding-top:60px; padding-bottom:20px; padding-left:10px; height:1500px">
-    <div class="w3-container w3-third w3-theme-d3" style="padding-top:10px; padding-bottom:20px; padding-left:0px; padding-right:0px">
-      <div class="w3-third w3-theme-d2 w3-card" style=" padding:15px; overflow:auto;">
-        <a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Create Event" onclick="eventmanager()"><i
-            class="fa fa-plus"></i></a>
+  <div class="w3-container w3-theme-d3" style="padding-top:60px; padding-bottom:20px; padding-left:10px; height:1500px; overflow:auto;">
+    <div class="w3-container w3-third w3-theme-d3"  style="width:40%;overflow:auto;padding-top:10px; padding-bottom:20px; padding-left:0px; padding-right:0px;">
+      <div class="w3-third w3-theme-d2 w3-card" style=" padding:15px; overflow: auto;">
+	<h4><div class="w3-button w3-theme-d5" onclick="retrieveHostEventList()">Host</div><div class="w3-button w3-theme-d5" onclick="hostContributeList()">Contribute</div></h4>
+       <br> <a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Create Event" onclick="eventmanager()"><i class="fa fa-plus"></i></a>
+
         <p id="eventList"></p>
       </div>
-
 
 
 
@@ -85,13 +87,13 @@
 
 
           <div class="w3-card w3-theme-d4" style="padding-left:0%">
-            <h2>&nbsp&nbspTasks</h2>
+            <h3>&nbsp&nbspTasks</h3>
 
             <p id="tasks" class="w3-bar-block w3-theme-d3"></p>
           </div>
 
           <div class="w3-card w3-theme-d4" style="padding-left:0%">
-            <h2>&nbsp&nbspContributors</h2>
+            <h3>&nbsp&nbspContributors</h3>
             <p id="contributors" class="w3-bar-block w3-theme-d3"></p>
           </div>
 
@@ -107,17 +109,17 @@
     <div class="w3-rest w3-theme-d2" style="padding-top:10px; padding-bottom:20px; padding-left:1%; ">
       <div class="w3-bar-block w3-theme-d3" style="overflow:auto">
         <div class="w3-card w3-theme-d4" style="padding-left:5%">
-          <h1>Guests</h1>
+          <h3>Guests</h3>
         </div>
         <p id="hostEventGuestList"></p>
 
       </div>
       <div class="w3-card w3-theme-d4" style="padding-left:5%">
-        <h1>Descriptors</h1>
+        <h3>Descriptors</h3>
       </div>
-      <div class="w3-bar-item w3-hover-white w3-button w3-card-4">#computerscience</div>
-      <div class="w3-bar-item w3-hover-white w3-button w3-card-4">#purdue</div>
-      <div class="w3-bar-item w3-hover-white w3-button w3-card-4">#boilermaker</div>
+      <p id="tagsOutput">
+
+    </p>
     </div>
 
 

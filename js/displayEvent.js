@@ -28,7 +28,6 @@ function ListPastEvent(UserName) {
   req.send(JSON.stringify(params));
 }
 function ShowList() {
-  console.log("PART000");
   //for (var i = 0; i < event.target.response.length; i++) {
   //var str = JSON.parse();
   //console.log(str);

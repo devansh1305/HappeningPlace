@@ -11,9 +11,7 @@ var user_password_reset_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.ama
 var guest_remove_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/guest-remove-event";
 var guest_join_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/guest-join-event";
 var user_event_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-list";
-var user_zipcode_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/zipcode";
 var user_event_history_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-history";
-
 
 
 /* Function Lookup index
@@ -30,7 +28,7 @@ var user_event_history_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amaz
  * 11. renderUI - Display the list of events to the user in UI
  * 12. getZip - Gets the event list for user's default zipcode
  * 13. joinEvent - Adds the username to the guest list for the event_time
- * 14. join - Calls joinEvent and supplies details to it
+ * 14. loadProfile - After successful login, the profile details to be displayed are updated
  */
 
 
@@ -66,14 +64,8 @@ function addUser(userName, userPassword, firstName, lastName, address_1, address
 function signup() {
 
   //Get the user interest tags supplied by the user during sign up
-  var userInterestsArr = document.getElementById("inte").value.split(/[ ,]+/);
-  var userInterestsArrStr = [];
-  for (var i = 0; i < userInterestsArr.options.length; i++) {
-    if (userInterestsArr.options[i].selected) {
-      userInterestsArrStr.push(userInterestsArr.options[i].label);
-    }
-  }
-//Add user to the database
+  var userInterestsArr = document.getElementById("inte").value.split(/[,]+/);
+  //Add user to the database
   addUser(document.getElementById("inputEmail4").value,
     document.getElementById("inputPassword4").value,
     document.getElementById("inputFName").value,
@@ -91,12 +83,18 @@ function userLogin(username, password) {
   var req = new XMLHttpRequest();
   req.open('POST', user_login_endpoint)
   req.onreadystatechange = function(event) {
-    if (event.target.responseText === 'true' && this.readyState == 4) {
+    res = "";
+    console.log(event.target.response);
+    if (this.readyState == 4)
+      res = JSON.parse(event.target.response);
+    if (res.response === 'true' && this.readyState == 4) {
       localStorage.setItem("username", document.getElementById('username').value);
+      localStorage.setItem("userDetails", event.target.response);
       alert("Successful login");
       location.href = "guest.html"
-    } else if (this.readyState == 4)
+    } else if (this.readyState == 4) {
       alert("Invalid Credentials");
+    }
   };
   req.setRequestHeader('Content-Type', 'application/json');
   var params = {
@@ -108,7 +106,8 @@ function userLogin(username, password) {
 }
 
 function login() {
-  userLogin(document.getElementById('username').value, document.getElementById('password').value);
+  if (document.getElementById('username').value != "" && document.getElementById('password').value != "")
+    userLogin(document.getElementById('username').value, document.getElementById('password').value);
 }
 
 function resetpassword(userName, userPassword, new_password, confirm_Password) {
@@ -144,99 +143,134 @@ function reset() {
 
 }
 
-function createEvent(userName, event_Name, eventZipcode, eventLocation, time, description, tags) {
-  // Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
-  var req = new XMLHttpRequest();
-  req.open('POST', host_create_event_endpoint);
-  req.onreadystatechange = function(event) {
-    if (this.readyState == 4) {
-      console.log(event.target.response);
-      alert("Event Creation Successful");
-    }
-  };
-  var parameters = {
-    username: userName,
-    eventName: event_Name,
-    zipcode: eventZipcode,
-    event_location: eventLocation,
-    event_time: time,
-    desc: description,
-    usertags: tags
-  }
-  req.send(JSON.stringify(parameters));
-}
-
-function create() {
-  let tagsArray = document.getElementById("tags").value.split(/[ ,]+/);
-  console.log(tagsArray);
-  createEvent(localStorage.getItem("username"), document.getElementById("eventname").value,
-    document.getElementById("enterzip").value,
-    document.getElementById("entervenue").value,
-    document.getElementById("entertime").value,
-    document.getElementById("description").value,
-    tagsArray);
-}
-
-
-function guestEventList(_zipcode) {
+function guestEventList() {
   var req = new XMLHttpRequest();
   req.open('POST', user_event_list_endpoint);
   req.onreadystatechange = function(event) {
     if (this.readyState == 4 && event.target.response != "[]") {
-      renderUI(JSON.parse(event.target.response));
+      renderUI(JSON.parse(event.target.response), "blue");
     } else if (this.readyState == 4 && event.target.response == "[]") {
-      alert("Sorry no events found for that zipcode.");
+      document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
+      document.getElementById('searchResults').innerHTML = "Sorry no events found for that zipcode.";
     }
   };
-  var parameters = {
-    zip_code: _zipcode
+  var parameters;
+  document.getElementById('searchResults').innerHTML = "";
+  document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
+  document.getElementById('searchResults').innerHTML = "Sorry no events found for that zipcode.";
+  console.log(document.getElementById('zipcodeInput').value == '' && document.getElementById('tagsInput').value == '');
+  if (document.getElementById('zipcodeInput').value == '' && document.getElementById('tagsInput').value == '') {
+    arr = JSON.parse(localStorage.getItem("userDetails"));
+    console.log(arr.zipcode);
+    parameters = {
+      zip_code: arr.zipcode,
+      interest_tags: ""
+    }
+  } else {
+    parameters = {
+      zip_code: document.getElementById('zipcodeInput').value,
+      interest_tags: document.getElementById('tagsInput').value
+    }
   }
   req.send(JSON.stringify(parameters));
 }
 
-function retrieve() {
-  guestEventList(document.getElementById('zipcode').value);
-}
+function renderUI(arr, color) {
 
-function renderUI(arr) {
-  console.log(arr);
-  document.getElementById('results').innerHTML = "";
   if (arr != null) {
+    console.log(arr);
+    document.getElementById('searchResults').innerHTML = "";
+    if (color != 'green') {
+      document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
+      document.getElementById('searchResults').innerHTML = "Sorry no events found for that zipcode.";
+    }
+    else {
+      document.getElementById("backgroundCard").className = "w3-card w3-container w3-green";
+      document.getElementById('searchResults').innerHTML = "<label>You have not RSVP'ed any event yet<label>";
+    }
+    var flag = 0;
     for (var i = 0; i < arr.length; i++) {
-      document.getElementById('results').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\">1 min</span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"joinEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
+      if (arr[i] != null) {
+        document.getElementById("backgroundCard").className = "w3-card w3-container w3-" + color;
+        if (flag == 0) {
+          document.getElementById('searchResults').innerHTML = "";
+          flag = 1;
+        }
+        if (color == 'blue') {
+          document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"joinEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
+        } else if (color == 'green') {
+          document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-l2 w3-margin-bottom\" onclick=\"cancelEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-down\"></i> Cancel RSVP</button><button type=\"button\" class=\"w3-button w3-theme-d4 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
+
+        }
+      }
     }
   }
-}
-
-function getZip() {
-  var req = new XMLHttpRequest();
-  req.open('POST', user_zipcode_endpoint);
-  req.onreadystatechange = function(event) {
-    if (this.readyState == 4)
-      guestEventList(JSON.parse(event.target.response));
-  };
-  userName = localStorage.getItem("username");
-  var params = {
-    username: userName
-  }
-  req.send(JSON.stringify(params));
 }
 
 function joinEvent(eventID) {
   // Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
   userLoggedIn = localStorage.getItem("username");
-  console.log(userLoggedIn.toString());
-  console.log(eventID.toString());
   var req = new XMLHttpRequest();
   req.open('POST', guest_join_event_endpoint);
   req.onreadystatechange = function(event) {
-    console.log(event.target.response);
-    alert("Added to event")
+
+    if (this.readyState == 4 && event.target.response == 'true') {
+      console.log(event.target.response);
+      alert("Added to event")
+    }
   };
   console.log(eventID);
   var params = {
     username: userLoggedIn.toString(),
     event_id: eventID.toString()
+  }
+  req.send(JSON.stringify(params));
+}
+
+function loadProfile() {
+  //Tags updated
+  arr = JSON.parse(localStorage.getItem("userDetails"));
+  console.log(arr);
+  for (var i = 0; i < arr.interest_tags.length; i++) {
+    document.getElementById("tags").innerHTML += "<span class=\"w3-tag w3-small w3-theme-l" + ((i % 5)) + "\">" + arr.interest_tags[i] + "</span> ";
+  }
+  guestEventList();
+  //Profile name
+  document.getElementById("firstName").innerHTML = arr.firstname + "'s";
+  document.getElementById("address1").innerHTML += arr.address1 + ", " + arr.address2;
+  document.getElementById("email").innerHTML += arr.email;
+
+  //Send Reminders
+  //Function to loop through all events returned by  returnParticipatingEvents
+  //If date is within 1 day of current date, then add the event name to
+}
+
+function returnParticipatingEvents() {
+  userLoggedIn = localStorage.getItem("username");
+  var req = new XMLHttpRequest();
+  req.open('POST', user_event_history_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      return JSON.parse(event.target.response);
+    }
+  };
+  var params = {
+    username: userLoggedIn.toString()
+  }
+  req.send(JSON.stringify(params));
+}
+
+function viewParticipatingEvents() {
+  userLoggedIn = localStorage.getItem("username");
+  var req = new XMLHttpRequest();
+  req.open('POST', user_event_history_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      renderUI(JSON.parse(event.target.response), "green");
+    }
+  };
+  var params = {
+    username: userLoggedIn.toString()
   }
   req.send(JSON.stringify(params));
 }
