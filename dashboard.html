@@ -48,10 +48,7 @@
 
         }
       </style>
-      <button onclick=cancelEvent() class="button button3">CancelEvent </button>
-          width: 130px;
-        }
-      </style>
+
 
       <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
         <img src="img/avatar2.png" class="w3-circle" style="height:23px;width:23px" alt="Avatar">
@@ -68,10 +65,14 @@
 
 
   <div class="w3-container w3-theme-d3" style="padding-top:60px; padding-bottom:20px; padding-left:10px; height:1500px; overflow:auto;">
-    <div class="w3-container w3-third w3-theme-d3"  style="width:40%;overflow:auto;padding-top:10px; padding-bottom:20px; padding-left:0px; padding-right:0px;">
+    <div class="w3-container w3-third w3-theme-d3" style="width:40%;overflow:auto;padding-top:10px; padding-bottom:20px; padding-left:0px; padding-right:0px;">
       <div class="w3-third w3-theme-d2 w3-card" style=" padding:15px; overflow: auto;">
-	<h4><div class="w3-button w3-theme-d5" onclick="retrieveHostEventList()">Host</div><div class="w3-button w3-theme-d5" onclick="hostContributeList()">Contribute</div></h4>
-       <br> <a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Create Event" onclick="eventmanager()"><i class="fa fa-plus"></i></a>
+        <h4>
+          <div class="w3-button w3-theme-d5" onclick="retrieveHostEventList()">Host</div>
+          <div class="w3-button w3-theme-d5" onclick="hostContributeList()">Contribute</div>
+        </h4>
+        <br> <a class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Create Event"
+          onclick="eventmanager()"><i class="fa fa-plus"></i></a>
 
         <p id="eventList"></p>
       </div>
@@ -119,7 +120,7 @@
       </div>
       <p id="tagsOutput">
 
-    </p>
+      </p>
     </div>
 
 
