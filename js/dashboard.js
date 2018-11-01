@@ -25,6 +25,8 @@ var host_cancel_event_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/delete-host-event";
 var host_event_details_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-details";
+  var host_send_message_endpoint =
+    "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/send-message";
 var taskArr;
 
 function cancelEvent() {
@@ -424,6 +426,24 @@ function retrieveTasks() {
   var parameters = {
     event_id: localStorage.getItem("currentEvent"),
     contributor_username: document.getElementById("contributor_username").value
+  };
+  req.send(JSON.stringify(parameters));
+}
+
+function sendMessage()
+{
+  var req = new XMLHttpRequest();
+  req.open("POST", host_send_message_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4 && event.target.response == "true") {
+      alert("Sent message successfully");
+    } else if (this.readyState == 4) {
+      alert("Sorry resource unavailable");
+    }
+  };
+  var parameters = {
+    event_id: localStorage.getItem("currentEvent"),
+    message: document.getElementById("message").value
   };
   req.send(JSON.stringify(parameters));
 }

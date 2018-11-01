@@ -11,7 +11,7 @@
   <script type="text/javascript" src="js/dashboard.js"></script>
 </head>
 
-<body class="w3-theme-l5" onload="retrieveHostEventList()">
+<body class="w3-theme-d1 bg-success" onload="retrieveHostEventList()">
   <div class="w3-top">
     <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
       <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2"
@@ -33,7 +33,7 @@
 
       <style>
         .button3 {
-          background-color: #862d2d;
+          background-color: red;
           border: none;
           color: white;
           padding: 10px 12px;
@@ -65,8 +65,8 @@
 
 
   <div class="w3-container w3-theme-d3" style="padding-top:60px; padding-bottom:20px; padding-left:10px; height:1500px; overflow:auto;">
-    <div class="w3-container w3-third w3-theme-d3" style="width:40%;overflow:auto;padding-top:10px; padding-bottom:20px; padding-left:0px; padding-right:0px;">
-      <div class="w3-third w3-theme-d2 w3-card" style=" padding:15px; overflow: auto;">
+    <div class="w3-container w3-third w3-theme-d3" style="overflow:auto;padding-top:10px; padding-bottom:20px; padding-left:0px; padding-right:0px;">
+      <div class="w3-third w3-theme-d2 w3-card" style="width:50%;padding:15px; overflow: auto;">
         <h4>
           <div class="w3-button w3-theme-d5" onclick="retrieveHostEventList()">Host</div>
           <div class="w3-button w3-theme-d5" onclick="hostContributeList()">Contribute</div>
@@ -111,6 +111,8 @@
       <div class="w3-bar-block w3-theme-d3" style="overflow:auto">
         <div class="w3-card w3-theme-d4" style="padding-left:5%">
           <h3>Guests</h3>
+          <input id="message" placeholder="Enter message to send" class="form-control"></input>
+          <button type="button" class="btn btn-primary" onclick="sendMessage()">Send</button>
         </div>
         <p id="hostEventGuestList"></p>
 

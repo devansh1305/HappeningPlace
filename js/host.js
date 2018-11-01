@@ -12,6 +12,7 @@ var guest_remove_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amaz
 var guest_join_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/guest-join-event";
 var user_event_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-list";
 var user_event_history_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-history";
+var guest_get_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-get-messages";
 
 
 /* Function Lookup index
@@ -158,10 +159,10 @@ function guestEventList() {
   document.getElementById('searchResults').innerHTML = "";
   document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
   document.getElementById('searchResults').innerHTML = "Sorry no events found for that zipcode.";
-  console.log(document.getElementById('zipcodeInput').value == '' && document.getElementById('tagsInput').value == '');
+  //console.log(document.getElementById('zipcodeInput').value == '' && document.getElementById('tagsInput').value == '');
   if (document.getElementById('zipcodeInput').value == '' && document.getElementById('tagsInput').value == '') {
     arr = JSON.parse(localStorage.getItem("userDetails"));
-    console.log(arr.zipcode);
+    //console.log(arr.zipcode);
     parameters = {
       zip_code: arr.zipcode,
       interest_tags: ""
@@ -178,7 +179,7 @@ function guestEventList() {
 function renderUI(arr, color) {
 
   if (arr != null) {
-    console.log(arr);
+    //console.log(arr);
     document.getElementById('searchResults').innerHTML = "";
     if (color != 'green') {
       document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
@@ -230,7 +231,6 @@ function joinEvent(eventID) {
 function loadProfile() {
   //Tags updated
   arr = JSON.parse(localStorage.getItem("userDetails"));
-  console.log(arr);
   for (var i = 0; i < arr.interest_tags.length; i++) {
     document.getElementById("tags").innerHTML += "<span class=\"w3-tag w3-small w3-theme-l" + ((i % 5)) + "\">" + arr.interest_tags[i] + "</span> ";
   }
@@ -279,7 +279,7 @@ function cancelEvent(eventID) {
   var req = new XMLHttpRequest();
   req.open('POST', guest_remove_event_endpoint);
   req.onreadystatechange = function(event) {
-    if(this.readyState == 4) {
+    if(this.readyState == 4 && event.target.response!='false') {
       return JSON.parse(event.target.response);
     }
     viewParticipatingEvents();
@@ -288,6 +288,27 @@ function cancelEvent(eventID) {
   var params = {
     username: localStorage.getItem("username"),
     eventID: event_id
+  };
+  req.send(JSON.stringify(params));
+}
+
+function displayMessages()
+{
+  document.getElementById("backgroundCard").className = "w3-card w3-container w3-yellow";
+  document.getElementById("searchResults").innerHTML = "<h3>Your Messages</h3>"
+  var req = new XMLHttpRequest();
+  req.open('POST', guest_get_message_endpoint);
+  req.onreadystatechange = function(event) {
+    if(this.readyState == 4 && event.target.response!='false') {
+
+      arr = JSON.parse(event.target.response);
+      for(var i in arr.message_list)
+      document.getElementById("searchResults").innerHTML += arr.message_list[i]+"<br>";
+
+    }
+  };
+  var params = {
+    username: localStorage.getItem("username")
   };
   req.send(JSON.stringify(params));
 }
