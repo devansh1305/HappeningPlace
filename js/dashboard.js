@@ -22,7 +22,7 @@ var event_add_task_endpoint =
 var event_add_contributor_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-add-contributor";
 var host_cancel_event_endpoint =
-  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1";
+  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/delete-host-event";
 var host_event_details_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-details";
 var taskArr;
@@ -31,13 +31,17 @@ function cancelEvent() {
   var req = new XMLHttpRequest();
   req.open("POST", host_cancel_event_endpoint);
   req.onreadystatechange = function(event) {
+    console.log(event.target.response);
     if (this.readyState == 4) {
       return JSON.parse(event.target.response);
     }
+    retrieveHostEventList();
+    document.getElementById("createEvent").innerHTML = "";
   };
-  event_id = localStorage.getItem("eventID");
+  event_id = localStorage.getItem("currentEvent");
+  console.log(event_id);
   var parameters = {
-    eventID: event_id.toString();
+    event_id: event_id
   };
   req.send(JSON.stringify(parameters));
 }
@@ -126,8 +130,7 @@ function openNav() {
     document.getElementById("hostEventGuestList").innerHTML = text;
   }*/
 
-function hostguestlist() {
-  var host_guest_list = ["hemanth", "rahul", "harish"];
+function hostguestlist(host_guest_list) {
   text = "";
   for (i = 0; i < host_guest_list.length; i++) {
     text +=
@@ -159,7 +162,7 @@ function displayEventDetails() {
       arg = JSON.parse(event.target.response);
       var text = "";
       text +=
-        '<button class="button button3 w3-right" title="Cancel Event">Cancel Event</button><br>';
+        '<button class="button button3 w3-right" title="Cancel Event" onclick="cancelEvent()">Cancel Event</button><br>';
       text +=
         "<h2>" +
         arg[0] +
@@ -180,6 +183,7 @@ function displayEventDetails() {
           arg[5][i] +
           "</div>";
       //arg[6] is guest List
+      hostguestlist(arg[6]);
     }
   };
   var parameters = {
@@ -208,6 +212,7 @@ function displayHostEventDetails(currentEvent) {
         }
       }
       document.getElementById("tasks").innerHTML = task;
+      //hostguestlist(arg[6]);
     }
   };
   var parameters = {
