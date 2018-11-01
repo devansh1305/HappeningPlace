@@ -25,9 +25,15 @@ var host_cancel_event_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/delete-host-event";
 var host_event_details_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-details";
-  var host_send_message_endpoint =
-    "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/send-message";
+var host_send_message_endpoint =
+  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/send-message";
+var user_details_endpoint = 
+  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/get-user-profile";
+
 var taskArr;
+
+
+
 
 function cancelEvent() {
   var req = new XMLHttpRequest();
@@ -147,7 +153,7 @@ function hostguestlist(host_guest_list) {
 }
 
 function userDetailsBackend(){
-console.log("hi");
+
 
 }
 
