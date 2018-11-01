@@ -33,6 +33,20 @@ var user_details_endpoint =
 var taskArr;
 
 
+function retrieveUserDetails() {
+  var req = new XMLHttpRequest();
+  req.open("POST", user_details_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      loadHostEventList(JSON.parse(event.target.response));
+    }
+  };
+  userName = localStorage.getItem("username");
+  var parameters = {
+    username: userName
+  };
+  req.send(JSON.stringify(parameters));
+}
 
 
 function cancelEvent() {
