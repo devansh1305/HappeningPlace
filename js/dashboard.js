@@ -338,7 +338,7 @@ function displayTaskDetails(eventID) {
 
   text =
     text +
-    '<div class="w3-bar-item w3-hover-white w3-right w3-button w3-card-2 w3-medium w3-theme-d4" title="Remove Task"><i class="fa fa-close"></i></div><br>';
+    '<button type="button" class="w3-button w3-theme-d1 w3-right" onclick="cancel()">Cancel</button><br>';
   text +=
     "<h2>" +
     eventID +
@@ -349,7 +349,7 @@ function displayTaskDetails(eventID) {
   text +=
     '<input class="w3-input" type="text" placeholder="Contributor e-mail ID" id="contributor_username">';
   text +=
-    '<br><button type="button" class="w3-button w3-theme-d1" >Add Contributor</button>&nbsp<button type="button" class="w3-button w3-theme-d1" onclick="cancel()">Cancel</button></div>';
+    '<br><button type="button" class="w3-button w3-theme-d1" >Add Contributor</button>&nbsp</div>';
 
   text +=
     '<div class="w3-card-3 w3-theme-d3" style="padding:5px"><input class="w3-input" type="text" placeholder="Enter Subtask Name" id="subtaskname">';
