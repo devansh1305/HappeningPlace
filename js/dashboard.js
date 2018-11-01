@@ -29,7 +29,8 @@ var host_send_message_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/send-message";
 var user_details_endpoint = 
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/get-user-profile";
-
+var task_add_contributor_endpoint=
+  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/add-contributor-to-task";
 var taskArr;
 
 
@@ -401,9 +402,9 @@ function displayTaskDetails(eventID) {
   text +=
     '<div class="w3-display-container w3-panel w3-theme-d3" style="padding:0px;">';
   text +=
-    '<input class="w3-input" type="text" placeholder="Contributor e-mail ID" id="contributor_username">';
+    '<input class="w3-input" type="text" placeholder="Contributor e-mail ID" id="contributor_id_from_task">';
   text +=
-    '<br><button type="button" class="w3-button w3-theme-d1" >Add Contributor</button>&nbsp</div>';
+    '<br><button type="button" class="w3-button w3-theme-d1" onclick="addContributorToTask(\''+eventID + '\')">Add Contributor</button>&nbsp</div>';
 
   text +=
     '<div class="w3-card-3 w3-theme-d3" style="padding:5px"><input class="w3-input" type="text" placeholder="Enter Subtask Name" id="subtaskname">';
@@ -415,6 +416,30 @@ function displayTaskDetails(eventID) {
   document.getElementById("createEvent").innerHTML = text;
 }
 
+
+function addContributorToTask(taskid){
+var req = new XMLHttpRequest();
+  req.open("POST", task_add_contributor_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4 && event.target.response == "true") {
+      alert("Task added successfully");
+    } else if (this.readyState == 4) {
+	console.log(event.target.response);
+      alert("Sorry resource unavailable");
+    }
+  };
+  var parameters = {
+	task_id: taskid,
+    contributor_username: document.getElementById("contributor_id_from_task").value
+	
+  };
+  req.send(JSON.stringify(parameters));
+}
+
+
+
+
+/*
 function displayContributorDetails(contributerName) {
   var text = '<div class="w3-theme-d3 w3-card-3"> ';
   text +=
@@ -424,7 +449,7 @@ function displayContributorDetails(contributerName) {
   text += "</div><H3>&nbsp&nbspTask Assigned</h3>";
   text += "</div>";
   document.getElementById("createEvent").innerHTML = text;
-}
+}*/
 
 function retrieveHostEventList() {
   var req = new XMLHttpRequest();
