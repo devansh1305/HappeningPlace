@@ -33,20 +33,6 @@ var user_details_endpoint =
 var taskArr;
 
 
-function retrieveUserDetails() {
-  var req = new XMLHttpRequest();
-  req.open("POST", user_details_endpoint);
-  req.onreadystatechange = function(event) {
-    if (this.readyState == 4) {
-      loadHostEventList(JSON.parse(event.target.response));
-    }
-  };
-  userName = localStorage.getItem("username");
-  var parameters = {
-    username: userName
-  };
-  req.send(JSON.stringify(parameters));
-}
 
 
 function cancelEvent() {
@@ -157,7 +143,7 @@ function hostguestlist(host_guest_list) {
   text = "";
   for (i = 0; i < host_guest_list.length; i++) {
     text +=
-      '<div class="w3-bar-item w3-hover-white w3-button w3-card" title="guest email" onclick="userDetails(\'' +
+      '<div class="w3-bar-item w3-hover-white w3-button w3-card" title="guest email" onclick="retrieveUserDetails(\'' 		+
       host_guest_list[i] +
       '\')">' +
       host_guest_list[i] +
@@ -166,20 +152,45 @@ function hostguestlist(host_guest_list) {
   document.getElementById("hostEventGuestList").innerHTML = text;
 }
 
-function userDetailsBackend(){
 
 
+
+function userDetails(arr){
+
+
+ var text="<div class=\"w3-card-4 w3-theme-d4\"><h2>&nbsp&nbsp"+arr.firstname+" "+arr.lastname+"<h2></div>";
+text+="<div class=\"w3-card-4 w3-theme-d2\"><h3>&nbsp&nbspCity: "+arr.city+"<h3>";
+text+="<h3>&nbsp&nbspInterest: "+arr.interest_tags[0]+"<br>";
+
+
+for(var i=1;i<arr.interest_tags.length;i++){
+text+="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+arr.interest_tags[i]+"<br>";
 }
+text+="</h3>";
 
 
-function userDetails(email){
- var text="<div class=\"w3-card-4 w3-theme-d4\"><h2>&nbsp&nbsp"+email+"<h2></div>";
-text+="<div class=\"w3-card-4 w3-theme-d2\"><h3>&nbsp&nbspHello there<h3></div>";
 
+text+="</div>"
       document.getElementById("createEvent").innerHTML = text;
 
 }
 
+
+
+function retrieveUserDetails(email) {
+  var req = new XMLHttpRequest();
+  req.open("POST", user_details_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      userDetails(JSON.parse(event.target.response));
+    }
+  };
+
+  var parameters = {
+    username: email
+  };
+  req.send(JSON.stringify(parameters));
+}
 
 
 
@@ -273,7 +284,7 @@ function displayHostEventDetails(currentEvent) {
       if (contributorArr != null) {
         for (var i = 0; i < contributorArr.length; i++) {
           contributor +=
-            '<button class="w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2" onclick="displayContributorDetails(\'' +
+            '<button class="w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2" onclick="retrieveUserDetails(\'' +
             contributorArr[i][1] +
             "');\" >" +
             contributorArr[i][0] +
