@@ -274,3 +274,20 @@ function viewParticipatingEvents() {
   }
   req.send(JSON.stringify(params));
 }
+
+function cancelEvent(eventID) {
+  var req = new XMLHttpRequest();
+  req.open('POST', guest_remove_event_endpoint);
+  req.onreadystatechange = function(event) {
+    if(this.readyState == 4) {
+      return JSON.parse(event.target.response);
+    }
+    viewParticipatingEvents();
+  };
+  event_id = eventID
+  var params = {
+    username: localStorage.getItem("username"),
+    eventID: event_id
+  };
+  req.send(JSON.stringify(params));
+}
