@@ -282,7 +282,9 @@ function setReminders()
     var req = new XMLHttpRequest();
     req.open('POST', user_event_history_endpoint);
     req.onreadystatechange = function(event) {
-      if (this.readyState == 4) {
+    
+	   if (this.readyState == 4) {
+		   console.log(event.target.response);
         arr=JSON.parse(event.target.response);
 	     for(var i in arr)
 	      {
@@ -296,7 +298,7 @@ function setReminders()
       }
     };
     var params = {
-      username: userLoggedIn.toString()
+	    username: localStorage.getItem("username")
     }
     req.send(JSON.stringify(params));
 }
