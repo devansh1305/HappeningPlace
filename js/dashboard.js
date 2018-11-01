@@ -134,14 +134,32 @@ function hostguestlist(host_guest_list) {
   text = "";
   for (i = 0; i < host_guest_list.length; i++) {
     text +=
-      '<div class="w3-bar-item w3-hover-white w3-button w3-card" title="guest email" onclick="hostguestlistonclick(' +
-      i +
-      ')">' +
+      '<div class="w3-bar-item w3-hover-white w3-button w3-card" title="guest email" onclick="userDetails(\'' +
+      host_guest_list[i] +
+      '\')">' +
       host_guest_list[i] +
       "</div>";
   }
   document.getElementById("hostEventGuestList").innerHTML = text;
 }
+
+funtction userDetailsBackend(){
+
+
+}
+
+
+function userDetails(email){
+ var text="<div class=\"w3-card-4 w3-theme-d4\"><h2>&nbsp&nbsp"+email+"<h2></div>";
+text+="<div class=\"w3-card-4 w3-theme-d2\"><h3>&nbsp&nbspHello there<h3></div>";
+
+      document.getElementById("createEvent").innerHTML = text;
+
+}
+
+
+
+
 
 function hostContributeList() {
   var arr = ["contribute1", "contribute2", "contribute3"];
