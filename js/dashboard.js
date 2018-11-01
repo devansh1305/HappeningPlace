@@ -160,13 +160,17 @@ function userDetails(arr){
 
  var text="<div class=\"w3-card-4 w3-theme-d4\"><h2>&nbsp&nbsp"+arr.firstname+" "+arr.lastname+"<h2></div>";
 text+="<div class=\"w3-card-4 w3-theme-d2\"><h3>&nbsp&nbspCity: "+arr.city+"<h3>";
-text+="<h3>&nbsp&nbspInterst: "+arr.interest_tags[0]+"<br>";
+text+="<h3>&nbsp&nbspInterest: "+arr.interest_tags[0]+"<br>";
 
 
 for(var i=1;i<arr.interest_tags.length;i++){
-text+="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+arr.interest_tags[i]+"<br>";
+text+="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+arr.interest_tags[i]+"<br>";
 }
-text+="</h3></div>"
+text+="</h3>";
+
+
+
+text+="</div>"
       document.getElementById("createEvent").innerHTML = text;
 
 }
