@@ -284,6 +284,15 @@ function setReminders()
     req.onreadystatechange = function(event) {
       if (this.readyState == 4) {
         arr=JSON.parse(event.target.response);
+	     for(var i in arr)
+	      {
+		      	var eventTime = new Date(arr[i].date+", "+arr[i].time);
+		      	if(eventTime - (new Date) < 86400000)
+		      	{
+				alert(arr[i].name);
+			}
+
+		}
       }
     };
     var params = {
