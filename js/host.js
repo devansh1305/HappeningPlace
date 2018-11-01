@@ -284,6 +284,7 @@ function setReminders()
     req.onreadystatechange = function(event) {
     
 	   if (this.readyState == 4) {
+		   document.getElementById('notifications').innerHTML = "";
 		   console.log(event.target.response);
         arr=JSON.parse(event.target.response);
 	     for(var i in arr)
@@ -291,7 +292,7 @@ function setReminders()
 		      	var eventTime = new Date(arr[i].date+", "+arr[i].time);
 		      	if(eventTime - (new Date) < 86400000)
 		      	{
-				alert(arr[i].name);
+				document.getElementById('notifications').innerHTML += '<a href="#" class="w3-bar-item w3-button">'+arr[i].name+'</a>';
 			}
 
 		}
