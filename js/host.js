@@ -235,6 +235,7 @@ function loadProfile() {
     document.getElementById("tags").innerHTML += "<span class=\"w3-tag w3-small w3-theme-l" + ((i % 5)) + "\">" + arr.interest_tags[i] + "</span> ";
   }
   guestEventList();
+  setReminders();
   //Profile name
   document.getElementById("firstName").innerHTML = arr.firstname + "'s";
   document.getElementById("address1").innerHTML += arr.address1 + ", " + arr.address2;
@@ -273,6 +274,22 @@ function viewParticipatingEvents() {
     username: userLoggedIn.toString()
   }
   req.send(JSON.stringify(params));
+}
+
+function setReminders()
+{
+    userLoggedIn = localStorage.getItem("username");
+    var req = new XMLHttpRequest();
+    req.open('POST', user_event_history_endpoint);
+    req.onreadystatechange = function(event) {
+      if (this.readyState == 4) {
+        arr=JSON.parse(event.target.response);
+      }
+    };
+    var params = {
+      username: userLoggedIn.toString()
+    }
+    req.send(JSON.stringify(params));
 }
 
 function cancelEvent(eventID) {

@@ -85,6 +85,7 @@ function create() {
     document.getElementById("enterzip").value,
     document.getElementById("entervenue").value,
     document.getElementById("entertime").value,
+    document.getElementById("enterdate").value,
     document.getElementById("description").value,
     tagsArray
   );
@@ -203,6 +204,7 @@ function displayEventDetails() {
           arg[5][i] +
           "</div>";
       //arg[6] is guest List
+      if(arg[6]!=null)
       hostguestlist(arg[6]);
     }
   };
@@ -289,7 +291,7 @@ function createEvent(
   event_Name,
   eventZipcode,
   eventLocation,
-  time,
+  time,date,
   description,
   tags
 ) {
@@ -310,6 +312,7 @@ function createEvent(
     zipcode: eventZipcode,
     event_location: eventLocation,
     event_time: time,
+    event_date: date,
     desc: description,
     usertags: tags
   };
