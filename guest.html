@@ -20,7 +20,7 @@
       <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
       <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4"><i class="fa fa-home w3-margin-right"></i>Happening Place</a>
       <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
-      <a href="dashboard.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
+      <a href="dashboard.html" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Switch to host"><i class="fa fa-refresh"></i></a>
       <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
       <div class="w3-dropdown-hover w3-hide-small">
         <button class="w3-button w3-padding-large" title="Notifications"><i class="fa fa-bell"></i><span class="w3-badge w3-right w3-small w3-green">3</span></button>
@@ -122,6 +122,10 @@
           <p><strong>Hey!</strong></p>
           <p>Meet and interact with new people. Expand your horizon. Sign up for an event now.</p>
         </div>
+
+
+	<div class="w3-button w3-theme-d3" onclick="timeLine()">Show Timeline</div>
+	
 
         <!-- End Left Column -->
       </div>
@@ -265,6 +269,15 @@
         x.className = x.className.replace(" w3-show", "");
       }
     }
+
+
+function timeLine(){	
+	var text="";
+	for(var i=0;i<3;i++){
+	text+="<div class=\"w3-theme-d1 w3-card-4\"><h2>&nbsp"+i+"<h2></div><br>";
+	}
+	document.getElementById("searchResults").innerHTML=text;
+}
   </script>
 
 </body>
