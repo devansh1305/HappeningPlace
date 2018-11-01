@@ -145,8 +145,8 @@ function hostguestlist(host_guest_list) {
   document.getElementById("hostEventGuestList").innerHTML = text;
 }
 
-funtction userDetailsBackend(){
-
+function userDetailsBackend(){
+console.log("hi");
 
 }
 
