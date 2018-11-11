@@ -509,3 +509,25 @@ function sendMessage()
   };
   req.send(JSON.stringify(parameters));
 }
+
+
+/* not done yet*/
+function seeProfile()
+{
+  var req = new XMLHttpRequest();
+  req.open("POST", host_send_message_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4 && event.target.response == "true") {
+      alert("Sent message successfully");
+    } else if (this.readyState == 4) {
+      alert("Sorry resource unavailable");
+    }
+  };
+  var parameters = {
+    event_id: localStorage.getItem("currentEvent"),
+    message: document.getElementById("message").value
+  };
+  req.send(JSON.stringify(parameters));
+}
+
+
