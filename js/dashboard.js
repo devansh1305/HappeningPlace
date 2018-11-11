@@ -436,21 +436,6 @@ var req = new XMLHttpRequest();
   req.send(JSON.stringify(parameters));
 }
 
-
-
-
-/*
-function displayContributorDetails(contributerName) {
-  var text = '<div class="w3-theme-d3 w3-card-3"> ';
-  text +=
-    '<div class="w3-theme-d4 w3-card-3"><H3>&nbsp&nbsp' +
-    contributerName +
-    "</h3>";
-  text += "</div><H3>&nbsp&nbspTask Assigned</h3>";
-  text += "</div>";
-  document.getElementById("createEvent").innerHTML = text;
-}*/
-
 function retrieveHostEventList() {
   var req = new XMLHttpRequest();
   req.open("POST", host_event_list_endpoint);

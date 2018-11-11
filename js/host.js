@@ -107,8 +107,9 @@ function userLogin(username, password) {
 }
 
 function login() {
-  if (document.getElementById('username').value != "" && document.getElementById('password').value != "")
+  if (document.getElementById('username').value != "" && document.getElementById('password').value != "") {
     userLogin(document.getElementById('username').value, document.getElementById('password').value);
+  }
 }
 
 function resetpassword(userName, userPassword, new_password, confirm_Password) {
@@ -122,7 +123,8 @@ function resetpassword(userName, userPassword, new_password, confirm_Password) {
   req.onreadystatechange = function(event) {
     if (this.readyState == 4 && event.target.response === "true") {
       alert("Reset successful");
-    } else if (this.readyState == 4) {
+    } 
+    else if (this.readyState == 4) {
       alert("Invalid account");
     }
   };
@@ -141,7 +143,6 @@ function reset() {
     document.getElementById("new_inputPassword").value,
     document.getElementById("confirm_Password").value
   );
-
 }
 
 function guestEventList() {
