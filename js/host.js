@@ -194,6 +194,9 @@ function renderUI(arr, color) {
     for (var i = 0; i < arr.length; i++) {
       if (arr[i] != null) {
         document.getElementById("backgroundCard").className = "w3-card w3-container w3-" + color;
+
+
+
         if (flag == 0) {
           document.getElementById('searchResults').innerHTML = "";
           flag = 1;
@@ -201,13 +204,38 @@ function renderUI(arr, color) {
         if (color == 'blue') {
           document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"joinEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
         } else if (color == 'green') {
+
+	
+
+
+
           document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-l2 w3-margin-bottom\" onclick=\"cancelEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-down\"></i> Cancel RSVP</button><button type=\"button\" class=\"w3-button w3-theme-d4 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
+
+
+document.getElementById('searchResults').innerHTML +="<h1><div class=\"w3-right w3-margin\" id=\"stars\" style\"padding:30px\"><span class=\"fa fa-star checked\" onclick=\"star(1)\"></span><span class=\"fa fa-star checked\"onclick=\"star(2)\"></span><span class=\"fa fa-star checked\"onclick=\"star(3)\"></span><span class=\"fa fa-star\" onclick=\"star(4)\"></span><span class=\"fa fa-star\" onclick=\"star(5)\"></span></div><h1>"
+
 
         }
       }
     }
   }
 }
+
+function star(number){
+var i=1;
+document.getElementById('stars').innerHTML =""
+for(;i<=number;i++){
+document.getElementById('stars').innerHTML +="<span class=\"fa fa-star checked\" onclick=\"star("+i+")\"></span>"
+}
+
+for(i=number+1;i<=5;i++){
+document.getElementById('stars').innerHTML +="<span class=\"fa fa-star\" onclick=\"star("+i+")\"></span>"
+}
+
+
+}
+
+
 
 function joinEvent(eventID) {
   // Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
