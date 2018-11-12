@@ -156,6 +156,8 @@ function hostguestlist(host_guest_list) {
 
 
 
+
+
 function userDetails(arr){
 
 
@@ -170,8 +172,11 @@ text+="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nb
 text+="</h3>";
 
 
-
 text+="</div>"
+
+
+text+="<input id=\"message\" placeholder=\"Enter message to send\" class=\"form-control\" style=\" width:100%\"></input><button type=\"button\" class=\"btn btn-primary\">Send</button>";
+
       document.getElementById("createEvent").innerHTML = text;
 
 }
@@ -301,6 +306,9 @@ function displayHostEventDetails(currentEvent) {
   req2.send(JSON.stringify(parameters2));
 }
 
+
+
+
 function addContributor() {
   var req = new XMLHttpRequest();
   req.open("POST", event_add_contributor_endpoint);
@@ -317,6 +325,9 @@ function addContributor() {
   };
   req.send(JSON.stringify(parameters));
 }
+
+
+
 
 function createEvent(
   userName,
@@ -417,6 +428,8 @@ function displayTaskDetails(eventID) {
 }
 
 
+
+
 function addContributorToTask(taskid){
 var req = new XMLHttpRequest();
   req.open("POST", task_add_contributor_endpoint);
@@ -436,6 +449,9 @@ var req = new XMLHttpRequest();
   req.send(JSON.stringify(parameters));
 }
 
+
+
+
 function retrieveHostEventList() {
   var req = new XMLHttpRequest();
   req.open("POST", host_event_list_endpoint);
@@ -450,6 +466,9 @@ function retrieveHostEventList() {
   };
   req.send(JSON.stringify(parameters));
 }
+
+
+
 
 function addTask() {
   var req = new XMLHttpRequest();
@@ -528,6 +547,11 @@ function seeProfile()
     message: document.getElementById("message").value
   };
   req.send(JSON.stringify(parameters));
+}
+
+
+function messagecontributor(){
+
 }
 
 
