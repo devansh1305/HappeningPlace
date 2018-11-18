@@ -13,6 +13,9 @@ var guest_join_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazon
 var user_event_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-list";
 var user_event_history_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-history";
 var guest_get_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-get-messages";
+var user_details_endpoint = 
+  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/get-user-profile";
+
 
 
 /* Function Lookup index
@@ -30,6 +33,7 @@ var guest_get_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazo
  * 12. getZip - Gets the event list for user's default zipcode
  * 13. joinEvent - Adds the username to the guest list for the event_time
  * 14. loadProfile - After successful login, the profile details to be displayed are updated
+ * 15. getUserProfile - get details of a user through EMAIL ID and display them
  */
 
 
@@ -369,4 +373,23 @@ function displayMessages()
     username: localStorage.getItem("username")
   };
   req.send(JSON.stringify(params));
+}
+
+
+
+
+function returnGetUserProfile(){
+var email=document.getElementById("searchUserInput").value;
+var req = new XMLHttpRequest();
+  req.open("POST", user_details_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      getUserProfile(JSON.parse(event.target.response));
+    }
+  };
+
+  var parameters = {
+    username: email
+  };
+  req.send(JSON.stringify(parameters));
 }

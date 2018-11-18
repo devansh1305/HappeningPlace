@@ -146,6 +146,14 @@
 
         <div class="w3-row-padding">
           <div class="w3-col m12">
+	     <div class="w3-card w3-round w3-white">
+              <div class="w3-container w3-padding">
+                <h6 class="w3-opacity">Search for Users</h6>
+                <input contenteditable="true" class="w3-border w3-padding" placeholder="Enter User's Email ID" id="searchUserInput" style="width:75%" default="0"></input><br><br>
+                <button type="button" class="w3-button w3-theme" onclick="returnGetUserProfile()"><i class="fa fa-pencil"></i> Retrieve</button>
+              </div>
+            </div>
+	    <br>
             <div class="w3-card w3-round w3-white">
               <div class="w3-container w3-padding">
                 <h6 class="w3-opacity">Search for events</h6>
@@ -270,6 +278,28 @@
           x.previousElementSibling.className.replace(" w3-theme-d1", "");
       }
     }
+
+
+
+   //Used to find the details of any guest by entering their EMAIL ID
+
+function getUserProfile(arr){
+
+ var text="<div class=\"w3-card-4 w3-theme-d2\"><h2>&nbsp&nbsp"+arr.firstname+" "+arr.lastname+"<h2>";
+text+="<h3>&nbsp&nbspCity: "+arr.city+"<h3>";
+text+="<h3>&nbsp&nbspInterest: "+arr.interest_tags[0]+"<br>";
+
+for(var i=1;i<arr.interest_tags.length;i++){
+text+="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+arr.interest_tags[i]+"<br>";
+}
+text+="</h3>";
+text+="</div>"
+
+text+="<div><button class=\"w3-button w3-theme-d1 w3-hover-opacity\">follow</button></div>";
+
+
+      document.getElementById("searchResults").innerHTML = text;
+}
 
     // Used to toggle the menu on smaller screens when clicking on the menu button
     function openNav() {
