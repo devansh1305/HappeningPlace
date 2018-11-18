@@ -271,7 +271,7 @@ function loadProfile() {
   setReminders();
   //Profile name
   document.getElementById("firstName").innerHTML = arr.firstname + "'s";
-  document.getElementById("address1").innerHTML += arr.address1 + ", " + arr.address2;
+  document.getElementById("address1").innerHTML += arr.address1 + ", " + arr.address2+", "+arr.city;
   document.getElementById("email").innerHTML += arr.email;
 
   //Send Reminders
