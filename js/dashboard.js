@@ -27,7 +27,7 @@ var host_event_details_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-details";
 var host_send_message_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/send-message";
-var user_details_endpoint = 
+var user_details_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/get-user-profile";
 var task_add_contributor_endpoint=
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/add-contributor-to-task";
@@ -219,20 +219,21 @@ function displayEventDetails() {
     if (this.readyState == 4) {
       arg = JSON.parse(event.target.response);
       var text = "";
-      text +=
-        '<button class="button button3 w3-right" title="Cancel Event" onclick="cancelEvent()">Cancel Event</button><br>';
+      var cancelButton = "<button class=\"w3-button w3-theme-d5\" onclick=\"viewEventMessages()\"> Messages </button>&nbsp<button class=\"w3-button w3-theme-d5\" onclick=\"sendInvitations()\"> Invitations </button>&nbsp";
+      cancelButton += '<button class="w3-button w3-theme-d5" title="Cancel Event" onclick="cancelEvent()">Cancel Event</button><br>';
       text +=
         "<h2>" +
         arg[0] +
         '</h2><h3 class="w3-card-4 w3-theme-d5">&nbsp&nbspEvent Details</h3><div class="w3-theme-d3 w3-card-2" style="padding:10px">';
       text +=
-        "<h5>Location:" +
+        "<h5>Location                 :" +
         arg[2] +
-        "</h5><h5>Time:" +
+        "</h5><h5>Time        :" +
         arg[4] +
-        "</h5><h5>Description:" +
+        "</h5><h5>Description :" +
         arg[3] +
         "</h5></div>";
+      document.getElementById("menu").innerHTML = cancelButton;
       document.getElementById("createEvent").innerHTML = text;
       document.getElementById("tagsOutput").innerHTML = "";
       for (var i in arg[5])
@@ -444,7 +445,7 @@ var req = new XMLHttpRequest();
   var parameters = {
 	task_id: taskid,
     contributor_username: document.getElementById("contributor_id_from_task").value
-	
+
   };
   req.send(JSON.stringify(parameters));
 }
@@ -553,5 +554,3 @@ function seeProfile()
 function messagecontributor(){
 
 }
-
-
