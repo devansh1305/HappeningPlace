@@ -59,7 +59,7 @@ function eventmanager() {
   document.getElementById("createEvent").innerHTML =
     '<div class="w3-display-container w3-panel w3-theme-d3" style="padding:0px;">';
   document.getElementById("createEvent").innerHTML +=
-    '<input class="w3-input" type="text" placeholder="Event Name" id="eventname"><br><input class="w3-input" type="text" placeholder="Enter Date" id="enterdate"><br><input class="w3-input" type="text" placeholder="Enter Time" id="entertime"><br><input class="w3-input" type="text" placeholder="Enter Venue" id="entervenue"><br><input class="w3-input" type="text" placeholder="Enter zipcode" id="enterzip"><br><input class="w3-input"type="text" placeholder="Event Description" id="description"><br>';
+    '<input class="w3-input" type="text" placeholder="Event Name" id="eventname"><br><input class="w3-input" type="date" placeholder="Enter Date" id="enterdate"><br><input class="w3-input" type="text" placeholder="Enter Time" id="entertime"><br><input class="w3-input" type="text" placeholder="Enter Venue" id="entervenue"><br><input class="w3-input" type="text" placeholder="Enter zipcode" id="enterzip"><br><input class="w3-input"type="text" placeholder="Event Description" id="description"><br>';
   document.getElementById("createEvent").innerHTML +=
     ' <input class="w3-input" type="text" placeholder="Enter Tags" id="tags"><br><button type="button" class="w3-button w3-theme-d1" onclick="create()">Create Event</button>&nbsp<button type="button" class="w3-button w3-theme-d1" onclick="cancel()">Cancel</button></div>';
 }
@@ -553,4 +553,12 @@ function seeProfile()
 
 function messagecontributor(){
 
+}
+function viewEventMessages()
+{
+  document.getElementById("createEvent").innerHTML = "Messages sent by users would appear here."
+}
+function sendInvitations()
+{
+  document.getElementById("createEvent").innerHTML = "Enter email id of user to send invitation too."
 }
