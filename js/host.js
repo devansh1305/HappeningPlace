@@ -15,6 +15,7 @@ var user_event_history_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amaz
 var guest_get_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-get-messages";
 var user_details_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/get-user-profile";
 var user_add_friend_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/add-friend";
+var user_profile_access_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/profileaccess";
 
 
 
@@ -272,6 +273,7 @@ function loadProfile() {
   document.getElementById("firstName").innerHTML = arr.firstname + "'s";
   document.getElementById("address1").innerHTML += arr.address1 + ", " + arr.address2 + ", " + arr.city;
   document.getElementById("email").innerHTML += arr.email;
+  document.getElementById("profileState").innerHTML = '<i class="fa fa-search fa-fw w3-margin-right w3-text-theme"></i>'+localStorage.getItem("profileAccess");
 
   //Send Reminders
   //Function to loop through all events returned by  returnParticipatingEvents
@@ -316,7 +318,6 @@ function setReminders() {
 
     if (this.readyState == 4) {
       document.getElementById('notifications').innerHTML = "";
-      console.log(event.target.response);
       arr = JSON.parse(event.target.response);
       for (var i in arr) {
         var eventTime = new Date(arr[i].date + ", " + arr[i].time);
@@ -397,7 +398,7 @@ function showFriend() {
         }
         document.getElementById("backgroundCard").className = "w3-card w3-container w3-green";
         if(arr.email!=localStorage.getItem("username"))
-        document.getElementById("searchResults").innerHTML += "<br><br><button type=\"button\" class=\"w3-button w3-small w3-theme-d4\">&nbsp<i class=\"fa fa-user\"></i>&nbspAdd Friend</button>";
+        document.getElementById("searchResults").innerHTML += "<br><br><button type=\"button\" class=\"w3-button w3-small w3-theme-d4\" onclick=\"addFriend(arr.email)\">&nbsp<i class=\"fa fa-user\"></i>&nbspAdd Friend</button>";
 
       } else {
         document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
@@ -413,8 +414,9 @@ function showFriend() {
 
 function addFriend(friendName) {
   var req = new XMLHttpRequest();
-  req.open("POST", user_add_friend_enpoint);
+  req.open("POST", user_add_friend_endpoint);
   req.onreadystatechange = function(event) {
+    console.log(event.target.response);
     if (this.readyState == 4) {
       //getUserProfile(JSON.parse(event.target.response));
       alert('Friend added successfully');
@@ -423,6 +425,33 @@ function addFriend(friendName) {
   var parameters = {
     username: localStorage.getItem("username"),
     friend_name: friendName
+  };
+  req.send(JSON.stringify(parameters));
+}
+function viewFriends()
+{
+  
+}
+
+function profileAccess()
+{
+  if(localStorage.getItem("profileAccess")=="public")
+    localStorage.setItem("profileAccess","private");
+  else {
+    localStorage.setItem("profileAccess","public");
+  }
+  document.getElementById("profileState").innerHTML = '<i class="fa fa-search fa-fw w3-margin-right w3-text-theme"></i>'+localStorage.getItem("profileAccess")
+  var req = new XMLHttpRequest();
+  req.open("POST", user_profile_access_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      //getUserProfile(JSON.parse(event.target.response));
+      alert('Profile changed successfully');
+    }
+  };
+  var parameters = {
+    username: localStorage.getItem("username"),
+    profileAccess: localStorage.getItem("profileAccess")
   };
   req.send(JSON.stringify(parameters));
 }
