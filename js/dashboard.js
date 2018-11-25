@@ -58,8 +58,7 @@ function cancelEvent() {
 function eventmanager() {
   document.getElementById("createEvent").innerHTML =
     '<div class="w3-display-container w3-panel w3-theme-d3" style="padding:0px;">';
-  document.getElementById("createEvent").innerHTML +=
-    '<input class="w3-input" type="text" placeholder="Event Name" id="eventname"><br><input class="w3-input" type="date" placeholder="Enter Date" id="enterdate"><br><input class="w3-input" type="text" placeholder="Enter Time" id="entertime"><br><input class="w3-input" type="text" placeholder="Enter Venue" id="entervenue"><br><input class="w3-input" type="text" placeholder="Enter zipcode" id="enterzip"><br><input class="w3-input"type="text" placeholder="Event Description" id="description"><br>';
+  document.getElementById("createEvent").innerHTML += '<input class="w3-input" type="text" placeholder="Event Name" id="eventname"><br><input class="w3-input" type="date" placeholder="Enter Date" id="enterdate"><br><input class="w3-input" type="text" placeholder="Enter Time" id="entertime"><br><input class="w3-input" type="text" placeholder="Enter Venue" id="entervenue"><br><input class="w3-input" type="text" placeholder="Enter zipcode" id="enterzip"><br><input class="w3-input"type="text" placeholder="Event Description" id="description"><br><select id="event_type" class="form-control"><option selected>Choose...</option><option value="Public">Public</option><option value="Private">Private</option></select><br>';
   document.getElementById("createEvent").innerHTML +=
     ' <input class="w3-input" type="text" placeholder="Enter Tags" id="tags"><br><button type="button" class="w3-button w3-theme-d1" onclick="create()">Create Event</button>&nbsp<button type="button" class="w3-button w3-theme-d1" onclick="cancel()">Cancel</button></div>';
 }
@@ -85,7 +84,8 @@ function myFunction(id) {
 
 function create() {
   let tagsArray = document.getElementById("tags").value.split(/[ ,]+/);
-  console.log(tagsArray);
+  console.log(document.getElementById("entertime").value);
+  console.log(document.getElementById("event_type").value);
   createEvent(
     localStorage.getItem("username"),
     document.getElementById("eventname").value,
@@ -94,6 +94,7 @@ function create() {
     document.getElementById("entertime").value,
     document.getElementById("enterdate").value,
     document.getElementById("description").value,
+    document.getElementById("event_type").value,
     tagsArray
   );
 }
@@ -330,6 +331,7 @@ function createEvent(
   eventLocation,
   time,date,
   description,
+  eventTypeParam,
   tags
 ) {
   // Create new XMLHttpRequest. Declare the endpoint and send parameters data in JSON form.
@@ -351,7 +353,8 @@ function createEvent(
     event_time: time,
     event_date: date,
     desc: description,
-    usertags: tags
+    usertags: tags,
+    eventType: eventTypeParam
   };
   req.send(JSON.stringify(parameters));
 }
