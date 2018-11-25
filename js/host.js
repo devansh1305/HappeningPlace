@@ -418,6 +418,7 @@ function addFriend(friendName) {
   req.onreadystatechange = function(event) {
     console.log(event.target.response);
     if (this.readyState == 4) {
+      console.log(event.target.response);
       //getUserProfile(JSON.parse(event.target.response));
       alert('Friend added successfully');
     }
@@ -430,7 +431,7 @@ function addFriend(friendName) {
 }
 function viewFriends()
 {
-  
+
 }
 
 function profileAccess()
