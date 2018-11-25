@@ -41,7 +41,7 @@ exports.handler = (event, context, callback) => {
                 if (err) {
                     callback(err);
                 }
-                else {
+                else {gi
                     callback(null,true);
                 }
                 });

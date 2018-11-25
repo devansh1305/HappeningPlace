@@ -13,7 +13,7 @@ var guest_join_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazon
 var user_event_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-list";
 var user_event_history_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-history";
 var guest_get_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-get-messages";
-var user_details_endpoint = 
+var user_details_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/get-user-profile";
 
 
@@ -127,7 +127,7 @@ function resetpassword(userName, userPassword, new_password, confirm_Password) {
   req.onreadystatechange = function(event) {
     if (this.readyState == 4 && event.target.response === "true") {
       alert("Reset successful");
-    } 
+    }
     else if (this.readyState == 4) {
       alert("Invalid account");
     }
@@ -209,7 +209,7 @@ function renderUI(arr, color) {
           document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"joinEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
         } else if (color == 'green') {
 
-	
+
 
 
 
@@ -267,6 +267,7 @@ function loadProfile() {
   for (var i = 0; i < arr.interest_tags.length; i++) {
     document.getElementById("tags").innerHTML += "<span class=\"w3-tag w3-small w3-theme-l" + ((i % 5)) + "\">" + arr.interest_tags[i] + "</span> ";
   }
+  searchEvents();
   guestEventList();
   setReminders();
   //Profile name
@@ -315,7 +316,7 @@ function setReminders()
     var req = new XMLHttpRequest();
     req.open('POST', user_event_history_endpoint);
     req.onreadystatechange = function(event) {
-    
+
 	   if (this.readyState == 4) {
 		   document.getElementById('notifications').innerHTML = "";
 		   console.log(event.target.response);
@@ -392,4 +393,22 @@ var req = new XMLHttpRequest();
     username: email
   };
   req.send(JSON.stringify(parameters));
+}
+
+function searchFriend()
+{
+  document.getElementById("searchBar").innerHTML = '<div class="w3-card w3-round w3-white"><div class="w3-container w3-padding"><h6 class="w3-opacity">Search for friends by username</h6><input contenteditable="true" class="w3-border w3-padding" placeholder="Enter username" id="friendUserName" default="0"></input><i> <br><br><button type="button" class="w3-button w3-theme" onclick="showFriend()"><i class="fa fa-pencil"></i> Retrieve</button></div></div>';
+  document.getElementById("searchResults").innerHTML = "";
+}
+function searchEvents()
+{
+  document.getElementById("searchBar").innerHTML = '<div class="w3-card w3-round w3-white"><div class="w3-container w3-padding"><h6 class="w3-opacity">Search for events</h6><input contenteditable="true" class="w3-border w3-padding" placeholder="Enter zipcode" id="zipcodeInput" default="0"></input><i> and/or </i><input contenteditable="true" class="w3-border w3-padding" placeholder="Enter tags" id="tagsInput"></input><br><br><button type="button" class="w3-button w3-theme" onclick="guestEventList()"><i class="fa fa-pencil"></i> Retrieve</button></div></div>';
+}
+function showFriend()
+{
+
+}
+function addFriend()
+{
+  
 }
