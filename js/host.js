@@ -13,8 +13,8 @@ var guest_join_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazon
 var user_event_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-list";
 var user_event_history_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-event-history";
 var guest_get_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-get-messages";
-var user_details_endpoint =
-  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/get-user-profile";
+var user_details_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/get-user-profile";
+var user_add_friend_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/add-friend";
 
 
 
@@ -127,8 +127,7 @@ function resetpassword(userName, userPassword, new_password, confirm_Password) {
   req.onreadystatechange = function(event) {
     if (this.readyState == 4 && event.target.response === "true") {
       alert("Reset successful");
-    }
-    else if (this.readyState == 4) {
+    } else if (this.readyState == 4) {
       alert("Invalid account");
     }
   };
@@ -189,8 +188,7 @@ function renderUI(arr, color) {
     if (color != 'green') {
       document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
       document.getElementById('searchResults').innerHTML = "Sorry no events found for that zipcode.";
-    }
-    else {
+    } else {
       document.getElementById("backgroundCard").className = "w3-card w3-container w3-green";
       document.getElementById('searchResults').innerHTML = "<label>You have not RSVP'ed any event yet<label>";
     }
@@ -216,7 +214,7 @@ function renderUI(arr, color) {
           document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-l2 w3-margin-bottom\" onclick=\"cancelEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-down\"></i> Cancel RSVP</button><button type=\"button\" class=\"w3-button w3-theme-d4 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
 
 
-document.getElementById('searchResults').innerHTML +="<h1><div class=\"w3-right w3-margin\" id=\"stars\" style\"padding:30px\"><span class=\"fa fa-star checked\" onclick=\"star(1)\"></span><span class=\"fa fa-star checked\"onclick=\"star(2)\"></span><span class=\"fa fa-star checked\"onclick=\"star(3)\"></span><span class=\"fa fa-star\" onclick=\"star(4)\"></span><span class=\"fa fa-star\" onclick=\"star(5)\"></span></div><h1>"
+          document.getElementById('searchResults').innerHTML += "<h1><div class=\"w3-right w3-margin\" id=\"stars\" style\"padding:30px\"><span class=\"fa fa-star checked\" onclick=\"star(1)\"></span><span class=\"fa fa-star checked\"onclick=\"star(2)\"></span><span class=\"fa fa-star checked\"onclick=\"star(3)\"></span><span class=\"fa fa-star\" onclick=\"star(4)\"></span><span class=\"fa fa-star\" onclick=\"star(5)\"></span></div><h1>"
 
 
         }
@@ -225,16 +223,16 @@ document.getElementById('searchResults').innerHTML +="<h1><div class=\"w3-right 
   }
 }
 
-function star(number){
-var i=1;
-document.getElementById('stars').innerHTML =""
-for(;i<=number;i++){
-document.getElementById('stars').innerHTML +="<span class=\"fa fa-star checked\" onclick=\"star("+i+")\"></span>"
-}
+function star(number) {
+  var i = 1;
+  document.getElementById('stars').innerHTML = ""
+  for (; i <= number; i++) {
+    document.getElementById('stars').innerHTML += "<span class=\"fa fa-star checked\" onclick=\"star(" + i + ")\"></span>"
+  }
 
-for(i=number+1;i<=5;i++){
-document.getElementById('stars').innerHTML +="<span class=\"fa fa-star\" onclick=\"star("+i+")\"></span>"
-}
+  for (i = number + 1; i <= 5; i++) {
+    document.getElementById('stars').innerHTML += "<span class=\"fa fa-star\" onclick=\"star(" + i + ")\"></span>"
+  }
 
 
 }
@@ -272,7 +270,7 @@ function loadProfile() {
   setReminders();
   //Profile name
   document.getElementById("firstName").innerHTML = arr.firstname + "'s";
-  document.getElementById("address1").innerHTML += arr.address1 + ", " + arr.address2+", "+arr.city;
+  document.getElementById("address1").innerHTML += arr.address1 + ", " + arr.address2 + ", " + arr.city;
   document.getElementById("email").innerHTML += arr.email;
 
   //Send Reminders
@@ -310,39 +308,36 @@ function viewParticipatingEvents() {
   req.send(JSON.stringify(params));
 }
 
-function setReminders()
-{
-    userLoggedIn = localStorage.getItem("username");
-    var req = new XMLHttpRequest();
-    req.open('POST', user_event_history_endpoint);
-    req.onreadystatechange = function(event) {
+function setReminders() {
+  userLoggedIn = localStorage.getItem("username");
+  var req = new XMLHttpRequest();
+  req.open('POST', user_event_history_endpoint);
+  req.onreadystatechange = function(event) {
 
-	   if (this.readyState == 4) {
-		   document.getElementById('notifications').innerHTML = "";
-		   console.log(event.target.response);
-        arr=JSON.parse(event.target.response);
-	     for(var i in arr)
-	      {
-		      	var eventTime = new Date(arr[i].date+", "+arr[i].time);
-		      	if(eventTime - (new Date) < 86400000)
-		      	{
-				document.getElementById('notifications').innerHTML += '<a href="#" class="w3-bar-item w3-button">'+arr[i].name+'</a>';
-			}
+    if (this.readyState == 4) {
+      document.getElementById('notifications').innerHTML = "";
+      console.log(event.target.response);
+      arr = JSON.parse(event.target.response);
+      for (var i in arr) {
+        var eventTime = new Date(arr[i].date + ", " + arr[i].time);
+        if (eventTime - (new Date) < 86400000) {
+          document.getElementById('notifications').innerHTML += '<a href="#" class="w3-bar-item w3-button">' + arr[i].name + '</a>';
+        }
 
-		}
       }
-    };
-    var params = {
-	    username: localStorage.getItem("username")
     }
-    req.send(JSON.stringify(params));
+  };
+  var params = {
+    username: localStorage.getItem("username")
+  }
+  req.send(JSON.stringify(params));
 }
 
 function cancelEvent(eventID) {
   var req = new XMLHttpRequest();
   req.open('POST', guest_remove_event_endpoint);
   req.onreadystatechange = function(event) {
-    if(this.readyState == 4 && event.target.response!='false') {
+    if (this.readyState == 4 && event.target.response != 'false') {
       return JSON.parse(event.target.response);
     }
     viewParticipatingEvents();
@@ -355,18 +350,17 @@ function cancelEvent(eventID) {
   req.send(JSON.stringify(params));
 }
 
-function displayMessages()
-{
+function displayMessages() {
   document.getElementById("backgroundCard").className = "w3-card w3-container w3-yellow";
   document.getElementById("searchResults").innerHTML = "<h3>Your Messages</h3>"
   var req = new XMLHttpRequest();
   req.open('POST', guest_get_message_endpoint);
   req.onreadystatechange = function(event) {
-    if(this.readyState == 4 && event.target.response!='false') {
+    if (this.readyState == 4 && event.target.response != 'false') {
 
       arr = JSON.parse(event.target.response);
-      for(var i in arr.message_list)
-      document.getElementById("searchResults").innerHTML += arr.message_list[i]+"<br>";
+      for (var i in arr.message_list)
+        document.getElementById("searchResults").innerHTML += arr.message_list[i] + "<br>";
 
     }
   };
@@ -376,39 +370,59 @@ function displayMessages()
   req.send(JSON.stringify(params));
 }
 
+function searchFriend() {
+  document.getElementById("searchBar").innerHTML = '<div class="w3-card w3-round w3-white"><div class="w3-container w3-padding"><h6 class="w3-opacity">Search for friends by username</h6><input contenteditable="true" class="w3-border w3-padding" placeholder="Enter username" id="friendUserName" default="0"></input><i> <br><br><button type="button" class="w3-button w3-theme" onclick="showFriend()"><i class="fa fa-pencil"></i> Retrieve</button></div></div>';
+  document.getElementById("searchResults").innerHTML = "";
+}
 
+function searchEvents() {
+  document.getElementById("searchBar").innerHTML = '<div class="w3-card w3-round w3-white"><div class="w3-container w3-padding"><h6 class="w3-opacity">Search for events</h6><input contenteditable="true" class="w3-border w3-padding" placeholder="Enter zipcode" id="zipcodeInput" default="0"></input><i> and/or </i><input contenteditable="true" class="w3-border w3-padding" placeholder="Enter tags" id="tagsInput"></input><br><br><button type="button" class="w3-button w3-theme" onclick="guestEventList()"><i class="fa fa-pencil"></i> Retrieve</button></div></div>';
+}
 
-
-function returnGetUserProfile(){
-var email=document.getElementById("searchUserInput").value;
-var req = new XMLHttpRequest();
+function showFriend() {
+  var friendName = document.getElementById('friendUserName').value;
+  var req = new XMLHttpRequest();
   req.open("POST", user_details_endpoint);
   req.onreadystatechange = function(event) {
+
     if (this.readyState == 4) {
-      getUserProfile(JSON.parse(event.target.response));
+      arr = JSON.parse(event.target.response);
+      if (arr.response == "true") {
+
+        document.getElementById("searchResults").innerHTML = "Name: " + arr.firstname + "'s<br>";
+        document.getElementById("searchResults").innerHTML += "Address: " + arr.address1 + ", " + arr.address2 + ", " + arr.city + "<br>";
+        document.getElementById("searchResults").innerHTML += "Email: " + arr.email + "<br>Interests: ";
+        for (var i = 0; i < arr.interest_tags.length; i++) {
+          document.getElementById("searchResults").innerHTML += " <span class=\"w3-tag w3-small w3-theme-l" + ((i % 5)) + "\">" + arr.interest_tags[i] + "</span>&nbsp";
+        }
+        document.getElementById("backgroundCard").className = "w3-card w3-container w3-green";
+        if(arr.email!=localStorage.getItem("username"))
+        document.getElementById("searchResults").innerHTML += "<br><br><button type=\"button\" class=\"w3-button w3-small w3-theme-d4\">&nbsp<i class=\"fa fa-user\"></i>&nbspAdd Friend</button>";
+
+      } else {
+        document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
+        document.getElementById("searchResults").innerHTML = "User name associated with email not found or profile might be private";
+      }
     }
   };
-
   var parameters = {
-    username: email
+    username: friendName
   };
   req.send(JSON.stringify(parameters));
 }
 
-function searchFriend()
-{
-  document.getElementById("searchBar").innerHTML = '<div class="w3-card w3-round w3-white"><div class="w3-container w3-padding"><h6 class="w3-opacity">Search for friends by username</h6><input contenteditable="true" class="w3-border w3-padding" placeholder="Enter username" id="friendUserName" default="0"></input><i> <br><br><button type="button" class="w3-button w3-theme" onclick="showFriend()"><i class="fa fa-pencil"></i> Retrieve</button></div></div>';
-  document.getElementById("searchResults").innerHTML = "";
-}
-function searchEvents()
-{
-  document.getElementById("searchBar").innerHTML = '<div class="w3-card w3-round w3-white"><div class="w3-container w3-padding"><h6 class="w3-opacity">Search for events</h6><input contenteditable="true" class="w3-border w3-padding" placeholder="Enter zipcode" id="zipcodeInput" default="0"></input><i> and/or </i><input contenteditable="true" class="w3-border w3-padding" placeholder="Enter tags" id="tagsInput"></input><br><br><button type="button" class="w3-button w3-theme" onclick="guestEventList()"><i class="fa fa-pencil"></i> Retrieve</button></div></div>';
-}
-function showFriend()
-{
-
-}
-function addFriend()
-{
-  
+function addFriend(friendName) {
+  var req = new XMLHttpRequest();
+  req.open("POST", user_add_friend_enpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      //getUserProfile(JSON.parse(event.target.response));
+      alert('Friend added successfully');
+    }
+  };
+  var parameters = {
+    username: localStorage.getItem("username"),
+    friend_name: friendName
+  };
+  req.send(JSON.stringify(parameters));
 }
