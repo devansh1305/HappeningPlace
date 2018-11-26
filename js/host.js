@@ -225,6 +225,60 @@ function renderUI(arr, color) {
   }
 }
 
+
+
+
+function renderUIGuestEvent(arr, color) {
+
+  if (arr != null) {
+    //console.log(arr);
+    document.getElementById('searchResults').innerHTML += "";
+    if (color != 'green') {
+      document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
+      document.getElementById('searchResults').innerHTML = "Sorry no events found ";
+    } else {
+      document.getElementById("backgroundCard").className = "w3-card w3-container w3-green";
+    }
+    var flag = 0;
+    for (var i = 0; i < arr.length; i++) {
+      if (arr[i] != null) {
+        document.getElementById("backgroundCard").className += "w3-card w3-container w3-" + color;
+
+
+        if (flag == 0) {
+          document.getElementById('searchResults').innerHTML += "";
+          flag = 1;
+        }
+        if (color == 'blue') {
+          document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"joinEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-up\"></i>  Going?</button><button type=\"button\" class=\"w3-button w3-theme-d2 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
+        } else if (color == 'green') {
+
+
+
+
+          document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-l2 w3-margin-bottom\" onclick=\"cancelEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-down\"></i> Cancel RSVP</button><button type=\"button\" class=\"w3-button w3-theme-d4 w3-margin-bottom\">&nbsp<i class=\"fa fa-comment\"></i>  Share</button></div>";
+
+
+          document.getElementById('searchResults').innerHTML += "<h1><div class=\"w3-right w3-margin\" id=\"stars\" style\"padding:30px\"><span class=\"fa fa-star checked\" onclick=\"star(1)\"></span><span class=\"fa fa-star checked\"onclick=\"star(2)\"></span><span class=\"fa fa-star checked\"onclick=\"star(3)\"></span><span class=\"fa fa-star\" onclick=\"star(4)\"></span><span class=\"fa fa-star\" onclick=\"star(5)\"></span></div><h1>"
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function star(number) {
   var i = 1;
   document.getElementById('stars').innerHTML = ""
@@ -298,6 +352,7 @@ function returnParticipatingEvents() {
 
 function viewParticipatingEvents() {
   userLoggedIn = localStorage.getItem("username");
+	console.log(userLoggedIn);
   var req = new XMLHttpRequest();
   req.open('POST', user_event_history_endpoint);
   req.onreadystatechange = function(event) {
@@ -310,6 +365,33 @@ function viewParticipatingEvents() {
   }
   req.send(JSON.stringify(params));
 }
+
+
+
+
+
+function viewGuestParticipatingEvents(email){
+ userLoggedIn = email;
+  var req = new XMLHttpRequest();
+  req.open('POST', user_event_history_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      renderUIGuestEvent(JSON.parse(event.target.response), "green");
+    }
+  };
+  var params = {
+    username: userLoggedIn.toString()
+  }
+  req.send(JSON.stringify(params));
+}
+
+
+
+
+
+
+
+
 
 function setReminders() {
   userLoggedIn = localStorage.getItem("username");
@@ -423,6 +505,44 @@ else
 
 
 
+function showFriendClick(offset) {
+var friendName
+if(!offset)
+   friendName = document.getElementById('friendUserName').value;
+else
+   friendName = offset;
+  var req = new XMLHttpRequest();
+  req.open("POST", user_details_endpoint);
+  req.onreadystatechange = function(event) {
+
+    if (this.readyState == 4) {
+      arr = JSON.parse(event.target.response);
+      if (arr.response == "true") {
+
+        document.getElementById("searchResults").innerHTML = "Name: " + arr.firstname + "'s<br>";
+        document.getElementById("searchResults").innerHTML += "Address: " + arr.address1 + ", " + arr.address2 + ", " + arr.city + "<br>";
+        document.getElementById("searchResults").innerHTML += "Email: " + arr.email + "<br>Interests: ";
+        for (var i = 0; i < arr.interest_tags.length; i++) {
+          document.getElementById("searchResults").innerHTML += " <span class=\"w3-tag w3-small w3-theme-l" + ((i % 5)) + "\">" + arr.interest_tags[i] + "</span>&nbsp";
+        }
+        document.getElementById("backgroundCard").className = "w3-card w3-container w3-green";
+
+        document.getElementById("backgroundCard").className = "w3-card w3-container w3-green";
+
+        document.getElementById("searchResults").innerHTML += "<br><br><h3>EVENT LIST<h3>";
+
+	viewGuestParticipatingEvents(arr.email);
+     }
+    }
+  };
+  var parameters = {
+    username: friendName
+  };
+  req.send(JSON.stringify(parameters));
+}
+
+
+
 
 
 
@@ -467,7 +587,7 @@ function viewFriends()
       arr = JSON.parse(event.target.response);
       //getUserProfile(JSON.parse(event.target.response));
       for (x in arr)
-        document.getElementById("searchResults").innerHTML += '<div class="w3-container w3-card w3-white w3-round w3-margin"><h6>'+arr[x]+'</h6><button type="button" class="w3-button w3-small w3-theme-d1 w3-margin-bottom" onclick="showFriend(\''+arr[x]+'\')"><i class="fa fa-user"></i>View Profile</button><button type="button" class="w3-button w3-small w3-theme-d2 w3-margin-bottom"><i class="fa fa-close"></i>Unfriend</button></div>';
+        document.getElementById("searchResults").innerHTML += '<div class="w3-container w3-card w3-white w3-round w3-margin"><h6>'+arr[x]+'</h6><button type="button" class="w3-button w3-small w3-theme-d1 w3-margin-bottom" onclick="showFriendClick(\''+arr[x]+'\')"><i class="fa fa-user"></i>View Profile</button><button type="button" class="w3-button w3-small w3-theme-d2 w3-margin-bottom"><i class="fa fa-close"></i>Unfriend</button></div>';
     }
   };
   var parameters = {
@@ -494,7 +614,6 @@ function profileAccess()
   req.onreadystatechange = function(event) {
     if (this.readyState == 4) {
       //getUserProfile(JSON.parse(event.target.response));
-      alert('Profile changed successfully');
     }
   };
   var parameters = {
