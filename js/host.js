@@ -465,7 +465,7 @@ function searchEvents() {
 
 
 
-function showFriend(offset) {
+function showFriend() {
 
   var friendName = document.getElementById('friendUserName').value;
   var req = new XMLHttpRequest();
@@ -501,9 +501,8 @@ function showFriend(offset) {
 
 
 
-function showFriendClick(offset) {
+function showFriendClick(friendName) {
 
-   var friendName = document.getElementById('friendUserName').value;
   var req = new XMLHttpRequest();
   req.open("POST", user_details_endpoint);
   req.onreadystatechange = function(event) {
