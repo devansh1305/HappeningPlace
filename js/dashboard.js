@@ -29,8 +29,11 @@ var host_send_message_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/send-message";
 var user_details_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/get-user-profile";
-var task_add_contributor_endpoint=
+var task_add_contributor_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/add-contributor-to-task";
+var contribute_event_list_endpoint =
+  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/contributinglistservice";
+
 var taskArr;
 
 
@@ -196,14 +199,26 @@ function retrieveUserDetails(email) {
 
 
 function hostContributeList() {
-  var arr = ["contribute1", "contribute2", "contribute3"];
+  // var arr = ["contribute1", "contribute2", "contribute3"];
 
-  var text = "";
-  var i;
-  for (i = 0; i < arr.length; i++) {
-    text += '<div class="w3-button w3-theme-d5">' + arr[i] + "</div><br><br>";
-  }
-  document.getElementById("eventList").innerHTML = text;
+  // var text = "";
+  // var i;
+  // for (i = 0; i < arr.length; i++) {
+  //   text += '<div class="w3-button w3-theme-d5">' + arr[i] + "</div><br><br>";
+  // }
+  // document.getElementById("eventList").innerHTML = text;
+  var req = new XMLHttpRequest();
+  req.open("POST", contribute_event_list_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      loadHostEventList(JSON.parse(event.target.response));
+    }
+  };
+  userName = localStorage.getItem("username");
+  var parameters = {
+    username: userName
+  };
+  req.send(JSON.stringify(parameters));
 }
 
 function displayEventDetails() {
@@ -247,6 +262,61 @@ function displayEventDetails() {
 }
 
 function displayHostEventDetails(currentEvent) {
+  localStorage.setItem("currentEvent", currentEvent);
+  var req = new XMLHttpRequest();
+  req.open("POST", event_task_list_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      taskArr = JSON.parse(event.target.response);
+      var task =
+        '<button class="w3-button w3-hide-small w3-padding-large w3-hover-white" title="Create Task" onclick="callAddTask()"><i class="fa fa-plus"></i></button>';
+      if (taskArr != null) {
+        for (var i = 0; i < taskArr.length; i++) {
+          task +=
+            '<button class="w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2" onclick="displayTaskDetails(\'' +
+            taskArr[i][1] +
+            "');\" >" +
+            taskArr[i][0] +
+            "</button>";
+        }
+      }
+      document.getElementById("tasks").innerHTML = task;
+      //hostguestlist(arg[6]);
+    }
+  };
+  var parameters = {
+    eventid: localStorage.getItem("currentEvent")
+  };
+  req.send(JSON.stringify(parameters));
+
+  var req2 = new XMLHttpRequest();
+  req2.open("POST", event_contributor_list_endpoint);
+  req2.onreadystatechange = function(event) {
+    if (this.readyState == 4 && event.target.response != null) {
+      contributorArr = JSON.parse(event.target.response);
+
+      var contributor =
+        '<button class="w3-button w3-hide-small w3-padding-large w3-hover-white" title="Add Contributor" onclick="callAddContributor()"><i class="fa fa-plus"></i></button>';
+      if (contributorArr != null) {
+        for (var i = 0; i < contributorArr.length; i++) {
+          contributor +=
+            '<button class="w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2" onclick="retrieveUserDetails(\'' +
+            contributorArr[i][1] +
+            "');\" >" +
+            contributorArr[i][0] +
+            "</button>";
+        }
+      }
+      document.getElementById("contributors").innerHTML = contributor;
+    }
+  };
+  var parameters2 = {
+    event_id: localStorage.getItem("currentEvent")
+  };
+  req2.send(JSON.stringify(parameters2));
+}
+
+function displayContributeEventDetails(currentEvent) {
   localStorage.setItem("currentEvent", currentEvent);
   var req = new XMLHttpRequest();
   req.open("POST", event_task_list_endpoint);
@@ -391,6 +461,25 @@ function loadHostEventList(arr) {
       hostEventNames[i][1] +
       "'); displayEventDetails()\">" +
       hostEventNames[i][0] +
+      "</button><br><br>";
+  }
+  document.getElementById("eventList").innerHTML = text;
+}
+
+function loadContributeEventList(arr) {
+  let contributeEventNames = arr;
+  if (arr == null) {
+    document.getElementById("eventList").innerHTML = "No events conributed";
+    return;
+  }
+  var text = "";
+  var i;
+  for (i = 0; i < contributeEventNames.length; i++) {
+    text +=
+      '<button class="w3-button w3-theme-d5"  onclick=" displayHostEventDetails(\'' +
+      contributeEventNames[i][1] +
+      "'); displayEventDetails()\">" +
+      contributeEventNames[i][0] +
       "</button><br><br>";
   }
   document.getElementById("eventList").innerHTML = text;
