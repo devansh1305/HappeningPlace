@@ -371,7 +371,6 @@ function viewParticipatingEvents() {
 
 
 function viewGuestParticipatingEvents(email){
- userLoggedIn = email;
   var req = new XMLHttpRequest();
   req.open('POST', user_event_history_endpoint);
   req.onreadystatechange = function(event) {
@@ -380,7 +379,7 @@ function viewGuestParticipatingEvents(email){
     }
   };
   var params = {
-    username: userLoggedIn.toString()
+    username: email
   }
   req.send(JSON.stringify(params));
 }
@@ -467,11 +466,8 @@ function searchEvents() {
 
 
 function showFriend(offset) {
-var friendName
-if(!offset)
-   friendName = document.getElementById('friendUserName').value;
-else
-   friendName = offset;
+
+  var friendName = document.getElementById('friendUserName').value;
   var req = new XMLHttpRequest();
   req.open("POST", user_details_endpoint);
   req.onreadystatechange = function(event) {
@@ -506,11 +502,8 @@ else
 
 
 function showFriendClick(offset) {
-var friendName
-if(!offset)
-   friendName = document.getElementById('friendUserName').value;
-else
-   friendName = offset;
+
+   var friendName = document.getElementById('friendUserName').value;
   var req = new XMLHttpRequest();
   req.open("POST", user_details_endpoint);
   req.onreadystatechange = function(event) {
