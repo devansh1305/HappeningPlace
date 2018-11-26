@@ -16,6 +16,7 @@ var guest_get_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazo
 var user_details_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/get-user-profile";
 var user_add_friend_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/add-friend";
 var user_profile_access_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/profileaccess";
+var user_friend_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-friend-list";
 
 
 
@@ -380,7 +381,7 @@ function searchEvents() {
   document.getElementById("searchBar").innerHTML = '<div class="w3-card w3-round w3-white"><div class="w3-container w3-padding"><h6 class="w3-opacity">Search for events</h6><input contenteditable="true" class="w3-border w3-padding" placeholder="Enter zipcode" id="zipcodeInput" default="0"></input><i> and/or </i><input contenteditable="true" class="w3-border w3-padding" placeholder="Enter tags" id="tagsInput"></input><br><br><button type="button" class="w3-button w3-theme" onclick="guestEventList()"><i class="fa fa-pencil"></i> Retrieve</button></div></div>';
 }
 
-function showFriend() {
+function showFriend(offset) {
   var friendName = document.getElementById('friendUserName').value;
   var req = new XMLHttpRequest();
   req.open("POST", user_details_endpoint);
@@ -431,6 +432,23 @@ function addFriend(friendName) {
 }
 function viewFriends()
 {
+  document.getElementById("searchBar").innerHTML = '<div class="w3-card w3-round w3-white"><div class="w3-container w3-padding"><h4 class="w3-opacity">Your Friends Cirlce</h4></div></div>';
+  document.getElementById("searchResults").innerHTML = "";
+  var req = new XMLHttpRequest();
+  req.open("POST", user_friend_list_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      arr = JSON.parse(event.target.response);
+      //getUserProfile(JSON.parse(event.target.response));
+      for (x in arr)
+        document.getElementById("searchResults").innerHTML += '<div class="w3-container w3-card w3-white w3-round w3-margin"><h6>'+arr[x]+'</h6><button type="button" class="w3-button w3-small w3-theme-d1 w3-margin-bottom"><i class="fa fa-user"></i>View Profile</button><button type="button" class="w3-button w3-small w3-theme-d2 w3-margin-bottom"><i class="fa fa-close"></i>Unfriend</button></div>';
+    }
+  };
+  var parameters = {
+    username: localStorage.getItem("username")
+  };
+  req.send(JSON.stringify(parameters));
+
 
 }
 
