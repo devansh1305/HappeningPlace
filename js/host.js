@@ -190,7 +190,7 @@ function renderUI(arr, color) {
     document.getElementById('searchResults').innerHTML = "";
     if (color != 'green') {
       document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
-      document.getElementById('searchResults').innerHTML = "Sorry no events found for that zipcode.";
+      document.getElementById('searchResults').innerHTML = "Sorry no events found";
     } else {
       document.getElementById("backgroundCard").className = "w3-card w3-container w3-green";
       document.getElementById('searchResults').innerHTML = "<label>You have not RSVP'ed any event yet<label>";
@@ -609,6 +609,7 @@ function viewSharedEvents()
   req.open("POST", user_shared_events_endpoint);
   req.onreadystatechange = function(event) {
     if (this.readyState == 4) {
+        document.getElementById("searchBar").innerHTML = '<div class="w3-card w3-round w3-white"><div class="w3-container w3-padding"><h3>Events Shared with you</h3></div></div>';
         renderUI(JSON.parse(event.target.response), "blue");
     }
   };

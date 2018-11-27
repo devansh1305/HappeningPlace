@@ -158,28 +158,14 @@ function hostguestlist(host_guest_list) {
 }
 
 function userDetails(arr) {
-  var text =
-    '<div class="w3-card-4 w3-theme-d4"><h2>&nbsp&nbsp' +
-    arr.firstname +
-    " " +
-    arr.lastname +
-    "<h2></div>";
-  text +=
-    '<div class="w3-card-4 w3-theme-d2"><h3>&nbsp&nbspCity: ' +
-    arr.city +
-    "<h3>";
-  text += "<h3>&nbsp&nbspInterest: " + arr.interest_tags[0] + "<br>";
-  for (var i = 1; i < arr.interest_tags.length; i++) {
-    text +=
-      "&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp" +
-      arr.interest_tags[i] +
-      "<br>";
-  }
-  text += "</h3>";
-  text += "</div>";
-  text +=
-    '<input id="message" placeholder="Enter message to send" class="form-control" style=" width:100%"></input><button type="button" class="btn btn-primary">Send</button>';
-  document.getElementById("createEvent").innerHTML = text;
+  document.getElementById("createEvent").innerHTML = "Name: " + arr.firstname + "'s<hr>";
+  document.getElementById("createEvent").innerHTML += "Address: " + arr.address1 + ", " + arr.address2 + "," + arr.city + "<hr>";
+  document.getElementById("createEvent").innerHTML += "Email: " + arr.email + "<hr>Interests: ";
+  for (var i = 0; i < arr.interest_tags.length; i++) {
+      document.getElementById("createEvent").innerHTML += " <span class=\"w3-tag w3-small w3-theme-l" + ((i % 5)) + "\">" + arr.interest_tags[i] + "</span>&nbsp";
+    }
+    document.getElementById("createEvent").innerHTML +=
+      '<hr><input id="message" placeholder="Enter message to send" class="form-control" style=" width:100%"></input><p></p><button type="button" class="btn btn-primary" onclick="sendMessage(\''+arr.email+'\')">Send</button>';
 }
 
 function retrieveUserDetails(email) {
@@ -192,7 +178,8 @@ function retrieveUserDetails(email) {
   };
 
   var parameters = {
-    username: email
+    username: email,
+    check: "0"
   };
   req.send(JSON.stringify(parameters));
 }
@@ -523,8 +510,7 @@ function addContributorToTask(taskid) {
   };
   var parameters = {
     task_id: taskid,
-    contributor_username: document.getElementById("contributor_id_from_task")
-      .value
+    contributor_username: document.getElementById("contributor_id_from_task").value
   };
   req.send(JSON.stringify(parameters));
 }
@@ -585,7 +571,7 @@ function retrieveTasks() {
   req.send(JSON.stringify(parameters));
 }
 
-function sendMessage() {
+function sendMessage(username) {
   var req = new XMLHttpRequest();
   req.open("POST", host_send_message_endpoint);
   req.onreadystatechange = function(event) {
@@ -595,10 +581,19 @@ function sendMessage() {
       alert("Sorry resource unavailable");
     }
   };
-  var parameters = {
+  var parameters;
+  if(username!=null)
+  parameters = {
     event_id: localStorage.getItem("currentEvent"),
-    message: document.getElementById("message").value
+    message: document.getElementById("message").value,
+    username:username
   };
+  else {
+    parameters = {
+      event_id: localStorage.getItem("currentEvent"),
+      message: document.getElementById("message").value
+    };
+  }
   req.send(JSON.stringify(parameters));
 }
 
