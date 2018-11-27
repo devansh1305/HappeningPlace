@@ -151,11 +151,8 @@
               </div>
             </div>
             <button onclick="viewParticipatingEvents()" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i>My Events</button>
-            <div id="Demo2" class="w3-hide w3-container">
-              <p>Event Timeline...</p>
-            </div>
+            <button onclick="viewSharedEvents()" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i>Shared Events</button>
             <button onclick="searchFriend()" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-search clearfa-fw w3-margin-right"></i> Add Friend</button>
-              <button onclick="viewFriends()" class="w3-button w3-block w3-theme-l1 w3-left-align"><i class="fa fa-users fa-fw w3-margin-right"></i>My Friends</button>
             <div id="Demo3" class="w3-hide w3-container">
               <div class="w3-row-padding">
                 <br>
@@ -268,19 +265,17 @@
       <div class="w3-col m2">
         <div class="w3-card w3-round w3-white w3-center">
           <div class="w3-container">
-            <p>Your Upcoming Events:</p>
+            <p id="friendList"><u>Your Friend List</u></p>
 
-            <p><strong>Gambling Gardens</strong></p>
-            <p>Friday 3:00 PM</p>
-            <p><button class="w3-button w3-block w3-theme-l4">View all</button></p>
           </div>
         </div>
         <br>
 
         <div class="w3-card w3-round w3-white w3-center">
           <div class="w3-container">
-            <p>Friend Request</p>
-            <img src="img/avatar6.png" alt="Avatar" style="width:50%"><br>
+            <p>Friend Profile</p>
+            <p id="friendProfile"></p>
+            <!--<img src="img/avatar6.png" alt="Avatar" style="width:50%"><br>
             <span>Iryna Jackson</span>
             <div class="w3-row w3-opacity">
               <div class="w3-half">
@@ -289,13 +284,13 @@
               <div class="w3-half">
                 <button class="w3-button w3-block w3-red w3-section" title="Decline"><i class="fa fa-remove"></i></button>
               </div>
-            </div>
+            </div>-->
           </div>
         </div>
         <br>
 
         <div class="w3-card w3-round w3-white w3-padding-16 w3-center">
-          <p>Random section. Useful for future</p>
+          <p id="friendEventList"></p>
         </div>
         <br>
 

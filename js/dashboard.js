@@ -33,11 +33,10 @@ var task_add_contributor_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/add-contributor-to-task";
 var contribute_event_list_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/contributinglistservice";
+var task_check_endpoint =
+  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/TaskCheck";
 
 var taskArr;
-
-
-
 
 function cancelEvent() {
   var req = new XMLHttpRequest();
@@ -61,7 +60,8 @@ function cancelEvent() {
 function eventmanager() {
   document.getElementById("createEvent").innerHTML =
     '<div class="w3-display-container w3-panel w3-theme-d3" style="padding:0px;">';
-  document.getElementById("createEvent").innerHTML += '<input class="w3-input" type="text" placeholder="Event Name" id="eventname"><br><input class="w3-input" type="date" placeholder="Enter Date" id="enterdate"><br><input class="w3-input" type="text" placeholder="Enter Time" id="entertime"><br><input class="w3-input" type="text" placeholder="Enter Venue" id="entervenue"><br><input class="w3-input" type="text" placeholder="Enter zipcode" id="enterzip"><br><input class="w3-input"type="text" placeholder="Event Description" id="description"><br><select id="event_type" class="form-control"><option selected>Choose...</option><option value="Public">Public</option><option value="Private">Private</option></select><br>';
+  document.getElementById("createEvent").innerHTML +=
+    '<input class="w3-input" type="text" placeholder="Event Name" id="eventname"><br><input class="w3-input" type="date" placeholder="Enter Date" id="enterdate"><br><input class="w3-input" type="text" placeholder="Enter Time" id="entertime"><br><input class="w3-input" type="text" placeholder="Enter Venue" id="entervenue"><br><input class="w3-input" type="text" placeholder="Enter zipcode" id="enterzip"><br><input class="w3-input"type="text" placeholder="Event Description" id="description"><br><select id="event_type" class="form-control"><option selected>Choose...</option><option value="Public">Public</option><option value="Private">Private</option></select><br>';
   document.getElementById("createEvent").innerHTML +=
     ' <input class="w3-input" type="text" placeholder="Enter Tags" id="tags"><br><button type="button" class="w3-button w3-theme-d1" onclick="create()">Create Event</button>&nbsp<button type="button" class="w3-button w3-theme-d1" onclick="cancel()">Cancel</button></div>';
 }
@@ -148,37 +148,25 @@ function hostguestlist(host_guest_list) {
   text = "";
   for (i = 0; i < host_guest_list.length; i++) {
     text +=
-      '<div class="w3-bar-item w3-hover-white w3-button w3-card" title="guest email" onclick="retrieveUserDetails(\'' 		+
+      '<div class="w3-bar-item w3-hover-white w3-button w3-card" title="guest email" onclick="retrieveUserDetails(\'' +
       host_guest_list[i] +
-      '\')">' +
+      "')\">" +
       host_guest_list[i] +
       "</div>";
   }
   document.getElementById("hostEventGuestList").innerHTML = text;
 }
 
-
-
-
-
-
-function userDetails(arr)
-{
-  var text="<div class=\"w3-card-4 w3-theme-d4\"><h2>&nbsp&nbsp"+arr.firstname+" "+arr.lastname+"<h2></div>";
-  text+="<div class=\"w3-card-4 w3-theme-d2\"><h3>&nbsp&nbspCity: "+arr.city+"<h3>";
-  text+="<h3>&nbsp&nbspInterest: "+arr.interest_tags[0]+"<br>";
-  for(var i=1;i<arr.interest_tags.length;i++)
-  {
-    text+="&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp"+arr.interest_tags[i]+"<br>";
-  }
-  text+="</h3>";
-  text+="</div>"
-  text+="<input id=\"message\" placeholder=\"Enter message to send\" class=\"form-control\" style=\" width:100%\"></input><button type=\"button\" class=\"btn btn-primary\">Send</button>";
-  document.getElementById("createEvent").innerHTML = text;
-
+function userDetails(arr) {
+  document.getElementById("createEvent").innerHTML = "Name: " + arr.firstname + "'s<hr>";
+  document.getElementById("createEvent").innerHTML += "Address: " + arr.address1 + ", " + arr.address2 + "," + arr.city + "<hr>";
+  document.getElementById("createEvent").innerHTML += "Email: " + arr.email + "<hr>Interests: ";
+  for (var i = 0; i < arr.interest_tags.length; i++) {
+      document.getElementById("createEvent").innerHTML += " <span class=\"w3-tag w3-small w3-theme-l" + ((i % 5)) + "\">" + arr.interest_tags[i] + "</span>&nbsp";
+    }
+    document.getElementById("createEvent").innerHTML +=
+      '<hr><input id="message" placeholder="Enter message to send" class="form-control" style=" width:100%"></input><p></p><button type="button" class="btn btn-primary" onclick="sendMessage(\''+arr.email+'\')">Send</button>';
 }
-
-
 
 function retrieveUserDetails(email) {
   var req = new XMLHttpRequest();
@@ -190,13 +178,11 @@ function retrieveUserDetails(email) {
   };
 
   var parameters = {
-    username: email
+    username: email,
+    check: "0"
   };
   req.send(JSON.stringify(parameters));
 }
-
-
-
 
 function hostContributeList() {
   // var arr = ["contribute1", "contribute2", "contribute3"];
@@ -228,8 +214,10 @@ function displayEventDetails() {
     if (this.readyState == 4) {
       arg = JSON.parse(event.target.response);
       var text = "";
-      var cancelButton = "<button class=\"w3-button w3-theme-d5\" onclick=\"viewEventMessages()\"> Messages </button>&nbsp<button class=\"w3-button w3-theme-d5\" onclick=\"sendInvitations()\"> Invitations </button>&nbsp";
-      cancelButton += '<button class="w3-button w3-theme-d5" title="Cancel Event" onclick="cancelEvent()">Cancel Event</button><br>';
+      var cancelButton =
+        '<button class="w3-button w3-theme-d5" onclick="viewEventMessages()"> Messages </button>&nbsp<button class="w3-button w3-theme-d5" onclick="sendInvitations()"> Invitations </button>&nbsp';
+      cancelButton +=
+        '<button class="w3-button w3-theme-d5" title="Cancel Event" onclick="cancelEvent()">Cancel Event</button><br>';
       text +=
         "<h2>" +
         arg[0] +
@@ -251,8 +239,7 @@ function displayEventDetails() {
           arg[5][i] +
           "</div>";
       //arg[6] is guest List
-      if(arg[6]!=null)
-      hostguestlist(arg[6]);
+      if (arg[6] != null) hostguestlist(arg[6]);
     }
   };
   var parameters = {
@@ -411,9 +398,6 @@ function displayContributeEventDetails(currentEvent) {
   req2.send(JSON.stringify(parameters2));
 }
 
-
-
-
 function addContributor() {
   var req = new XMLHttpRequest();
   req.open("POST", event_add_contributor_endpoint);
@@ -431,15 +415,13 @@ function addContributor() {
   req.send(JSON.stringify(parameters));
 }
 
-
-
-
 function createEvent(
   userName,
   event_Name,
   eventZipcode,
   eventLocation,
-  time,date,
+  time,
+  date,
   description,
   eventTypeParam,
   tags
@@ -541,7 +523,9 @@ function displayTaskDetails(eventID) {
   text +=
     '<input class="w3-input" type="text" placeholder="Contributor e-mail ID" id="contributor_id_from_task">';
   text +=
-    '<br><button type="button" class="w3-button w3-theme-d1" onclick="addContributorToTask(\''+eventID + '\')">Add Contributor</button>&nbsp</div>';
+    '<br><button type="button" class="w3-button w3-theme-d1" onclick="addContributorToTask(\'' +
+    eventID +
+    "')\">Add Contributor</button>&nbsp</div>";
 
   text +=
     '<div class="w3-card-3 w3-theme-d3" style="padding:5px"><input class="w3-input" type="text" placeholder="Enter Subtask Name" id="subtaskname">';
@@ -553,30 +537,23 @@ function displayTaskDetails(eventID) {
   document.getElementById("createEvent").innerHTML = text;
 }
 
-
-
-
-function addContributorToTask(taskid){
-var req = new XMLHttpRequest();
+function addContributorToTask(taskid) {
+  var req = new XMLHttpRequest();
   req.open("POST", task_add_contributor_endpoint);
   req.onreadystatechange = function(event) {
     if (this.readyState == 4 && event.target.response == "true") {
       alert("Task added successfully");
     } else if (this.readyState == 4) {
-	console.log(event.target.response);
+      console.log(event.target.response);
       alert("Sorry resource unavailable");
     }
   };
   var parameters = {
-	task_id: taskid,
+    task_id: taskid,
     contributor_username: document.getElementById("contributor_id_from_task").value
-
   };
   req.send(JSON.stringify(parameters));
 }
-
-
-
 
 function retrieveHostEventList() {
   var req = new XMLHttpRequest();
@@ -592,9 +569,6 @@ function retrieveHostEventList() {
   };
   req.send(JSON.stringify(parameters));
 }
-
-
-
 
 function addTask() {
   var req = new XMLHttpRequest();
@@ -637,8 +611,7 @@ function retrieveTasks() {
   req.send(JSON.stringify(parameters));
 }
 
-function sendMessage()
-{
+function sendMessage(username) {
   var req = new XMLHttpRequest();
   req.open("POST", host_send_message_endpoint);
   req.onreadystatechange = function(event) {
@@ -648,17 +621,24 @@ function sendMessage()
       alert("Sorry resource unavailable");
     }
   };
-  var parameters = {
+  var parameters;
+  if(username!=null)
+  parameters = {
     event_id: localStorage.getItem("currentEvent"),
-    message: document.getElementById("message").value
+    message: document.getElementById("message").value,
+    username:username
   };
+  else {
+    parameters = {
+      event_id: localStorage.getItem("currentEvent"),
+      message: document.getElementById("message").value
+    };
+  }
   req.send(JSON.stringify(parameters));
 }
-
 
 /* not done yet*/
-function seeProfile()
-{
+function seeProfile() {
   var req = new XMLHttpRequest();
   req.open("POST", host_send_message_endpoint);
   req.onreadystatechange = function(event) {
@@ -675,15 +655,12 @@ function seeProfile()
   req.send(JSON.stringify(parameters));
 }
 
-
-function messagecontributor(){
-
+function messagecontributor() {}
+function viewEventMessages() {
+  document.getElementById("createEvent").innerHTML =
+    "Messages sent by users would appear here.";
 }
-function viewEventMessages()
-{
-  document.getElementById("createEvent").innerHTML = "Messages sent by users would appear here."
-}
-function sendInvitations()
-{
-  document.getElementById("createEvent").innerHTML = "Enter email id of user to send invitation too."
+function sendInvitations() {
+  document.getElementById("createEvent").innerHTML =
+    "Enter email id of user to send invitation too.";
 }
