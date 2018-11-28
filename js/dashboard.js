@@ -22,6 +22,7 @@ var contribute_event_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.a
 var task_check_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/TaskCheck";
 var user_share_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-share-event";
 var host_event_messages_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-event-messages";
+var user_send_host_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-send-host-message";
 
 var taskArr;
 
@@ -262,8 +263,9 @@ function displayHostEventDetails(currentEvent) {
   req2.open("POST", event_contributor_list_endpoint);
   req2.onreadystatechange = function(event) {
     if (this.readyState == 4 && event.target.response != null) {
-      contributorArr = JSON.parse(event.target.response);
 
+      contributorArr = JSON.parse(event.target.response);
+      console.log(contributorArr);
       var contributor =
         '<button class="w3-button w3-hide-small w3-padding-large w3-hover-white" title="Add Contributor" onclick="callAddContributor()"><i class="fa fa-plus"></i></button>';
       if (contributorArr != null) {
@@ -271,7 +273,7 @@ function displayHostEventDetails(currentEvent) {
           contributor +=
             '<button class="w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2" onclick="retrieveUserDetails(\'' +
             contributorArr[i][1] +
-            "');\" >" +
+            "');\" ondblclick=\"forwardMessage(\'"+contributorArr[i][1]+"\')\" >" +
             contributorArr[i][0] +
             "</button>";
         }
@@ -351,11 +353,11 @@ function addContributor() {
   req.open("POST", event_add_contributor_endpoint);
   req.onreadystatechange = function(event) {
     console.log(event.target.response);
-    if (this.readyState == 4 && event.target.response == true)
-      console.log("Added Contributor");
+    if (this.readyState == 4 && event.target.response == "true")
+    {  alert("Added Contributor");
+      displayHostEventDetails(localStorage.getItem("currentEvent"));
+    }
   };
-  console.log(localStorage.getItem("currentEvent"));
-  console.log(document.getElementById("contributor_username").value);
   var parameters = {
     event_id: localStorage.getItem("currentEvent"),
     contributor_username: document.getElementById("contributor_username").value
@@ -659,16 +661,56 @@ function viewEventMessages()
     arr = JSON.parse(event.target.response);
     if (this.readyState == 4) {
       document.getElementById("createEvent").innerHTML = '<center>'+arr.message_content+'</center>';
+      temp = "";
       for(x in arr.message_list)
       {
+        if(arr.message_list[x].includes("->"))
+          arr.message_list[x] = arr.message_list[x].substring(3);
         temp = arr.message_list[x].split(":-")
-      document.getElementById("createEvent").innerHTML += '<hr><font color="red">'+temp[0]+"</font>"+temp[1];
+        if(temp[1].includes("->"))
+        {
+          subtemp = temp[1].split("->")
+          document.getElementById("createEvent").innerHTML += '<hr><font color="red">'+temp[0]+"</font>"+subtemp[0]+"-><font color='green'>"+subtemp[1]+"</font>";
+        }
+        else
+        document.getElementById("createEvent").innerHTML += "<hr><button class=\"w3-btn\" onclick=\"storeMessage(\'"+arr.message_list[x]+"\')\"><i class=\"fa fa-plane\"></i></button>"+'<font color="red">'+temp[0]+"</font>"+temp[1];
     }
 
   }
   };
   var parameters = {
     event_id : localStorage.getItem("currentEvent"),
+  };
+  req.send(JSON.stringify(parameters));
+}
+function storeMessage(message)
+{
+  localStorage.setItem("forwardedMessage",message);
+}
+function forwardMessage(contributorName)
+{
+  if(localStorage.getItem("forwardedMessage")!="")
+  {
+    sendtoSelf(localStorage.getItem("currentEvent"),contributorName,localStorage.getItem("forwardedMessage"))
+    localStorage.setItem("forwardedMessage","")
+  }
+}
+function sendtoSelf(eventID,contributorName,message)
+{
+  message += " -> "+contributorName;
+  var req = new XMLHttpRequest();
+  req.open("POST", user_send_host_message_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      console.log(event.target.response);
+        alert("Message sent successfully")
+    }
+  };
+
+  var parameters = {
+    event_id: eventID.toString(),
+    username: "",
+    event_mess: message
   };
   req.send(JSON.stringify(parameters));
 }
