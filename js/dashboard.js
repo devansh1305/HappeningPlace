@@ -23,6 +23,7 @@ var task_check_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.co
 var user_share_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-share-event";
 var host_event_messages_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-event-messages";
 var user_send_host_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-send-host-message";
+var event_get_user_rating_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-get-user-rating";
 
 var taskArr;
 
@@ -131,6 +132,23 @@ function openNav() {
     }
     document.getElementById("hostEventGuestList").innerHTML = text;
   }*/
+function getUserRating(username)
+{
+  var req = new XMLHttpRequest();
+  req.open("POST", event_get_user_rating_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      document.getElementById('userRating').innerHTML = "User Event Rating: " + event.target.response;
+    }
+  };
+  console.log(username);
+  console.log(localStorage.getItem("currentEvent"));
+  var parameters = {
+    event_id: localStorage.getItem("currentEvent"),
+    username: username
+  };
+  req.send(JSON.stringify(parameters));
+}
 
 function hostguestlist(host_guest_list) {
   text = "";
@@ -146,7 +164,7 @@ function hostguestlist(host_guest_list) {
 }
 
 function userDetails(arr) {
-  document.getElementById("createEvent").innerHTML = "Name: " + arr.firstname + "'s<hr>";
+  document.getElementById("createEvent").innerHTML = "<p id=\"userRating\"></p>Name: " + arr.firstname + "'s<hr>";
   document.getElementById("createEvent").innerHTML += "Address: " + arr.address1 + ", " + arr.address2 + "," + arr.city + "<hr>";
   document.getElementById("createEvent").innerHTML += "Email: " + arr.email + "<hr>Interests: ";
   for (var i = 0; i < arr.interest_tags.length; i++) {
@@ -157,10 +175,12 @@ function userDetails(arr) {
 }
 
 function retrieveUserDetails(email) {
+    getUserRating(email);
   var req = new XMLHttpRequest();
   req.open("POST", user_details_endpoint);
   req.onreadystatechange = function(event) {
     if (this.readyState == 4) {
+
       userDetails(JSON.parse(event.target.response));
     }
   };
@@ -563,6 +583,7 @@ function retrieveTasks() {
 }
 
 function sendMessage(username) {
+
   var req = new XMLHttpRequest();
   req.open("POST", host_send_message_endpoint);
   req.onreadystatechange = function(event) {
@@ -634,6 +655,7 @@ function demographics()
 
 function sendInvitations()
 {
+  document.getElementById('userRating').innerHTML = "";
   document.getElementById("createEvent").innerHTML = 'Enter username of users to invite<br><input class="w3-input" id="inviteList"></input><hr><button class="w3-button w3-theme-d4" onclick="shareEvent()">Send Invites</button>';
 }
 function shareEvent()
@@ -655,6 +677,7 @@ function shareEvent()
 
 function viewEventMessages()
 {
+  document.getElementById('userRating').innerHTML = "";
   var req = new XMLHttpRequest();
   req.open("POST",host_event_messages_endpoint);
   req.onreadystatechange = function(event) {
