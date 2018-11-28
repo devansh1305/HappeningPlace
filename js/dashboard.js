@@ -24,9 +24,12 @@ var task_check_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.co
 var user_share_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-share-event";
 var host_event_messages_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-event-messages";
 <<<<<<< HEAD
+<<<<<<< HEAD
 var user_send_host_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-send-host-message";
 var event_get_user_rating_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-get-user-rating";
 
+=======
+>>>>>>> parent of a0f1f58... message forwarding user story 8
 =======
 >>>>>>> parent of a0f1f58... message forwarding user story 8
 
@@ -684,6 +687,7 @@ function viewEventMessages()
   req.send(JSON.stringify(parameters));
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 function storeMessage(message)
 {
   localStorage.setItem("forwardedMessage",message);
@@ -700,5 +704,7 @@ function sendInvitations() {
   document.getElementById("createEvent").innerHTML =
     "Enter email id of user to send invitation too.";
 }
+=======
+>>>>>>> parent of a0f1f58... message forwarding user story 8
 =======
 >>>>>>> parent of a0f1f58... message forwarding user story 8
