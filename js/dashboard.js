@@ -23,9 +23,12 @@ var contribute_event_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.a
 var task_check_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/TaskCheck";
 var user_share_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-share-event";
 var host_event_messages_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-event-messages";
+<<<<<<< HEAD
 var user_send_host_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-send-host-message";
 var event_get_user_rating_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-get-user-rating";
 
+=======
+>>>>>>> parent of a0f1f58... message forwarding user story 8
 
 var taskArr;
 /*
@@ -667,19 +670,10 @@ function viewEventMessages()
     arr = JSON.parse(event.target.response);
     if (this.readyState == 4) {
       document.getElementById("createEvent").innerHTML = '<center>'+arr.message_content+'</center>';
-      temp = "";
       for(x in arr.message_list)
       {
-        if(arr.message_list[x].includes("->"))
-          arr.message_list[x] = arr.message_list[x].substring(3);
         temp = arr.message_list[x].split(":-")
-        if(temp[1].includes("->"))
-        {
-          subtemp = temp[1].split("->")
-          document.getElementById("createEvent").innerHTML += '<hr><font color="red">'+temp[0]+"</font>"+subtemp[0]+"-><font color='green'>"+subtemp[1]+"</font>";
-        }
-        else
-        document.getElementById("createEvent").innerHTML += "<hr><button class=\"w3-btn\" onclick=\"storeMessage(\'"+arr.message_list[x]+"\')\"><i class=\"fa fa-plane\"></i></button>"+'<font color="red">'+temp[0]+"</font>"+temp[1];
+      document.getElementById("createEvent").innerHTML += '<hr><font color="red">'+temp[0]+"</font>"+temp[1];
     }
 
   }
@@ -689,6 +683,7 @@ function viewEventMessages()
   };
   req.send(JSON.stringify(parameters));
 }
+<<<<<<< HEAD
 function storeMessage(message)
 {
   localStorage.setItem("forwardedMessage",message);
@@ -705,3 +700,5 @@ function sendInvitations() {
   document.getElementById("createEvent").innerHTML =
     "Enter email id of user to send invitation too.";
 }
+=======
+>>>>>>> parent of a0f1f58... message forwarding user story 8
