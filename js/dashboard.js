@@ -514,7 +514,7 @@ function displayTaskDetails(eventID) {
   text +=
     '<input class="w3-input" type="text" placeholder="Contributor e-mail ID" id="contributor_id_from_task">';
   text +=
-    '<br><button type="button" class="w3-button w3-theme-d1" onclick="addContributorToTask(\'' +
+    '<br><button type="button" class="w3-button w3-small w3-theme-d5" onclick="addContributorToTask(\'' +
     eventID +
     "')\">Add Contributor</button>&nbsp</div>";
 
@@ -522,9 +522,9 @@ function displayTaskDetails(eventID) {
     '<div class="w3-card-3 w3-theme-d3" style="padding:5px"><input class="w3-input" type="text" placeholder="Enter Task status" id="Status">';
   text +=
     '<button type="button" class="w3-button w3-small w3-theme-d5" onclick="create()">Add Status</button></div>';
-  text += '<div class=" w3-bar"> ';
-  text +=
-    '<input class="w3-check" type="checkbox"><label>sub_task</label><br><input class="w3-small w3-check" type="checkbox"><label>sub_task</label><br><input class="w3-check" type="checkbox"><label>sub_task</label><br> </div>';
+  //text += '<div class=" w3-bar"> ';
+  //text +=
+  //'<input class="w3-check" type="checkbox"><label>sub_task</label><br><input class="w3-small w3-check" type="checkbox"><label>sub_task</label><br><input class="w3-check" type="checkbox"><label>sub_task</label><br> </div>';
   document.getElementById("createEvent").innerHTML = text;
 }
 
