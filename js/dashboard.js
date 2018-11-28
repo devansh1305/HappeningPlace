@@ -5,37 +5,23 @@
  */
 
 //Amazon Web Services API Gateway Endpoints
-var host_event_list_endpoint =
-  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-event-list";
-var host_event_guest_list_endpoint =
-  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-event-guest-list";
-var host_delete_event_endpoint =
-  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-delete-event";
-var host_create_event_endpoint =
-  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-create-event";
-var event_task_list_endpoint =
-  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-task-list";
-var event_contributor_list_endpoint =
-  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-contributor-list";
-var event_add_task_endpoint =
-  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-add-task";
-var event_add_contributor_endpoint =
-  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-add-contributor";
-var host_cancel_event_endpoint =
-  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/delete-host-event";
-var host_event_details_endpoint =
-  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-details";
-var host_send_message_endpoint =
-  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/send-message";
-var user_details_endpoint =
-  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/get-user-profile";
-var task_add_contributor_endpoint =
-  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/add-contributor-to-task";
-var contribute_event_list_endpoint =
-  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/contributinglistservice";
-var task_check_endpoint =
-  "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/TaskCheck";
+var host_event_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-event-list";
+var host_event_guest_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-event-guest-list";
+var host_delete_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-delete-event";
+var host_create_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-create-event";
+var event_task_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-task-list";
+var event_contributor_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-contributor-list";
+var event_add_task_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-add-task";
+var event_add_contributor_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-add-contributor";
+var host_cancel_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/delete-host-event";
+var host_event_details_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-details";
+var host_send_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/send-message";
+var user_details_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/get-user-profile";
+var task_add_contributor_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/add-contributor-to-task";
+var contribute_event_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/contributinglistservice";
+var task_check_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/TaskCheck";
 var user_share_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-share-event";
+var host_event_messages_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-event-messages";
 
 var taskArr;
 
@@ -216,11 +202,11 @@ function displayEventDetails() {
       arg = JSON.parse(event.target.response);
       var text = "";
       var cancelButton =
-        '<button class="w3-button w3-theme-d5" onclick="viewEventMessages()"> Messages </button>&nbsp<button class="w3-button w3-theme-d5" onclick="sendInvitations()">Invite</button>&nbsp';
+        '<button class="w3-button w3-yellow" onclick="viewEventMessages()"> Messages </button>&nbsp<button class="w3-button w3-blue" onclick="sendInvitations()">Invite</button>&nbsp';
       cancelButton +=
-        '<button class="w3-button w3-theme-d5" title="View Reviews" onclick="viewReviews()">Reviews</button>&nbsp';
+        '<button class="w3-button w3-green" title="View Reviews" onclick="viewReviews()">Reviews</button>&nbsp';
       cancelButton +=
-          '<button class="w3-button w3-theme-d5" title="Cancel Event" onclick="cancelEvent()">Cancel Event</button><br>';
+          '<button class="w3-button w3-red" title="Cancel Event" onclick="cancelEventConfirm()">Cancel Event</button><br>';
       text +=
         "<h2>" +
         arg[0] +
@@ -299,6 +285,12 @@ function displayHostEventDetails(currentEvent) {
   req2.send(JSON.stringify(parameters2));
 }
 
+function cancelEventConfirm()
+{
+  if(confirm("Are you sure you want to cancel?"))
+    cancelEvent();
+
+}
 function displayContributeEventDetails(currentEvent) {
   localStorage.setItem("currentEvent", currentEvent);
   var req = new XMLHttpRequest();
@@ -512,6 +504,7 @@ function addContributorToTask(taskid) {
 }
 
 function retrieveHostEventList() {
+
   var req = new XMLHttpRequest();
   req.open("POST", host_event_list_endpoint);
   req.onreadystatechange = function(event) {
@@ -599,8 +592,32 @@ function demographics()
   req.open("POST", host_event_guest_list_endpoint);
   req.onreadystatechange = function(event) {
     if (this.readyState == 4) {
-      console.log(event.target.response);
-      document.getElementById("tagsOutput").innerHTML = JSON.parse(event.target.response);
+      arr = JSON.parse(event.target.response);
+      new Chart(document.getElementById("pie-chart"), {
+        type: 'pie',
+        data: {
+          labels: arr[0],
+          datasets: [{
+            label: "Population (millions)",
+            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+            data: arr[1]
+          }]
+        },
+        options: {
+          legend: {
+            labels: {
+                // This more specific font property overrides the global property
+                fontColor: 'white'
+            }
+        },
+          title: {
+            display: true,
+            text: 'Most popular tags pie chart',
+            fontColor: 'white'
+          }
+        }
+    });
+      //document.getElementById("tagsOutput").innerHTML = JSON.parse(event.target.response);
 
     } else if (this.readyState == 4) {
       alert("Sorry resource unavailable");
@@ -630,6 +647,28 @@ function shareEvent()
   var parameters = {
     eventID : localStorage.getItem("currentEvent"),
     usersSharedTo: document.getElementById('inviteList').value.split(",")
+  };
+  req.send(JSON.stringify(parameters));
+}
+
+function viewEventMessages()
+{
+  var req = new XMLHttpRequest();
+  req.open("POST",host_event_messages_endpoint);
+  req.onreadystatechange = function(event) {
+    arr = JSON.parse(event.target.response);
+    if (this.readyState == 4) {
+      document.getElementById("createEvent").innerHTML = '<center>'+arr.message_content+'</center>';
+      for(x in arr.message_list)
+      {
+        temp = arr.message_list[x].split(":-")
+      document.getElementById("createEvent").innerHTML += '<hr><font color="red">'+temp[0]+"</font>"+temp[1];
+    }
+
+  }
+  };
+  var parameters = {
+    event_id : localStorage.getItem("currentEvent"),
   };
   req.send(JSON.stringify(parameters));
 }

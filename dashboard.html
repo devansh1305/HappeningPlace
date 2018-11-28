@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-dark-grey.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <script type="text/javascript" src="js/dashboard.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
 </head>
 
 <body class="w3-theme-d1 bg-success" onload="retrieveHostEventList()">
@@ -123,7 +124,7 @@
         <h3>Descriptors</h3>
       </div>
       <p id="tagsOutput">
-
+        <canvas id="pie-chart" width="800" height="450"></canvas>
       </p>
     </div>
 
