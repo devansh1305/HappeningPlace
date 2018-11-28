@@ -19,7 +19,7 @@ var user_profile_access_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.ama
 var user_friend_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-friend-list";
 var user_share_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-share-event";
 var user_shared_events_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/get-shared-events";
-
+var user_send_host_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-send-host-message";
 
 /* Function Lookup index
  * 1. Add user - Adds user to Database
@@ -159,13 +159,13 @@ function guestEventList() {
       renderUI(JSON.parse(event.target.response), "blue");
     } else if (this.readyState == 4 && event.target.response == "[]") {
       document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
-      document.getElementById('searchResults').innerHTML = "Sorry no events found for that zipcode.";
+      document.getElementById('searchResults').innerHTML = "Sorry no events found";
     }
   };
   var parameters;
   document.getElementById('searchResults').innerHTML = "";
   document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
-  document.getElementById('searchResults').innerHTML = "Sorry no events found for that zipcode.";
+  document.getElementById('searchResults').innerHTML = "Sorry no events found";
   //console.log(document.getElementById('zipcodeInput').value == '' && document.getElementById('tagsInput').value == '');
   if (document.getElementById('zipcodeInput').value == '' && document.getElementById('tagsInput').value == '') {
     arr = JSON.parse(localStorage.getItem("userDetails"));
@@ -212,7 +212,7 @@ function renderUI(arr, color) {
 
         } else if (color == 'green') {
           //Displaying joined events
-          document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><div id=\"stars\"><span class=\"fa fa-star checked\" onclick=\"star(1)\"></span><span class=\"fa fa-star checked\"onclick=\"star(2)\"></span><span class=\"fa fa-star checked\"onclick=\"star(3)\"></span><span class=\"fa fa-star\" onclick=\"star(4)\"></span><span class=\"fa fa-star\" onclick=\"star(5)\"></span></div><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-l2 w3-margin-bottom\" onclick=\"cancelEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-down\"></i> Cancel RSVP</button><button type=\"button\" class=\"w3-button w3-theme-d4 w3-margin-bottom\" onclick=\"shareEvent("+arr[i].eventid+")\">&nbsp<i class=\"fa fa-comment\" ></i>  Share</button><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"messageHost("+arr[i].eventid+")\">&nbsp<i class=\"fa fa-user\"></i>&nbspMessage Host</button></div>";
+          document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><div id=\"stars\"><span class=\"fa fa-star checked\" onclick=\"star(1)\"></span><span class=\"fa fa-star checked\"onclick=\"star(2)\"></span><span class=\"fa fa-star checked\"onclick=\"star(3)\"></span><span class=\"fa fa-star\" onclick=\"star(4)\"></span><span class=\"fa fa-star\" onclick=\"star(5)\"></span></div><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-l2 w3-margin-bottom\" onclick=\"cancelEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-down\"></i> Cancel RSVP</button><button type=\"button\" class=\"w3-button w3-theme-d4 w3-margin-bottom\" onclick=\"shareEvent("+arr[i].eventid+")\">&nbsp<i class=\"fa fa-comment\" ></i>  Share</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input id=\"messageToHost\" style=\"height:40px\"></input><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"messageHost("+arr[i].eventid+")\">&nbsp<i class=\"fa fa-user\"></i>&nbspMessage Host</button></div>";
 
 
         }
@@ -345,6 +345,7 @@ function viewParticipatingEvents() {
   req.open('POST', user_event_history_endpoint);
   req.onreadystatechange = function(event) {
     if (this.readyState == 4) {
+      document.getElementById("searchBar").innerHTML = '<div class="w3-card w3-round w3-white"><div class="w3-container w3-padding"><h3>My Event List</h3></div></div>';
       renderUI(JSON.parse(event.target.response), "green");
     }
   };
@@ -616,6 +617,25 @@ function viewSharedEvents()
 
   var parameters = {
     username:localStorage.getItem("username")
+  };
+  req.send(JSON.stringify(parameters));
+}
+
+
+function messageHost(eventID)
+{
+  var req = new XMLHttpRequest();
+  req.open("POST", user_send_host_message_endpoint;
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+        alert("Message sent successfully")
+    }
+  };
+
+  var parameters = {
+    eventID: eventID,
+    username: localStorage.getItem("username"),
+    event_mess: document.getElementById('messageToHost').value;
   };
   req.send(JSON.stringify(parameters));
 }

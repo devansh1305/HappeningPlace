@@ -35,6 +35,7 @@ var contribute_event_list_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/contributinglistservice";
 var task_check_endpoint =
   "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/TaskCheck";
+var user_share_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-share-event";
 
 var taskArr;
 
@@ -215,29 +216,24 @@ function displayEventDetails() {
       arg = JSON.parse(event.target.response);
       var text = "";
       var cancelButton =
-        '<button class="w3-button w3-theme-d5" onclick="viewEventMessages()"> Messages </button>&nbsp<button class="w3-button w3-theme-d5" onclick="sendInvitations()"> Invitations </button>&nbsp';
+        '<button class="w3-button w3-theme-d5" onclick="viewEventMessages()"> Messages </button>&nbsp<button class="w3-button w3-theme-d5" onclick="sendInvitations()">Invite</button>&nbsp';
       cancelButton +=
-        '<button class="w3-button w3-theme-d5" title="Cancel Event" onclick="cancelEvent()">Cancel Event</button><br>';
+        '<button class="w3-button w3-theme-d5" title="View Reviews" onclick="viewReviews()">Reviews</button>&nbsp';
+      cancelButton +=
+          '<button class="w3-button w3-theme-d5" title="Cancel Event" onclick="cancelEvent()">Cancel Event</button><br>';
       text +=
         "<h2>" +
         arg[0] +
         '</h2><h3 class="w3-card-4 w3-theme-d5">&nbsp&nbspEvent Details</h3><div class="w3-theme-d3 w3-card-2" style="padding:10px">';
       text +=
-        "<h5>Location                 :" +
-        arg[2] +
-        "</h5><h5>Time        :" +
-        arg[4] +
-        "</h5><h5>Description :" +
-        arg[3] +
+          "<h5>Zipcode               :" + arg[1];
+      text +=
+        "<h5>Location                 :" + arg[2] +"</h5><h5>Time        :" +arg[4] +
+        "</h5><h5>Description :" +arg[3] +
         "</h5></div>";
       document.getElementById("menu").innerHTML = cancelButton;
       document.getElementById("createEvent").innerHTML = text;
-      document.getElementById("tagsOutput").innerHTML = "";
-      for (var i in arg[5])
-        document.getElementById("tagsOutput").innerHTML +=
-          '<div class="w3-bar-item w3-hover-white w3-button w3-card-4">' +
-          arg[5][i] +
-          "</div>";
+      demographics();
       //arg[6] is guest List
       if (arg[6] != null) hostguestlist(arg[6]);
     }
@@ -637,13 +633,15 @@ function sendMessage(username) {
   req.send(JSON.stringify(parameters));
 }
 
-/* not done yet*/
-function seeProfile() {
+function demographics()
+{
   var req = new XMLHttpRequest();
-  req.open("POST", host_send_message_endpoint);
+  req.open("POST", host_event_guest_list_endpoint);
   req.onreadystatechange = function(event) {
-    if (this.readyState == 4 && event.target.response == "true") {
-      alert("Sent message successfully");
+    if (this.readyState == 4) {
+      console.log(event.target.response);
+      document.getElementById("tagsOutput").innerHTML = JSON.parse(event.target.response);
+
     } else if (this.readyState == 4) {
       alert("Sorry resource unavailable");
     }
@@ -655,12 +653,23 @@ function seeProfile() {
   req.send(JSON.stringify(parameters));
 }
 
-function messagecontributor() {}
-function viewEventMessages() {
-  document.getElementById("createEvent").innerHTML =
-    "Messages sent by users would appear here.";
+function sendInvitations()
+{
+  document.getElementById("createEvent").innerHTML = 'Enter username of users to invite<br><input class="w3-input" id="inviteList"></input><hr><button class="w3-button w3-theme-d4" onclick="shareEvent()">Send Invites</button>';
 }
-function sendInvitations() {
-  document.getElementById("createEvent").innerHTML =
-    "Enter email id of user to send invitation too.";
+function shareEvent()
+{
+  var req = new XMLHttpRequest();
+  req.open("POST", user_share_event_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      console.log(event.target.response);
+      alert("Event shared with friends successfully");
+    }
+  };
+  var parameters = {
+    eventID : localStorage.getItem("currentEvent"),
+    usersSharedTo: document.getElementById('inviteList').value.split(",")
+  };
+  req.send(JSON.stringify(parameters));
 }
