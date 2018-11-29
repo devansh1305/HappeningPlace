@@ -393,7 +393,8 @@ function setReminders() {
       document.getElementById('notifications').innerHTML = "";
       arr = JSON.parse(event.target.response);
       for (var i in arr) {
-        var eventTime = new Date(arr[i].date + ", " + arr[i].time);
+        console.log(arr[i].date + "T" + arr[i].time);
+        var eventTime = new Date(arr[i].date + "T" + arr[i].time + ':00');
         if (eventTime - (new Date) < 86400000) {
           document.getElementById('notifications').innerHTML += '<a href="#" class="w3-bar-item w3-button">' + arr[i].name + '</a>';
         }

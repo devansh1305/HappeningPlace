@@ -53,7 +53,7 @@ function eventmanager() {
   document.getElementById("createEvent").innerHTML =
     '<div class="w3-display-container w3-panel w3-theme-d3" style="padding:0px;">';
   document.getElementById("createEvent").innerHTML +=
-    '<input class="w3-input" type="text" placeholder="Event Name" id="eventname"><br><input class="w3-input" type="date" placeholder="Enter Date" id="enterdate"><br><input class="w3-input" type="text" placeholder="Enter Time" id="entertime"><br><input class="w3-input" type="text" placeholder="Enter Venue" id="entervenue"><br><input class="w3-input" type="text" placeholder="Enter zipcode" id="enterzip"><br><input class="w3-input"type="text" placeholder="Event Description" id="description"><br><select id="event_type" class="form-control"><option selected>Choose...</option><option value="Public">Public</option><option value="Private">Private</option></select><br>';
+    '<input class="w3-input" type="text" placeholder="Event Name" id="eventname"><br><input class="w3-input" type="date" placeholder="Enter Date" id="enterdate"><br><input class="w3-input" type="time" placeholder="Enter Time" id="entertime"><br><input class="w3-input" type="text" placeholder="Enter Venue" id="entervenue"><br><input class="w3-input" type="text" placeholder="Enter zipcode" id="enterzip"><br><input class="w3-input"type="text" placeholder="Event Description" id="description"><br><select id="event_type" class="form-control"><option selected>Choose...</option><option value="Public">Public</option><option value="Private">Private</option></select><br>';
   document.getElementById("createEvent").innerHTML +=
     ' <input class="w3-input" type="text" placeholder="Enter Tags" id="tags"><br><button type="button" class="w3-button w3-theme-d1" onclick="create()">Create Event</button>&nbsp<button type="button" class="w3-button w3-theme-d1" onclick="cancel()">Cancel</button></div>';
 }
@@ -228,6 +228,46 @@ function displayEventDetails() {
       demographics();
       //arg[6] is guest List
       if (arg[6] != null) hostguestlist(arg[6]);
+    }
+  };
+  var parameters = {
+    eventid: localStorage.getItem("currentEvent")
+  };
+  req.send(JSON.stringify(parameters));
+}
+
+function displayEventDetailsForContributors() {
+  var req = new XMLHttpRequest();
+  req.open("POST", host_event_details_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      arg = JSON.parse(event.target.response);
+      var text = "";
+      // var cancelButton = "<button class=\"w3-button w3-theme-d5\" onclick=\"viewEventMessages()\"> Messages </button>&nbsp<button class=\"w3-button w3-theme-d5\" onclick=\"sendInvitations()\"> Invitations </button>&nbsp";
+      // cancelButton += '<button class="w3-button w3-theme-d5" title="Cancel Event" onclick="cancelEvent()">Cancel Event</button><br>';
+      text +=
+        "<h2>" +
+        arg[0] +
+        '</h2><h3 class="w3-card-4 w3-theme-d5">&nbsp&nbspEvent Details</h3><div class="w3-theme-d3 w3-card-2" style="padding:10px">';
+      text +=
+        "<h5>Location                 :" +
+        arg[2] +
+        "</h5><h5>Time        :" +
+        arg[4] +
+        "</h5><h5>Description :" +
+        arg[3] +
+        "</h5></div>";
+      // document.getElementById("menu").innerHTML = cancelButton;
+      document.getElementById("createEvent").innerHTML = text;
+      document.getElementById("tagsOutput").innerHTML = "";
+      for (var i in arg[5])
+        document.getElementById("tagsOutput").innerHTML +=
+          '<div class="w3-bar-item w3-hover-white w3-button w3-card-4">' +
+          arg[5][i] +
+          "</div>";
+      //arg[6] is guest List
+      if(arg[6]!=null)
+      hostguestlist(arg[6]);
     }
   };
   var parameters = {
@@ -455,7 +495,7 @@ function loadContributeEventList(arr) {
     text +=
       '<button class="w3-button w3-theme-d5"  onclick=" displayHostEventDetails(\'' +
       contributeEventNames[i][1] +
-      "'); displayEventDetails()\">" +
+      "'); displayEventDetailsForContributors()\">" +
       contributeEventNames[i][0] +
       "</button><br><br>";
   }
