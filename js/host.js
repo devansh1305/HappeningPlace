@@ -4,6 +4,14 @@
  * @date 21st Oct, 2018
  */
 
+
+//date setting
+var today = new Date();
+var dd = today.getDate();
+var mm = today.getMonth()+1; //January is 0!
+var yyyy = today.getFullYear();
+
+
 //Amazon Web Services API Gateway Endpoints
 var user_sign_up_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-signup";
 var user_login_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-login";
@@ -674,6 +682,9 @@ function getEventRating(arr)
  document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr.name + " " + arr.location + "</h4><br><hr class=\"w3-clear\"><div id=\"stars\">"
 
 
+if(yyyy>=Number(arr.date.substr(0,4))){
+if(mm>=Number(arr.date.substr(5,2))){
+if(dd>=Number(arr.date.substr(8,2))){
 var count=1;
 for(;count<=starcount;count++){
  document.getElementById('searchResults').innerHTML += "<span class=\"fa fa-star checked\" onclick=\"setStar("+count+","+arr.eventid+","+arr.date +")\"></span>";
@@ -681,9 +692,10 @@ for(;count<=starcount;count++){
 for(;count<6;count++){
  document.getElementById('searchResults').innerHTML += "<span class=\"fa fa-star\" onclick=\"setStar("+count+","+arr.eventid+","+arr.date +")\"></span>";
 }
-
+}
+}
+}
      document.getElementById('searchResults').innerHTML += "</div><p>Location: " + arr.location + "<br>Time: " + arr.time + "<br>ZipCode: " + arr.zipcode + "<br> Description:" + arr.desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-l2 w3-margin-bottom\" onclick=\"cancelEvent(" + arr.eventid + ")\"><i class=\"fa fa-thumbs-down\"></i> Cancel RSVP</button><button type=\"button\" class=\"w3-button w3-theme-d4 w3-margin-bottom\" onclick=\"shareEvent("+arr.eventid+")\">&nbsp<i class=\"fa fa-comment\" ></i>  Share</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input id=\"messageToHost\" style=\"height:40px\"></input><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"messageHost("+arr.eventid+")\">&nbsp<i class=\"fa fa-user\"></i>&nbspMessage Host</button></div>";
-
 
     }
   };
