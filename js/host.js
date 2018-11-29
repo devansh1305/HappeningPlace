@@ -530,11 +530,7 @@ function addFriend(friendName) {
     username: localStorage.getItem("username"),
     friend_name: friendName
   };
-  req.send(JSON.stringify(parameters));
-}
-
-
-
+ }
 
 
 
@@ -625,17 +621,18 @@ function viewSharedEvents()
 function messageHost(eventID)
 {
   var req = new XMLHttpRequest();
-  req.open("POST", user_send_host_message_endpoint;
+  req.open("POST", user_send_host_message_endpoint);
   req.onreadystatechange = function(event) {
     if (this.readyState == 4) {
+      console.log(event.target.response);
         alert("Message sent successfully")
     }
   };
 
   var parameters = {
-    eventID: eventID,
+    event_id: eventID.toString(),
     username: localStorage.getItem("username"),
-    event_mess: document.getElementById('messageToHost').value;
+    event_mess: document.getElementById('messageToHost').value
   };
   req.send(JSON.stringify(parameters));
 }
