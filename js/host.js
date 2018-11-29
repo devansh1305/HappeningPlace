@@ -331,6 +331,8 @@ function loadProfile() {
   document.getElementById("firstName").innerHTML = arr.firstname + "'s";
   document.getElementById("address1").innerHTML += arr.address1 + ", " + arr.address2 + ", " + arr.city;
   document.getElementById("email").innerHTML += arr.email;
+  if(!localStorage.getItem("profileAccess") || localStorage.getItem("profileAccess")==null || localStorage.getItem("profileAccess")=="null")
+    localStorage.setItem("profileAccess","public")
   document.getElementById("profileState").innerHTML = '<i class="fa fa-search fa-fw w3-margin-right w3-text-theme"></i>' + localStorage.getItem("profileAccess");
 
   //Send Reminders
@@ -475,7 +477,7 @@ function showFriend() {
         }
         document.getElementById("backgroundCard").className = "w3-card w3-container w3-green";
         if (arr.email != localStorage.getItem("username"))
-          document.getElementById("searchResults").innerHTML += "<br><br><button type=\"button\" class=\"w3-button w3-small w3-theme-d4\" onclick=\"addFriend(arr.email)\">&nbsp<i class=\"fa fa-user\"></i>&nbspAdd Friend</button>";
+          document.getElementById("searchResults").innerHTML += "<br><br><button type=\"button\" class=\"w3-button w3-small w3-theme-d4\" onclick=\"addFriend(\'"+arr.email+"\')\">&nbsp<i class=\"fa fa-user\"></i>&nbspAdd Friend</button>";
 
       } else {
         document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
@@ -533,6 +535,7 @@ function addFriend(friendName) {
   var req = new XMLHttpRequest();
   req.open("POST", user_add_friend_endpoint);
   req.onreadystatechange = function(event) {
+    console.log("hi");
     console.log(event.target.response);
     if (this.readyState == 4) {
       console.log(event.target.response);
@@ -546,13 +549,14 @@ function addFriend(friendName) {
     username: localStorage.getItem("username"),
     friend_name: friendName
   };
+    req.send(JSON.stringify(parameters));
  }
 
 
 
 function viewFriends() {
 
-  document.getElementById("friendList").innerHTML = "<u>Your Friend List</u>";
+  document.getElementById("friendList").innerHTML = "<u>Your Friend List</u><br>";
     var userFriendList=[];
   var req = new XMLHttpRequest();
   req.open("POST", user_friend_list_endpoint);
@@ -565,7 +569,7 @@ function viewFriends() {
       for (x in arr)
       {
         userFriendList.push(arr[x]);
-        document.getElementById("friendList").innerHTML += '<button class="w3-btn w3-small" onclick="showFriendClick(\''+arr[x]+'\')">'+arr[x]+'</button>';
+        document.getElementById("friendList").innerHTML += '<br><button class="w3-btn w3-small" onclick="showFriendClick(\''+arr[x]+'\')">'+arr[x]+'</button>';
       }
       localStorage.setItem("userFriendList",JSON.stringify(userFriendList));
     }

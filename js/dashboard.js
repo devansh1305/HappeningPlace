@@ -49,7 +49,7 @@ function eventmanager() {
   document.getElementById("createEvent").innerHTML =
     '<div class="w3-display-container w3-panel w3-theme-d3" style="padding:0px;">';
   document.getElementById("createEvent").innerHTML +=
-    '<input class="w3-input" type="text" placeholder="Event Name" id="eventname"><br><input class="w3-input" type="date" placeholder="Enter Date" id="enterdate"><br><input class="w3-input" type="time" placeholder="Enter Time" id="entertime"><br><input class="w3-input" type="text" placeholder="Enter Venue" id="entervenue"><br><input class="w3-input" type="text" placeholder="Enter zipcode" id="enterzip"><br><input class="w3-input"type="text" placeholder="Event Description" id="description"><br><select id="event_type" class="form-control"><option selected>Choose...</option><option value="Public">Public</option><option value="Private">Private</option></select><br>';
+    '<input class="w3-input" type="text" placeholder="Event Name" id="eventname"><br><input class="w3-input" type="date" placeholder="Enter Date" id="enterdate"><br><input class="w3-input" type="time" placeholder="Enter Time" id="entertime"><br><input class="w3-input" type="text" placeholder="Enter Venue" id="entervenue"><br><input class="w3-input" type="text" placeholder="Enter zipcode" id="enterzip"><br><input class="w3-input"type="text" placeholder="Event Description" id="description"><br>Access:<select id="event_type" class="w3-select form-control"><option value="Public">Public</option><option value="Private">Private</option></select><br><br>';
   document.getElementById("createEvent").innerHTML +=
     ' <input class="w3-input" type="text" placeholder="Enter Tags" id="tags"><br><button type="button" class="w3-button w3-theme-d1" onclick="create()">Create Event</button>&nbsp<button type="button" class="w3-button w3-theme-d1" onclick="cancel()">Cancel</button></div>';
 }
@@ -534,7 +534,8 @@ function addContributorToTask(taskid) {
   req.open("POST", task_add_contributor_endpoint);
   req.onreadystatechange = function(event) {
     if (this.readyState == 4 && event.target.response == "true") {
-      alert("Task added successfully");
+      alert("Added contributor");
+      displayTaskDetails(taskid);
     } else if (this.readyState == 4) {
       console.log(event.target.response);
       alert("Sorry resource unavailable");
