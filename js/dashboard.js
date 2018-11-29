@@ -24,10 +24,7 @@ var user_share_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazon
 var host_event_messages_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-event-messages";
 var user_send_host_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-send-host-message";
 var event_get_user_rating_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-get-user-rating";
-
-
-
-
+var event_get_task_profile_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/gettaskprofile";
 var taskArr;
 
 function cancelEvent() {
@@ -502,18 +499,31 @@ function loadContributeEventList(arr) {
   document.getElementById("eventList").innerHTML = text;
 }
 
-function displayTaskDetails(eventID) {
-  var text = "";
+function displayTaskDetails(taskID) {
+  var req = new XMLHttpRequest();
+  req.open("POST",event_get_task_profile_endpoint);
+  req.onreadystatechange = function(event) {
+    console.log(event.target.response);
+    if (this.readyState == 4 && event.target.response == "true") {
 
-  text +='<button type="button" class="w3-button w3-theme-d1 w3-right" onclick="cancel()">X</button><br>';
-  text +='<h4>Task Details</h4><div class="w3-theme-d2 w3-card-2" style="padding:10px"><h4>Task Description</h4>';
-  text += '<div class="w3-display-container w3-panel w3-theme-d3" style="padding:0px;">';
-  text += '<input class="w3-input" type="text" placeholder="Contributor e-mail ID" id="contributor_id_from_task">';
-  text += '<br><button type="button" class="w3-button w3-theme-d1" onclick="addContributorToTask(\'' +
-    eventID + "')\">Add Contributor</button>&nbsp</div>";
-  text += '<div class="w3-card-3 w3-theme-d3" style="padding:5px">Status:<input class="w3-input" type="text" id="subtaskname">';
-  text += '<button type="button" class="w3-button w3-small w3-green" onclick="updateStatus()">Update Status Log</button></div>';
-  document.getElementById("createEvent").innerHTML = text;
+      var text = "";
+      text +='<button type="button" class="w3-button w3-theme-d1 w3-right" onclick="cancel()">X</button><br>';
+      text +='<h4>Task Details</h4><div class="w3-theme-d2 w3-card-2" style="padding:10px"><h4>Task Description</h4>';
+      text += '<div class="w3-display-container w3-panel w3-theme-d3" style="padding:0px;">';
+      text += '<input class="w3-input" type="text" placeholder="Contributor e-mail ID" id="contributor_id_from_task">';
+      text += '<br><button type="button" class="w3-button w3-theme-d1" onclick="addContributorToTask(\'' +
+        taskID + "')\">Add Contributor</button>&nbsp</div>";
+      text += '<div class="w3-card-3 w3-theme-d3" style="padding:5px">Status:<input class="w3-input" type="text" id="subtaskname">';
+      text += '<button type="button" class="w3-button w3-small w3-green" onclick="updateStatus()">Update Status Log</button></div>';
+      document.getElementById("createEvent").innerHTML = text;
+    }
+  };
+  console.log(taskID.toString());
+  var parameters = {
+    taskid: taskID.toString()
+  };
+  req.send(JSON.stringify(parameters));
+
 }
 
 function addContributorToTask(taskid) {
