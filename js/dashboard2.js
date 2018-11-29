@@ -5,6 +5,7 @@
  */
 
 //Amazon Web Services API Gateway Endpoints
+
 var host_event_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-event-list";
 var host_event_guest_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-event-guest-list";
 var host_delete_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-delete-event";
@@ -23,17 +24,37 @@ var task_check_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.co
 var user_share_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-share-event";
 var host_event_messages_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-event-messages";
 <<<<<<< HEAD
-
+<<<<<<< HEAD
+<<<<<<< HEAD
 var user_send_host_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-send-host-message";
 var event_get_user_rating_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-get-user-rating";
 
-
-
 =======
-var user_send_host_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-send-host-message";
->>>>>>> 4777e4e9831abb7a6b5ccd97b6795d6ff8597ad6
+>>>>>>> parent of a0f1f58... message forwarding user story 8
+=======
+>>>>>>> parent of a0f1f58... message forwarding user story 8
+=======
+>>>>>>> parent of a0f1f58... message forwarding user story 8
 
 var taskArr;
+/*
+function CheckTasks(){
+  var req = new XMLHttpRequest();
+  req.open("POST", task_check_endpoint);
+  req.onreadystatechange = function(event) {
+    console.log(event.target.response);
+    if (this.readyState == 4) {
+      return JSON.parse(event.target.response);
+    }
+    document.getElementById("").innerHTML = "";
+  };
+
+  var parameters  = {
+    task_id: taskid
+  };
+  req.send(JSON.stringify(parameters));
+}
+*/
 
 function cancelEvent() {
   var req = new XMLHttpRequest();
@@ -119,10 +140,13 @@ function openNav() {
       host_guest_list[i] +
       "</div>";
   }
+
   text +=
     '<div class="w3-bar-item w3-hover-white w3-button w3-card" title="guest email">email ID</div>';
+
   <<
   << << < HEAD
+
   for (i = position + 1; i < host_guest_list.length; i++) {
     text += "<div class=\"w3-bar-item w3-hover-white w3-button w3-card\" title=\"guest email\" onclick=\"hostguestlistonclick(" + i + ")\">" + host_guest_list[i] + "</div>"; ===
     === =
@@ -137,6 +161,23 @@ function openNav() {
     }
     document.getElementById("hostEventGuestList").innerHTML = text;
   }*/
+function getUserRating(username)
+{
+  var req = new XMLHttpRequest();
+  req.open("POST", event_get_user_rating_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      document.getElementById('userRating').innerHTML = "User Event Rating: " + event.target.response;
+    }
+  };
+  console.log(username);
+  console.log(localStorage.getItem("currentEvent"));
+  var parameters = {
+    event_id: localStorage.getItem("currentEvent"),
+    username: username
+  };
+  req.send(JSON.stringify(parameters));
+}
 
 function hostguestlist(host_guest_list) {
   text = "";
@@ -152,7 +193,8 @@ function hostguestlist(host_guest_list) {
 }
 
 function userDetails(arr) {
-  document.getElementById("createEvent").innerHTML = "Name: " + arr.firstname + "'s<hr>";
+
+  document.getElementById("createEvent").innerHTML = "<p id=\"userRating\"></p>Name: " + arr.firstname + "'s<hr>";
   document.getElementById("createEvent").innerHTML += "Address: " + arr.address1 + ", " + arr.address2 + "," + arr.city + "<hr>";
   document.getElementById("createEvent").innerHTML += "Email: " + arr.email + "<hr>Interests: ";
   for (var i = 0; i < arr.interest_tags.length; i++) {
@@ -163,17 +205,18 @@ function userDetails(arr) {
 }
 
 function retrieveUserDetails(email) {
+    getUserRating(email);
   var req = new XMLHttpRequest();
   req.open("POST", user_details_endpoint);
   req.onreadystatechange = function(event) {
     if (this.readyState == 4) {
+
       userDetails(JSON.parse(event.target.response));
     }
   };
 
   var parameters = {
-    username: email,
-    check: "0"
+    username: email
   };
   req.send(JSON.stringify(parameters));
 }
@@ -209,24 +252,29 @@ function displayEventDetails() {
       arg = JSON.parse(event.target.response);
       var text = "";
       var cancelButton =
-        '<button class="w3-button w3-yellow" onclick="viewEventMessages()"> Messages </button>&nbsp<button class="w3-button w3-blue" onclick="sendInvitations()">Invite</button>&nbsp';
+        '<button class="w3-button w3-theme-d5" onclick="viewEventMessages()"> Messages </button>&nbsp<button class="w3-button w3-theme-d5" onclick="sendInvitations()"> Invitations </button>&nbsp';
       cancelButton +=
-        '<button class="w3-button w3-green" title="View Reviews" onclick="viewReviews()">Reviews</button>&nbsp';
-      cancelButton +=
-          '<button class="w3-button w3-red" title="Cancel Event" onclick="cancelEventConfirm()">Cancel Event</button><br>';
+        '<button class="w3-button w3-theme-d5" title="Cancel Event" onclick="cancelEvent()">Cancel Event</button><br>';
       text +=
         "<h2>" +
         arg[0] +
         '</h2><h3 class="w3-card-4 w3-theme-d5">&nbsp&nbspEvent Details</h3><div class="w3-theme-d3 w3-card-2" style="padding:10px">';
       text +=
-          "<h5>Zipcode               :" + arg[1];
-      text +=
-        "<h5>Location                 :" + arg[2] +"</h5><h5>Time        :" +arg[4] +
-        "</h5><h5>Description :" +arg[3] +
+        "<h5>Location                 :" +
+        arg[2] +
+        "</h5><h5>Time        :" +
+        arg[4] +
+        "</h5><h5>Description :" +
+        arg[3] +
         "</h5></div>";
       document.getElementById("menu").innerHTML = cancelButton;
       document.getElementById("createEvent").innerHTML = text;
-      demographics();
+      document.getElementById("tagsOutput").innerHTML = "";
+      for (var i in arg[5])
+        document.getElementById("tagsOutput").innerHTML +=
+          '<div class="w3-bar-item w3-hover-white w3-button w3-card-4">' +
+          arg[5][i] +
+          "</div>";
       //arg[6] is guest List
       if (arg[6] != null) hostguestlist(arg[6]);
     }
@@ -269,9 +317,8 @@ function displayHostEventDetails(currentEvent) {
   req2.open("POST", event_contributor_list_endpoint);
   req2.onreadystatechange = function(event) {
     if (this.readyState == 4 && event.target.response != null) {
-
       contributorArr = JSON.parse(event.target.response);
-      console.log(contributorArr);
+
       var contributor =
         '<button class="w3-button w3-hide-small w3-padding-large w3-hover-white" title="Add Contributor" onclick="callAddContributor()"><i class="fa fa-plus"></i></button>';
       if (contributorArr != null) {
@@ -279,7 +326,7 @@ function displayHostEventDetails(currentEvent) {
           contributor +=
             '<button class="w3-bar-item w3-hover-white w3-button w3-card-4 w3-medium w3-theme-d2" onclick="retrieveUserDetails(\'' +
             contributorArr[i][1] +
-            "');\" ondblclick=\"forwardMessage(\'"+contributorArr[i][1]+"\')\" >" +
+            "');\" >" +
             contributorArr[i][0] +
             "</button>";
         }
@@ -293,12 +340,6 @@ function displayHostEventDetails(currentEvent) {
   req2.send(JSON.stringify(parameters2));
 }
 
-function cancelEventConfirm()
-{
-  if(confirm("Are you sure you want to cancel?"))
-    cancelEvent();
-
-}
 function displayContributeEventDetails(currentEvent) {
   localStorage.setItem("currentEvent", currentEvent);
   var req = new XMLHttpRequest();
@@ -359,11 +400,11 @@ function addContributor() {
   req.open("POST", event_add_contributor_endpoint);
   req.onreadystatechange = function(event) {
     console.log(event.target.response);
-    if (this.readyState == 4 && event.target.response == "true")
-    {  alert("Added Contributor");
-      displayHostEventDetails(localStorage.getItem("currentEvent"));
-    }
+    if (this.readyState == 4 && event.target.response == true)
+      console.log("Added Contributor");
   };
+  console.log(localStorage.getItem("currentEvent"));
+  console.log(document.getElementById("contributor_username").value);
   var parameters = {
     event_id: localStorage.getItem("currentEvent"),
     contributor_username: document.getElementById("contributor_username").value
@@ -479,17 +520,17 @@ function displayTaskDetails(eventID) {
   text +=
     '<input class="w3-input" type="text" placeholder="Contributor e-mail ID" id="contributor_id_from_task">';
   text +=
-    '<br><button type="button" class="w3-button w3-theme-d1" onclick="addContributorToTask(\'' +
+    '<br><button type="button" class="w3-button w3-small w3-theme-d5" onclick="addContributorToTask(\'' +
     eventID +
     "')\">Add Contributor</button>&nbsp</div>";
 
   text +=
-    '<div class="w3-card-3 w3-theme-d3" style="padding:5px"><input class="w3-input" type="text" placeholder="Enter Subtask Name" id="subtaskname">';
+    '<div class="w3-card-3 w3-theme-d3" style="padding:5px"><input class="w3-input" type="text" placeholder="Enter Task status" id="Status">';
   text +=
-    '<button type="button" class="w3-button w3-small w3-theme-d5" onclick="create()">Add Sub_Task</button></div>';
-  text += '<div class=" w3-bar"> ';
-  text +=
-    '<input class="w3-check" type="checkbox"><label>sub_task</label><br><input class="w3-small w3-check" type="checkbox"><label>sub_task</label><br><input class="w3-check" type="checkbox"><label>sub_task</label><br> </div>';
+    '<button type="button" class="w3-button w3-small w3-theme-d5" onclick="create()">Add Status</button></div>';
+  //text += '<div class=" w3-bar"> ';
+  //text +=
+  //'<input class="w3-check" type="checkbox"><label>sub_task</label><br><input class="w3-small w3-check" type="checkbox"><label>sub_task</label><br><input class="w3-check" type="checkbox"><label>sub_task</label><br> </div>';
   document.getElementById("createEvent").innerHTML = text;
 }
 
@@ -506,13 +547,13 @@ function addContributorToTask(taskid) {
   };
   var parameters = {
     task_id: taskid,
-    contributor_username: document.getElementById("contributor_id_from_task").value
+    contributor_username: document.getElementById("contributor_id_from_task")
+      .value
   };
   req.send(JSON.stringify(parameters));
 }
 
 function retrieveHostEventList() {
-
   var req = new XMLHttpRequest();
   req.open("POST", host_event_list_endpoint);
   req.onreadystatechange = function(event) {
@@ -569,6 +610,7 @@ function retrieveTasks() {
 }
 
 function sendMessage(username) {
+
   var req = new XMLHttpRequest();
   req.open("POST", host_send_message_endpoint);
   req.onreadystatechange = function(event) {
@@ -578,55 +620,20 @@ function sendMessage(username) {
       alert("Sorry resource unavailable");
     }
   };
-  var parameters;
-  if(username!=null)
-  parameters = {
+  var parameters = {
     event_id: localStorage.getItem("currentEvent"),
-    message: document.getElementById("message").value,
-    username:username
+    message: document.getElementById("message").value
   };
-  else {
-    parameters = {
-      event_id: localStorage.getItem("currentEvent"),
-      message: document.getElementById("message").value
-    };
-  }
   req.send(JSON.stringify(parameters));
 }
 
-function demographics()
-{
+/* not done yet*/
+function seeProfile() {
   var req = new XMLHttpRequest();
-  req.open("POST", host_event_guest_list_endpoint);
+  req.open("POST", host_send_message_endpoint);
   req.onreadystatechange = function(event) {
-    if (this.readyState == 4) {
-      arr = JSON.parse(event.target.response);
-      new Chart(document.getElementById("pie-chart"), {
-        type: 'pie',
-        data: {
-          labels: arr[0],
-          datasets: [{
-            label: "Population (millions)",
-            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
-            data: arr[1]
-          }]
-        },
-        options: {
-          legend: {
-            labels: {
-                // This more specific font property overrides the global property
-                fontColor: 'white'
-            }
-        },
-          title: {
-            display: true,
-            text: 'Most popular tags pie chart',
-            fontColor: 'white'
-          }
-        }
-    });
-      //document.getElementById("tagsOutput").innerHTML = JSON.parse(event.target.response);
-
+    if (this.readyState == 4 && event.target.response == "true") {
+      alert("Sent message successfully");
     } else if (this.readyState == 4) {
       alert("Sorry resource unavailable");
     }
@@ -640,6 +647,7 @@ function demographics()
 
 function sendInvitations()
 {
+  document.getElementById('userRating').innerHTML = "";
   document.getElementById("createEvent").innerHTML = 'Enter username of users to invite<br><input class="w3-input" id="inviteList"></input><hr><button class="w3-button w3-theme-d4" onclick="shareEvent()">Send Invites</button>';
 }
 function shareEvent()
@@ -661,25 +669,17 @@ function shareEvent()
 
 function viewEventMessages()
 {
+  document.getElementById('userRating').innerHTML = "";
   var req = new XMLHttpRequest();
   req.open("POST",host_event_messages_endpoint);
   req.onreadystatechange = function(event) {
     arr = JSON.parse(event.target.response);
     if (this.readyState == 4) {
       document.getElementById("createEvent").innerHTML = '<center>'+arr.message_content+'</center>';
-      temp = "";
       for(x in arr.message_list)
       {
-        if(arr.message_list[x].includes("->"))
-          arr.message_list[x] = arr.message_list[x].substring(3);
         temp = arr.message_list[x].split(":-")
-        if(temp[1].includes("->"))
-        {
-          subtemp = temp[1].split("->")
-          document.getElementById("createEvent").innerHTML += '<hr><font color="red">'+temp[0]+"</font>"+subtemp[0]+"-><font color='green'>"+subtemp[1]+"</font>";
-        }
-        else
-        document.getElementById("createEvent").innerHTML += "<hr><button class=\"w3-btn\" onclick=\"storeMessage(\'"+arr.message_list[x]+"\')\"><i class=\"fa fa-plane\"></i></button>"+'<font color="red">'+temp[0]+"</font>"+temp[1];
+      document.getElementById("createEvent").innerHTML += '<hr><font color="red">'+temp[0]+"</font>"+temp[1];
     }
 
   }
@@ -690,9 +690,8 @@ function viewEventMessages()
   req.send(JSON.stringify(parameters));
 }
 <<<<<<< HEAD
-
-=======
->>>>>>> 4777e4e9831abb7a6b5ccd97b6795d6ff8597ad6
+<<<<<<< HEAD
+<<<<<<< HEAD
 function storeMessage(message)
 {
   localStorage.setItem("forwardedMessage",message);
@@ -705,22 +704,13 @@ function forwardMessage(contributorName)
     localStorage.setItem("forwardedMessage","")
   }
 }
-function sendtoSelf(eventID,contributorName,message)
-{
-  message += " -> "+contributorName;
-  var req = new XMLHttpRequest();
-  req.open("POST", user_send_host_message_endpoint);
-  req.onreadystatechange = function(event) {
-    if (this.readyState == 4) {
-      console.log(event.target.response);
-        alert("Message sent successfully")
-    }
-  };
-
-  var parameters = {
-    event_id: eventID.toString(),
-    username: "",
-    event_mess: message
-  };
-  req.send(JSON.stringify(parameters));
+function sendInvitations() {
+  document.getElementById("createEvent").innerHTML =
+    "Enter email id of user to send invitation too.";
 }
+=======
+>>>>>>> parent of a0f1f58... message forwarding user story 8
+=======
+>>>>>>> parent of a0f1f58... message forwarding user story 8
+=======
+>>>>>>> parent of a0f1f58... message forwarding user story 8
