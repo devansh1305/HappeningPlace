@@ -224,7 +224,7 @@ function renderUI(arr, color) {
 
         } else if (color == 'green') {
           //Displaying joined events
-         
+
 
 
 getEventRating(arr[i]);
@@ -240,7 +240,7 @@ for(;count<6;count++){
 
 */
 
-     
+
 
 
         }
@@ -298,7 +298,8 @@ function setStar(starNum,eventID,date){
   req.open('POST', user_set_rating_endpoint);
   req.onreadystatechange = function(event) {
     if (this.readyState == 4 && event.target.response == 'true') {
-      console.log(event.target.response);
+      viewParticipatingEvents();
+
     }
   };
   console.log(eventID);
@@ -682,7 +683,7 @@ function getEventRating(arr)
 starcount= event.target.response[1];
 console.log(starcount);
 
- document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr.name + " " + arr.location + "</h4><hr class=\"w3-clear\"><center>”
+ document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr.name + " " + arr.location + "</h4><hr class=\"w3-clear\">";
 
 
 if(yyyy>=Number(arr.date.substr(0,4))){
@@ -698,7 +699,7 @@ for(;count<6;count++){
 }
 }
 }
-     document.getElementById('searchResults').innerHTML += “</center><div class=\"w3-container w3-card w3-white w3-round w3-margin\"><p>Location: " + arr.location + "<br>Time: " + arr.time + "<br>ZipCode: " + arr.zipcode + "<br> Description:" + arr.desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-l2 w3-margin-bottom\" onclick=\"cancelEvent(" + arr.eventid + ")\"><i class=\"fa fa-thumbs-down\"></i> Cancel RSVP</button><button type=\"button\" class=\"w3-button w3-theme-d4 w3-margin-bottom\" onclick=\"shareEvent("+arr.eventid+")\">&nbsp<i class=\"fa fa-comment\" ></i>  Share</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input id=\"messageToHost\" style=\"height:40px\"></input><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"messageHost("+arr.eventid+")\">&nbsp<i class=\"fa fa-user\"></i>&nbspMessage Host</button></div><br><br>";
+     document.getElementById('searchResults').innerHTML += "</center><div class=\"w3-container w3-card w3-white w3-round w3-margin\"><p>Location: " + arr.location + "<br>Time: " + arr.time + "<br>ZipCode: " + arr.zipcode + "<br> Description:" + arr.desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-l2 w3-margin-bottom\" onclick=\"cancelEvent(" + arr.eventid + ")\"><i class=\"fa fa-thumbs-down\"></i> Cancel RSVP</button><button type=\"button\" class=\"w3-button w3-theme-d4 w3-margin-bottom\" onclick=\"shareEvent("+arr.eventid+")\">&nbsp<i class=\"fa fa-comment\" ></i>  Share</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input id=\"messageToHost\" style=\"height:40px\"></input><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"messageHost("+arr.eventid+")\">&nbsp<i class=\"fa fa-user\"></i>&nbspMessage Host</button></div><br><br>";
 
     }
   };
@@ -709,6 +710,3 @@ for(;count<6;count++){
   };
   req.send(JSON.stringify(parameters));
 }
-
-
-
