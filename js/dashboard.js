@@ -465,30 +465,14 @@ function loadContributeEventList(arr) {
 function displayTaskDetails(eventID) {
   var text = "";
 
-  text =
-    text +
-    '<button type="button" class="w3-button w3-theme-d1 w3-right" onclick="cancel()">Cancel</button><br>';
-  text +=
-    "<h2>" +
-    eventID +
-    '</h2><div class="w3-theme-d2 w3-card-2" style="padding:10px"><h4>Task Description</h4>';
-
-  text +=
-    '<div class="w3-display-container w3-panel w3-theme-d3" style="padding:0px;">';
-  text +=
-    '<input class="w3-input" type="text" placeholder="Contributor e-mail ID" id="contributor_id_from_task">';
-  text +=
-    '<br><button type="button" class="w3-button w3-theme-d1" onclick="addContributorToTask(\'' +
-    eventID +
-    "')\">Add Contributor</button>&nbsp</div>";
-
-  text +=
-    '<div class="w3-card-3 w3-theme-d3" style="padding:5px"><input class="w3-input" type="text" placeholder="Enter Subtask Name" id="subtaskname">';
-  text +=
-    '<button type="button" class="w3-button w3-small w3-theme-d5" onclick="create()">Add Sub_Task</button></div>';
-  text += '<div class=" w3-bar"> ';
-  text +=
-    '<input class="w3-check" type="checkbox"><label>sub_task</label><br><input class="w3-small w3-check" type="checkbox"><label>sub_task</label><br><input class="w3-check" type="checkbox"><label>sub_task</label><br> </div>';
+  text +='<button type="button" class="w3-button w3-theme-d1 w3-right" onclick="cancel()">X</button><br>';
+  text +='<h4>Task Details</h4><div class="w3-theme-d2 w3-card-2" style="padding:10px"><h4>Task Description</h4>';
+  text += '<div class="w3-display-container w3-panel w3-theme-d3" style="padding:0px;">';
+  text += '<input class="w3-input" type="text" placeholder="Contributor e-mail ID" id="contributor_id_from_task">';
+  text += '<br><button type="button" class="w3-button w3-theme-d1" onclick="addContributorToTask(\'' +
+    eventID + "')\">Add Contributor</button>&nbsp</div>";
+  text += '<div class="w3-card-3 w3-theme-d3" style="padding:5px">Status:<input class="w3-input" type="text" id="subtaskname">';
+  text += '<button type="button" class="w3-button w3-small w3-green" onclick="updateStatus()">Update Status Log</button></div>';
   document.getElementById("createEvent").innerHTML = text;
 }
 
