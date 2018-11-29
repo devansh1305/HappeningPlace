@@ -22,16 +22,11 @@ var contribute_event_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.a
 var task_check_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/TaskCheck";
 var user_share_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-share-event";
 var host_event_messages_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/host-event-messages";
-<<<<<<< HEAD
-
 var user_send_host_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-send-host-message";
 var event_get_user_rating_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-get-user-rating";
 
 
 
-=======
-var user_send_host_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-send-host-message";
->>>>>>> 4777e4e9831abb7a6b5ccd97b6795d6ff8597ad6
 
 var taskArr;
 
@@ -152,7 +147,7 @@ function hostguestlist(host_guest_list) {
 }
 
 function userDetails(arr) {
-  document.getElementById("createEvent").innerHTML = "Name: " + arr.firstname + "'s<hr>";
+  document.getElementById("createEvent").innerHTML = "<p id=\"userRating\"></p>Name: " + arr.firstname + "'s<hr>";
   document.getElementById("createEvent").innerHTML += "Address: " + arr.address1 + ", " + arr.address2 + "," + arr.city + "<hr>";
   document.getElementById("createEvent").innerHTML += "Email: " + arr.email + "<hr>Interests: ";
   for (var i = 0; i < arr.interest_tags.length; i++) {
@@ -168,6 +163,7 @@ function retrieveUserDetails(email) {
   req.onreadystatechange = function(event) {
     if (this.readyState == 4) {
       userDetails(JSON.parse(event.target.response));
+      getUserRating(email);
     }
   };
 
@@ -187,6 +183,7 @@ function hostContributeList() {
   //   text += '<div class="w3-button w3-theme-d5">' + arr[i] + "</div><br><br>";
   // }
   // document.getElementById("eventList").innerHTML = text;
+  localStorage.setItem("currentView","contributor");
   var req = new XMLHttpRequest();
   req.open("POST", contribute_event_list_endpoint);
   req.onreadystatechange = function(event) {
@@ -208,12 +205,14 @@ function displayEventDetails() {
     if (this.readyState == 4) {
       arg = JSON.parse(event.target.response);
       var text = "";
-      var cancelButton =
-        '<button class="w3-button w3-yellow" onclick="viewEventMessages()"> Messages </button>&nbsp<button class="w3-button w3-blue" onclick="sendInvitations()">Invite</button>&nbsp';
-      cancelButton +=
-        '<button class="w3-button w3-green" title="View Reviews" onclick="viewReviews()">Reviews</button>&nbsp';
+      var cancelButton = '<button class="w3-button w3-yellow" onclick="viewEventMessages()"> Messages </button>&nbsp';
+
+        if(localStorage.getItem("currentView")!='contributor')
+        {
+          cancelButton += '<button class="w3-button w3-blue" onclick="sendInvitations()">Invite</button>&nbsp';
       cancelButton +=
           '<button class="w3-button w3-red" title="Cancel Event" onclick="cancelEventConfirm()">Cancel Event</button><br>';
+        }
       text +=
         "<h2>" +
         arg[0] +
@@ -513,6 +512,7 @@ function addContributorToTask(taskid) {
 
 function retrieveHostEventList() {
 
+localStorage.setItem("currentView","host");
   var req = new XMLHttpRequest();
   req.open("POST", host_event_list_endpoint);
   req.onreadystatechange = function(event) {
@@ -640,6 +640,7 @@ function demographics()
 
 function sendInvitations()
 {
+    document.getElementById("userRating").innerHTML = "";
   document.getElementById("createEvent").innerHTML = 'Enter username of users to invite<br><input class="w3-input" id="inviteList"></input><hr><button class="w3-button w3-theme-d4" onclick="shareEvent()">Send Invites</button>';
 }
 function shareEvent()
@@ -661,6 +662,7 @@ function shareEvent()
 
 function viewEventMessages()
 {
+  document.getElementById("userRating").innerHTML = "";
   var req = new XMLHttpRequest();
   req.open("POST",host_event_messages_endpoint);
   req.onreadystatechange = function(event) {
@@ -689,10 +691,7 @@ function viewEventMessages()
   };
   req.send(JSON.stringify(parameters));
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> 4777e4e9831abb7a6b5ccd97b6795d6ff8597ad6
 function storeMessage(message)
 {
   localStorage.setItem("forwardedMessage",message);
@@ -721,6 +720,23 @@ function sendtoSelf(eventID,contributorName,message)
     event_id: eventID.toString(),
     username: "",
     event_mess: message
+  };
+  req.send(JSON.stringify(parameters));
+}
+
+function getUserRating(username)
+{
+  var req = new XMLHttpRequest();
+  req.open("POST", event_get_user_rating_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+      document.getElementById("userRating").innerHTML = "User Event Rating: "+event.target.response;
+    }
+  };
+
+  var parameters = {
+    event_id: localStorage.getItem("currentEvent"),
+    username: username
   };
   req.send(JSON.stringify(parameters));
 }
