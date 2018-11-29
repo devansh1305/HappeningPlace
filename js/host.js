@@ -20,6 +20,8 @@ var user_friend_list_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazon
 var user_share_event_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-share-event";
 var user_shared_events_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/get-shared-events";
 var user_send_host_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-send-host-message";
+var user_set_rating_endpoint="https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-set-rating";
+
 
 /* Function Lookup index
  * 1. Add user - Adds user to Database
@@ -212,7 +214,17 @@ function renderUI(arr, color) {
 
         } else if (color == 'green') {
           //Displaying joined events
-          document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><div id=\"stars\"><span class=\"fa fa-star checked\" onclick=\"star(1,"+arr[i].eventid+")\"></span><span class=\"fa fa-star checked\"onclick=\"star(2,"+arr[i].eventid+")\"></span><span class=\"fa fa-star checked\"onclick=\"star(\"3\","+arr[i].eventid+")\"></span><span class=\"fa fa-star\" onclick=\"star(4,"+arr[i].eventid+")\"></span><span class=\"fa fa-star\" onclick=\"star(5,"+arr[i].eventid+")\"></span></div><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-l2 w3-margin-bottom\" onclick=\"cancelEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-down\"></i> Cancel RSVP</button><button type=\"button\" class=\"w3-button w3-theme-d4 w3-margin-bottom\" onclick=\"shareEvent("+arr[i].eventid+")\">&nbsp<i class=\"fa fa-comment\" ></i>  Share</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input id=\"messageToHost\" style=\"height:40px\"></input><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"messageHost("+arr[i].eventid+")\">&nbsp<i class=\"fa fa-user\"></i>&nbspMessage Host</button></div>";
+          document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><div id=\"stars\">"
+
+
+
+
+var count=1;
+for(;count<6;count++){
+ document.getElementById('searchResults').innerHTML += "<span class=\"fa fa-star\" onclick=\"setStar("+count+","+arr[i].eventid+","+arr[i].date +")\"></span>";
+}
+
+          document.getElementById('searchResults').innerHTML += "</div><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"><div class=\"w3-half\"></div><div class=\"w3-half\"></div></div><button type=\"button\" class=\"w3-button w3-theme-l2 w3-margin-bottom\" onclick=\"cancelEvent(" + arr[i].eventid + ")\"><i class=\"fa fa-thumbs-down\"></i> Cancel RSVP</button><button type=\"button\" class=\"w3-button w3-theme-d4 w3-margin-bottom\" onclick=\"shareEvent("+arr[i].eventid+")\">&nbsp<i class=\"fa fa-comment\" ></i>  Share</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input id=\"messageToHost\" style=\"height:40px\"></input><button type=\"button\" class=\"w3-button w3-theme-d1 w3-margin-bottom\" onclick=\"messageHost("+arr[i].eventid+")\">&nbsp<i class=\"fa fa-user\"></i>&nbspMessage Host</button></div>";
 
 
         }
@@ -264,35 +276,22 @@ function renderUIGuestEvent(arr, color) {
 
 
 
-
-
-function star(number,eventID) {
-  var i = 1;
-  document.getElementById('stars').innerHTML = ""
-  for (; i <= number; i++) {
-    document.getElementById('stars').innerHTML += "<span class=\"fa fa-star checked\" onclick=\"star(" + i + ","+arr[i].eventid+")\"></span>"
-  }
-
-  for (i = number + 1; i <= 5; i++) {
-    document.getElementById('stars').innerHTML += "<span class=\"fa fa-star\" onclick=\"star(" + i + ","+arr[i].eventid+")\"></span>"
-  }
+function setStar(starNum,eventID,date){
+ userLoggedIn = localStorage.getItem("username");
   var req = new XMLHttpRequest();
-  req.open('POST', guest_join_event_endpoint);
+  req.open('POST', user_set_rating_endpoint);
   req.onreadystatechange = function(event) {
-    console.log(event.target.response);
     if (this.readyState == 4 && event.target.response == 'true') {
-      alert("Rating given")
+      console.log(event.target.response);
     }
   };
   console.log(eventID);
   var params = {
-    username: localStorage.getItem("username"),
+    username: userLoggedIn.toString(),
     event_id: eventID.toString(),
-    event_rate: number.toString()
-
+    event_rate: starNum.toString()
   }
   req.send(JSON.stringify(params));
-
 }
 
 
