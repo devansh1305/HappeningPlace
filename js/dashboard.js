@@ -31,7 +31,6 @@ function cancelEvent() {
   var req = new XMLHttpRequest();
   req.open("POST", host_cancel_event_endpoint);
   req.onreadystatechange = function(event) {
-    console.log(event.target.response);
     if (this.readyState == 4) {
       return JSON.parse(event.target.response);
     }
@@ -503,19 +502,23 @@ function displayTaskDetails(taskID) {
   var req = new XMLHttpRequest();
   req.open("POST",event_get_task_profile_endpoint);
   req.onreadystatechange = function(event) {
-    console.log(event.target.response);
-    if (this.readyState == 4 && event.target.response == "true") {
-
+    if (this.readyState == 4) {
+        arr = JSON.parse(event.target.response);
+      if(arr.response=="true")
+      {
+        console.log(arr);
       var text = "";
       text +='<button type="button" class="w3-button w3-theme-d1 w3-right" onclick="cancel()">X</button><br>';
-      text +='<h4>Task Details</h4><div class="w3-theme-d2 w3-card-2" style="padding:10px"><h4>Task Description</h4>';
-      text += '<div class="w3-display-container w3-panel w3-theme-d3" style="padding:0px;">';
-      text += '<input class="w3-input" type="text" placeholder="Contributor e-mail ID" id="contributor_id_from_task">';
-      text += '<br><button type="button" class="w3-button w3-theme-d1" onclick="addContributorToTask(\'' +
-        taskID + "')\">Add Contributor</button>&nbsp</div>";
-      text += '<div class="w3-card-3 w3-theme-d3" style="padding:5px">Status:<input class="w3-input" type="text" id="subtaskname">';
-      text += '<button type="button" class="w3-button w3-small w3-green" onclick="updateStatus()">Update Status Log</button></div>';
+      text +='<center><h3>Task Details</h3></center><hr>Name: '+arr.TaskName+'<hr>Task Description: '+arr.Description+'<hr>Contributors:<br>';
+      for(x in  arr.Owners)
+        text += arr.Owners[x]+"<br>";
+      text += '<br>Add Contributor<br><input class="w3-input w3-twothird" type="text" placeholder="Contributor e-mail ID" id="contributor_id_from_task"></input>';
+      text += '<button type="button" class="w3-button w3-third w3-theme-d1" onclick="addContributorToTask(\'' +
+        taskID + "')\">Add</button>";
+      text += '<br><br><br><hr>Status:<br><input class="w3-input w3-twothird" type="text" id="subtaskname"></input>';
+      text += '<button type="button" class="w3-button w3-green w3-third" onclick="updateStatus()">Update</button>';
       document.getElementById("createEvent").innerHTML = text;
+    }
     }
   };
   console.log(taskID.toString());
