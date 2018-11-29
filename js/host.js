@@ -199,6 +199,13 @@ function renderUI(arr, color) {
 
   if (arr != null) {
     //console.log(arr);
+
+    console.log(arr);
+	arr.sort((a, b) => (a.name > b.name) - (a.name < b.name));
+    console.log(arr);
+
+
+
     document.getElementById('searchResults').innerHTML = "";
     if (color != 'green') {
       document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
@@ -225,7 +232,7 @@ function renderUI(arr, color) {
         } else if (color == 'green') {
           //Displaying joined events
 
-
+    console.log(arr[i].name);
 
 getEventRating(arr[i]);
         }
@@ -240,7 +247,11 @@ getEventRating(arr[i]);
 function renderUIGuestEvent(arr, color) {
 
   if (arr != null) {
-    //console.log(arr);
+    console.log(arr);
+	arr.sort((a, b) => (a.name > b.name) - (a.name < b.name));
+    console.log(arr);
+
+
     document.getElementById('searchResults').innerHTML += "";
     if (color != 'green') {
       document.getElementById("backgroundCard").className = "w3-card w3-container w3-red";
@@ -261,7 +272,7 @@ function renderUIGuestEvent(arr, color) {
         if (color == 'blue') {
           document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</div>";
         } else if (color == 'green') {
-
+	
 
 
           document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</div>";
@@ -666,8 +677,6 @@ function getEventRating(arr)
   req.onreadystatechange = function(event) {
     if (this.readyState == 4) {
 starcount= event.target.response[1];
-console.log(starcount);
-
  document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr.name + " " + arr.location + "</h4><hr class=\"w3-clear\">";
 
 
