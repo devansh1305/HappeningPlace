@@ -247,9 +247,7 @@ getEventRating(arr[i]);
 function renderUIGuestEvent(arr, color) {
 
   if (arr != null) {
-    console.log(arr);
-	arr.sort((a, b) => (a.name > b.name) - (a.name < b.name));
-    console.log(arr);
+    
 
 
     document.getElementById('searchResults').innerHTML += "";
@@ -270,12 +268,12 @@ function renderUIGuestEvent(arr, color) {
           flag = 1;
         }
         if (color == 'blue') {
-          document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</div>";
+          document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "<br> Date: " + arr[i].date +"</div>";
         } else if (color == 'green') {
 	
+	getEventRatingGuest(arr[i]);
 
-
-          document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr[i].name + " " + arr[i].location + "</h4><br><hr class=\"w3-clear\"><p>Location: " + arr[i].location + "<br>Time: " + arr[i].time + "<br>ZipCode: " + arr[i].zipcode + "<br> Description:" + arr[i].desc + "</div>";
+          
         }
       }
     }
@@ -668,6 +666,53 @@ function messageHost(eventID)
   };
   req.send(JSON.stringify(parameters));
 }
+
+
+
+
+function getEventRatingGuest(arr){
+
+var req = new XMLHttpRequest();
+  req.open("POST", event_get_user_rating_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4) {
+starcount= event.target.response[1];
+
+
+
+
+
+ document.getElementById('searchResults').innerHTML += "<div class=\"w3-container w3-card w3-white w3-round w3-margin\"><br><img src=\"img/avatar2.png\" alt=\"Avatar\" class=\"w3-left w3-circle w3-margin-right\" style=\"width:60px\"><span class=\"w3-right w3-opacity\"></span><h4>" + arr.name + " " + arr.location + "</h4><br><hr class=\"w3-clear\">";
+
+
+
+
+if(yyyy>=Number(arr.date.substr(0,4))){
+if(mm>=Number(arr.date.substr(5,2))){
+if(dd>=Number(arr.date.substr(8,2))){
+var count=1;
+for(;count<=starcount;count++){
+ document.getElementById('searchResults').innerHTML += "<span class=\"fa fa-star checked\"></span>";
+}
+for(;count<6;count++){
+ document.getElementById('searchResults').innerHTML += "<span class=\"fa fa-star\" ></span>";
+}
+}
+}
+}
+ document.getElementById('searchResults').innerHTML += "</center><div class=\"w3-container w3-card w3-white w3-round w3-margin\"><p>Location: " + arr.location + "<br>Time: " + arr.time + "<br>ZipCode: " + arr.zipcode + "<br> Description: " + arr.desc + "<br> Date: " + arr.date + "</p><div class=\"w3-row-padding\" style=\"margin:0 -16px\"></div></div><br><br>";
+}
+};
+
+  var parameters = {
+    event_id: arr.eventid,
+    username: localStorage.getItem("username")
+  };
+  req.send(JSON.stringify(parameters));
+}
+
+
+
 
 
 function getEventRating(arr)
