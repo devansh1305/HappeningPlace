@@ -25,6 +25,7 @@ var host_event_messages_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.ama
 var user_send_host_message_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/user-send-host-message";
 var event_get_user_rating_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/event-get-user-rating";
 var event_get_task_profile_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/gettaskprofile";
+var task_update_status_endpoint = "https://md1q5ktq6e.execute-api.us-east-1.amazonaws.com/hp1/task-update-status";
 var taskArr;
 
 function cancelEvent() {
@@ -506,7 +507,7 @@ function displayTaskDetails(taskID) {
         arr = JSON.parse(event.target.response);
       if(arr.response=="true")
       {
-        console.log(arr);
+
       var text = "";
       text +='<button type="button" class="w3-button w3-theme-d1 w3-right" onclick="cancel()">X</button><br>';
       text +='<center><h3>Task Details</h3></center><hr>Name: '+arr.TaskName+'<hr>Task Description: '+arr.Description+'<hr>Contributors:<br>';
@@ -515,8 +516,8 @@ function displayTaskDetails(taskID) {
       text += '<br>Add Contributor<br><input class="w3-input w3-twothird" type="text" placeholder="Contributor e-mail ID" id="contributor_id_from_task"></input>';
       text += '<button type="button" class="w3-button w3-third w3-theme-d1" onclick="addContributorToTask(\'' +
         taskID + "')\">Add</button>";
-      text += '<br><br><br><hr>Status:<br><input class="w3-input w3-twothird" type="text" id="subtaskname"></input>';
-      text += '<button type="button" class="w3-button w3-green w3-third" onclick="updateStatus()">Update</button>';
+      text += '<br><br><br><hr>Status: '+arr.Status+'<br><br><input class="w3-input w3-twothird" type="text" id="taskStatus"></input>';
+      text += '<button type="button" class="w3-button w3-green w3-third" onclick="updateStatus(\''+arr.TaskId+'\')">Update</button>';
       document.getElementById("createEvent").innerHTML = text;
     }
     }
@@ -529,6 +530,25 @@ function displayTaskDetails(taskID) {
 
 }
 
+function updateStatus(taskid)
+{
+    var req = new XMLHttpRequest();
+  req.open("POST", task_update_status_endpoint);
+  req.onreadystatechange = function(event) {
+    if (this.readyState == 4 && event.target.response == "true") {
+      displayTaskDetails(taskid);
+    } else if (this.readyState == 4) {
+      console.log(event.target.response);
+      alert("Sorry resource not found");
+    }
+  };
+  var parameters = {
+    task_id: taskid,
+    task_status: document.getElementById("taskStatus").value
+  };
+  req.send(JSON.stringify(parameters));
+}
+
 function addContributorToTask(taskid) {
   var req = new XMLHttpRequest();
   req.open("POST", task_add_contributor_endpoint);
@@ -538,7 +558,7 @@ function addContributorToTask(taskid) {
       displayTaskDetails(taskid);
     } else if (this.readyState == 4) {
       console.log(event.target.response);
-      alert("Sorry resource unavailable");
+      alert("Not a guest");
     }
   };
   var parameters = {
